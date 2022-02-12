@@ -232,7 +232,7 @@ ahover:hover {
 } */
 
 .bodyody {
-  background-color: #242333;
+  background-color: #7a3127b9;
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -265,7 +265,7 @@ ahover:hover {
 } 
 
 .seat {
-  background-color: #444451;
+  background-color: #999486;
   height: 12px;
   width: 15px;
   margin: 3px;
@@ -274,11 +274,11 @@ ahover:hover {
 }
 
 .seat.selected {
-  background-color: #6feaf6;
+  background-color: #f0d95a;
 }
 
 .seat.occupied {
-  background-color: #fff;
+  background-color: rgb(128, 74, 24);
 }
 
 .seat:nth-of-type(2) {
