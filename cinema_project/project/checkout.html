@@ -1,71 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
+<head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="Template Mo">
-    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="Template Mo">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
 
-    <title>Movie Details Page</title>
+  <title>Checkout</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 
-    <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="assets/css/fontawesome.css">
-    <link rel="stylesheet" href="assets/css/templatemo-edu-meeting.css">
-    <link rel="stylesheet" href="assets/css/owl.css">
-    <link rel="stylesheet" href="assets/css/lightbox.css">
-<!--
+  <!-- Additional CSS Files -->
+  <link rel="stylesheet" href="assets/css/fontawesome.css">
+  <link rel="stylesheet" href="assets/css/templatemo-edu-meeting.css">
+  <link rel="stylesheet" href="assets/css/owl.css">
+  <link rel="stylesheet" href="assets/css/lightbox.css">
+
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <!------ Include the above in your HEAD tag ---------->
+
+  <!--
 
 TemplateMo 569 Edu Meeting
 
 https://templatemo.com/tm-569-edu-meeting
 
 -->
-  </head>
+</head>
 
 <body>
 
-   
+
 
   <!-- ***** Header Area Start ***** -->
   <header class="header-area header-sticky">
-      <div class="container">
-          <div class="row">
-              <div class="col-12">
-                  <nav class="main-nav">
-                      <!-- ***** Logo Start ***** -->
-                      <a href="index.html" class="logo">
-                          Virtual Cinemas
-                      </a>
-                      <!-- ***** Logo End ***** -->
-                      <!-- ***** Menu Start ***** -->
-                      <ul class="nav">
-                          <li><a href="index.html">Home</a></li>
-                          <li><a href="promotions.html">Promotions</a></li>
-                          <li class="has-sub">
-                              <a href="javascript:void(0)" class="active">Pages</a>
-                              <ul class="sub-menu">
-                                  <li><a href="meetings.html">Upcoming Meetings</a></li>
-                                  <li><a href="movie_details.html" >Movie Details</a></li>
-                              </ul>
-                          </li>
-                          <li><a href="register.html">Register</a></li> 
-                          <li><a href="login.html">Login</a></li> 
-                      </ul>        
-                      <a class='menu-trigger'>
-                          <span>Menu</span>
-                      </a>
-                      <!-- ***** Menu End ***** -->
-                  </nav>
-              </div>
-          </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <nav class="main-nav">
+            <!-- ***** Logo Start ***** -->
+            <a href="index.html" class="logo">
+              Virtual Cinemas
+            </a>
+            <!-- ***** Logo End ***** -->
+            <!-- ***** Menu Start ***** -->
+            <ul class="nav">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="promotions.html">Promotions</a></li>
+              <li class="has-sub">
+                <a href="javascript:void(0)" class="active">Pages</a>
+                <ul class="sub-menu">
+                  <li><a href="meetings.html">Upcoming Movies</a></li>
+                  <li><a href="movie_details.html">Movie Details</a></li>
+                </ul>
+              </li>
+              <li><a href="register.html">Register</a></li>
+              <li><a href="login.html">Login</a></li>
+            </ul>
+            <a class='menu-trigger'>
+              <span>Menu</span>
+            </a>
+            <!-- ***** Menu End ***** -->
+          </nav>
+        </div>
       </div>
+    </div>
   </header>
   <!-- ***** Header Area End ***** -->
 
@@ -73,85 +80,209 @@ https://templatemo.com/tm-569-edu-meeting
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
-        
+          <div class="container">
+            <br>
+            <hr>
+
+            <div class="row">
+              <aside class="col-sm-6">
+                <article class="card">
+                  <div class="card-body p-5">
+                    <form id="contact" action="" method="post">
+                      <div class="row">
+
+                        <div class="col-lg-12">
+
+                          <h2>Checkout</h2>
+                          <hr>
+                          <div class="container">
+                            <div class="row">
+                              <fieldset>
+
+                                <!-- Name -->
+                                <div class="control-group">
+                                  <p style="text-align:left">Card Holder's Name</p>
+                                  <div class="controls">
+                                    <input type="text" id="username" name="username" placeholder=""
+                                      class="input-xlarge">
+                                  </div>
+                                </div>
+
+                                <!-- Card Number -->
+                                <div class="control-group">
+                                  <p style="text-align:left">Card Number</p>
+                                  <div class="controls">
+                                    <input type="text" id="email" name="email" placeholder="" class="input-xlarge">
+                                  </div>
+                                </div>
+
+                                <!-- CVV -->
+                                <div class="control-group">
+                                  <p style="text-align:left">CVV</p>
+                                  <div class="controls">
+                                    <input type="password" id="password_confirm" name="password_confirm" placeholder=""
+                                      class="span2">
+                                  </div>
+                                </div>
+
+                                <!-- Expiry-->
+                                <div class="control-group">
+                                  <p>Expiration Date</p>
+                                  <div class="controls">
+                                    <select class="span3" name="expiry_month" id="expiry_month">
+                                      <option></option>
+                                      <option value="01">Jan (01)</option>
+                                      <option value="02">Feb (02)</option>
+                                      <option value="03">Mar (03)</option>
+                                      <option value="04">Apr (04)</option>
+                                      <option value="05">May (05)</option>
+                                      <option value="06">June (06)</option>
+                                      <option value="07">July (07)</option>
+                                      <option value="08">Aug (08)</option>
+                                      <option value="09">Sep (09)</option>
+                                      <option value="10">Oct (10)</option>
+                                      <option value="11">Nov (11)</option>
+                                      <option value="12">Dec (12)</option>
+                                    </select>
+                                    <select class="span2" name="expiry_year">
+                                      <option value="20">2020</option>
+                                      <option value="21">2021</option>
+                                      <option value="22">2022</option>
+                                      <option value="23">2023</option>
+                                      <option value="23">2024</option>
+                                      <option value="23">2025</option>
+                                      <option value="23">2026</option>
+                                      <option value="23">2027</option>
+                                      <option value="23">2028</option>
+                                      <option value="23">2029</option>
+                                      <option value="23">2030</option>
+                                    </select>
+                                  </div>
+                                </div>
+                              </fieldset>
+                            </div>
+                          </div>
+                          <div class="col-lg-12">
+                            <fieldset>
+                              <br><button type="submit" id="form-submit" class="button">Submit</button>
+                            </fieldset>
+                          </div>
+                        </div>
+                    </form>
+                  </div> <!-- card-body.// -->
+                </article> <!-- card.// -->
+              </aside> <!-- col.// -->
+
+              <aside class="col-sm-6">
+                <article class="card">
+                  <div class="card-body p-5">
+                    <form id="contact" action="" method="post">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <h4>Choose Payment Method</h4>
+                          <hr>
+                          <div class="container">
+                            <div class="row">
+                              <fieldset>
+                                <div class="control-group"><br>
+                                  <input type="radio" id="option1" name="card" value="Existing">
+                                  <label for="html">Existing Card</label><br>
+                                  <input type="radio" id="option2" name="card" value="New">
+                                  <label for="css">New Card</label><br>
+                                </div>
+                              </fieldset>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div> <!-- card-body.// -->
+                </article> <!-- card.// -->
+              </aside> <!-- col.// -->
+            </div> <!-- row.// -->
+          </div>
+          <!--container end.//-->
+          
+          <br><br>
           <div class="main-button-red">
             <a href="payment.html">Back to Payment</a>
           </div><br>
-        <div class="main-button-red">
-          <a href="confirmation.html">Complete Purchase</a>
-        </div><br>
-
+          <div class="main-button-red">
+            <a href="confirmation.html">Complete Purchase</a>
+          </div><br>
         </div>
       </div>
     </div>
     <div class="footer">
-      <p>Copyright © 2022 Virtual Cinemas., Ltd. All Rights Reserved. 
-          <br></p>
+      <p>Copyright © 2022 Virtual Cinemas., Ltd. All Rights Reserved.
+        <br>
+      </p>
     </div>
   </section>
 
 
   <!-- Scripts -->
   <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <script src="assets/js/isotope.min.js"></script>
-    <script src="assets/js/owl-carousel.js"></script>
-    <script src="assets/js/lightbox.js"></script>
-    <script src="assets/js/tabs.js"></script>
-    <script src="assets/js/video.js"></script>
-    <script src="assets/js/slick-slider.js"></script>
-    <script src="assets/js/custom.js"></script>
-    <script>
-        //according to loftblog tut
-        $('.nav li:first').addClass('active');
+  <script src="assets/js/isotope.min.js"></script>
+  <script src="assets/js/owl-carousel.js"></script>
+  <script src="assets/js/lightbox.js"></script>
+  <script src="assets/js/tabs.js"></script>
+  <script src="assets/js/video.js"></script>
+  <script src="assets/js/slick-slider.js"></script>
+  <script src="assets/js/custom.js"></script>
+  <script>
+    //according to loftblog tut
+    $('.nav li:first').addClass('active');
 
-        var showSection = function showSection(section, isAnimate) {
+    var showSection = function showSection(section, isAnimate) {
+      var
+        direction = section.replace(/#/, ''),
+        reqSection = $('.section').filter('[data-section="' + direction + '"]'),
+        reqSectionPos = reqSection.offset().top - 0;
+
+      if (isAnimate) {
+        $('body, html').animate({
+          scrollTop: reqSectionPos
+        },
+          800);
+      } else {
+        $('body, html').scrollTop(reqSectionPos);
+      }
+
+    };
+
+    var checkSection = function checkSection() {
+      $('.section').each(function () {
+        var
+          $this = $(this),
+          topEdge = $this.offset().top - 80,
+          bottomEdge = topEdge + $this.height(),
+          wScroll = $(window).scrollTop();
+        if (topEdge < wScroll && bottomEdge > wScroll) {
           var
-          direction = section.replace(/#/, ''),
-          reqSection = $('.section').filter('[data-section="' + direction + '"]'),
-          reqSectionPos = reqSection.offset().top - 0;
+            currentId = $this.data('section'),
+            reqLink = $('a').filter('[href*=\\#' + currentId + ']');
+          reqLink.closest('li').addClass('active').
+            siblings().removeClass('active');
+        }
+      });
+    };
 
-          if (isAnimate) {
-            $('body, html').animate({
-              scrollTop: reqSectionPos },
-            800);
-          } else {
-            $('body, html').scrollTop(reqSectionPos);
-          }
+    $('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function (e) {
+      e.preventDefault();
+      showSection($(this).attr('href'), true);
+    });
 
-        };
-
-        var checkSection = function checkSection() {
-          $('.section').each(function () {
-            var
-            $this = $(this),
-            topEdge = $this.offset().top - 80,
-            bottomEdge = topEdge + $this.height(),
-            wScroll = $(window).scrollTop();
-            if (topEdge < wScroll && bottomEdge > wScroll) {
-              var
-              currentId = $this.data('section'),
-              reqLink = $('a').filter('[href*=\\#' + currentId + ']');
-              reqLink.closest('li').addClass('active').
-              siblings().removeClass('active');
-            }
-          });
-        };
-
-        $('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function (e) {
-          e.preventDefault();
-          showSection($(this).attr('href'), true);
-        });
-
-        $(window).scroll(function () {
-          checkSection();
-        });
-    </script>
+    $(window).scroll(function () {
+      checkSection();
+    });
+  </script>
 </body>
 
 
-  </body>
+</body>
 
 </html>
