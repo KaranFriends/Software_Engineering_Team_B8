@@ -9,7 +9,7 @@
     <meta name="author" content="Template Mo">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
 
-    <title>Manage Movies</title>
+    <title>Suprise Gift</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -20,7 +20,6 @@
     <link rel="stylesheet" href="assets/css/templatemo-edu-meeting.css">
     <link rel="stylesheet" href="assets/css/owl.css">
     <link rel="stylesheet" href="assets/css/lightbox.css">
-    <link rel="stylesheet" href="assets/css/myCustom.css">
     <!--
 
 TemplateMo 569 Edu Meeting
@@ -47,8 +46,17 @@ https://templatemo.com/tm-569-edu-meeting
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <li><a href="admin_portal3.html">Home</a></li>
-                           
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="promotions.html">Promotions</a></li>
+                            <li class="has-sub">
+                                <a href="javascript:void(0)" class="active">Pages</a>
+                                <ul class="sub-menu">
+                                    <li><a href="edit_profile.html">Edit Profile</a></li>
+                                    <li><a href="movie_details.html">Movie Details</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="register.html">Register</a></li>
+                            <li><a href="login.html">Login</a></li>
                         </ul>
                         <a class='menu-trigger'>
                             <span>Menu</span>
@@ -66,14 +74,18 @@ https://templatemo.com/tm-569-edu-meeting
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="card container">
-                      <div class="text-center">
-                        <br><h2>Manage Movies</h2><br>
-                    </div>
-                      
+                    <div class="container"><br>
+                        <div class="addUser">
+                            <a class="btn btn-sm btn-primary my-2 text-uppercase "
+                                th:href="@{add_user_by_admin.html}">Add a User</a>
+                        </div>
                         <div class="searchClass">
                             <form class="my-2" action="#" th:action="@{/searchUser}" method="post">
-                                
+                                <label for="user_type">User Type</label>
+                                <select class="mx-2" name="user_type" id="user_type">
+                                    <option value="U">Customer</option>
+                                    <option value="A">Admin</option>
+                                </select>
                                 <input type="text" placeholder="Search a User" id="searchUser" name="searchUser"
                                     aria-label="Search a User">
                                 <button class="btn btn-sm btn-primary bg-primary text-light"
@@ -82,18 +94,17 @@ https://templatemo.com/tm-569-edu-meeting
                         </div>
                         <div id="table-scroll" th:if="${not #lists.isEmpty(users)}" class="userTable">
                             <div class="scrollit">
-                                <table class="table table-bordered table-hover mngTbl">
+                                <table class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th scope="col" class="mngTbl"><i class="fa fa-fw fa-list-ol mngTbl"></i>Index</th>
-                                            <th scope="col" class="mngTbl"><i class="fa fa-fw fa-user mngTbl"></i>First Name</th>
-                                            <th scope="col" class="mngTbl"><i class="fa fa-fw fa-user mngTbl"></i>Last Name</th>
-                                            <th scope="col" class="mngTbl"><i class="fa fa-fw fa-envelope-o mngTbl" aria-hidden="true"></i>Email</th>
-                                            <th scope="col" class="mngTbl"><i class="fa fa-fw fa-user-plus mngTbl" aria-hidden="true"></i>User Type</th>
-                                            <th scope="col" class="mngTbl"><i class="fa fa-fw fa-pencil-square-o mngTbl"></i>Edit</th>
-                                            <th scope="col" class="mngTbl"><i class="fa fa-fw fa-check-square mngTbl"></i>Is Active</th>
-                                            <th scope="col" class="mngTbl"><i class="fa fa-fw fa-ban mngTbl" aria-hidden="true"></i>Suspend</th>
-                                            <th scope="col" class="mngTbl"><i class="fa fa-fw fa-check mngTbl" aria-hidden="true"></i>Activate</th>
+                                            <th scope="col"><i class="fa fa-fw fa-list-ol"></i>Index</th>
+                                            <th scope="col"><i class="fa fa-fw fa-user"></i>First Name</th>
+                                            <th scope="col"><i class="fa fa-fw fa-user"></i>Last Name</th>
+                                            <th scope="col"><i class="fa fa-fw fa-user"></i>Email</th>
+                                            <th scope="col"><i class="fa fa-fw fa-check-square"></i>User Type</th>
+                                            <th scope="col"><i class="fa fa-fw fa-pencil-square-o"></i>Edit</th>
+                                            <th scope="col"><i class="fa fa-fw fa-check-square"></i>Is Active</th>
+                                            <th scope="col"><i class="fa fa-fw fa-pencil-square-o"></i></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -103,6 +114,8 @@ https://templatemo.com/tm-569-edu-meeting
                                             <td th:text="${user.last_Name}"></td>
                                             <td th:text="${user.email}"></td>
                                             <td th:switch="${user.user_Type}">
+                                                <span th:case="'U'">User</span>
+                                                <span th:case="'A'">Admin</span>
                                             </td>
                                             <td><a class="btn btn-sm btn-warning btn-block text-uppercase"
                                                     th:href="@{'/edit_user_admin/' + ${user.user_Id}}">Edit</a></td>
@@ -124,10 +137,6 @@ https://templatemo.com/tm-569-edu-meeting
                             <span>No users found for the search criteria</span>
                         </div>
 
-                        <div class="addUser">
-                          <a class="btn btn-sm btn-primary my-2 text-uppercase "
-                              th:href="@{add_user_by_admin.html}">Add a Movie</a>
-                      </div>
 
                     </div>
 
