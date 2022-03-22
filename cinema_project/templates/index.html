@@ -39,23 +39,23 @@ https://templatemo.com/tm-569-edu-meeting
         <div class="col-12">
           <nav class="main-nav">
             <!-- ***** Logo Start ***** -->
-            <a href="index.html" class="logo">
+            <a href="{{url_for('index')}}" class="logo">
               Virtual Cinemas
             </a>
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->
             <ul class="nav">
               <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
-              <li><a href="promotions.html">Promotions</a></li>
+              <li><a href="{{url_for('promotions')}}">Promotions</a></li>
               <li class="has-sub">
                 <a href="javascript:void(0)">Pages</a>
                 <ul class="sub-menu">
-                  <li><a href="edit_profile.html">Edit Profile</a></li>
-                  <li><a href="movie_details.html">Movie Details</a></li>
+                  <li><a href="{{url_for('edit_profile')}}">Edit Profile</a></li>
+                  <li><a href="{{url_for('movie_details')}}">Movie Details</a></li>
                 </ul>
               </li>
-              <li><a href="register.html">Register</a></li>
-              <li><a href="login.html">Login</a></li>
+              <li><a href="{{url_for('register')}}">Register</a></li>
+              <li><a href="{{url_for('login')}}">Login</a></li>
             </ul>
             <a class='menu-trigger'>
               <span>Menu</span>
@@ -85,7 +85,7 @@ https://templatemo.com/tm-569-edu-meeting
                 looking to purchase tickets to your favorite movie, we ask that you register an account with us before
                 checking out. Happy browsing! </p>
               <div class="main-button-red">
-                <div><a href="register.html">Sign Up Now!</a></div>
+                <div><a href="{{url_for('register')}}">Sign Up Now!</a></div>
               </div>
             </div>
           </div>
@@ -171,7 +171,7 @@ https://templatemo.com/tm-569-edu-meeting
             <p>We value our members here at Virtual Cinemas, and we want to share the love! Take a look at our newest
               movie offers and promotions to see what gifts we have waiting...</p>
             <div class="main-button-red">
-              <a href="promotions.html">Claim</a>
+              <a href="{{url_for('promotions')}}">Claim</a>
             </div>
           </div>
         </div>
@@ -183,13 +183,13 @@ https://templatemo.com/tm-569-edu-meeting
                   <div class="price">
                     <span>$13.59</span>
                   </div>
-                  <a href="movie_details.html"><img src="assets/images/moonfall.jpg" alt="Moonfall"></a>
+                  <a href="{{url_for('movie_details')}}"><img src="assets/images/moonfall.jpg" alt="Moonfall"></a>
                 </div>
                 <div class="down-content">
                   <div class="date">
                     <h6>Nov <span>10</span></h6>
                   </div>
-                  <a href="movie_details.html">
+                  <a href="{{url_for('movie_details')}}">
                     <h4>Moonfall</h4>
                   </a>
                   <p>PG-13<br>2 HR 10 MIN</p>
@@ -202,7 +202,7 @@ https://templatemo.com/tm-569-edu-meeting
                   <div class="price">
                     <span>$13.59</span>
                   </div>
-                  <a href="movie_details.html"><img src="assets/images/ja_forever.jpeg" alt="Jackass Forever"></a>
+                  <a href="{{url_for('movie_details')}}"><img src="assets/images/ja_forever.jpeg" alt="Jackass Forever"></a>
                 </div>
                 <div class="down-content">
                   <div class="date">
@@ -221,13 +221,13 @@ https://templatemo.com/tm-569-edu-meeting
                   <div class="price">
                     <span>$13.59</span>
                   </div>
-                  <a href="movie_details.html"><img src="assets/images/marry_me.jpg" alt="Marry Me"></a>
+                  <a href="{{url_for('movie_details')}}"><img src="assets/images/marry_me.jpg" alt="Marry Me"></a>
                 </div>
                 <div class="down-content">
                   <div class="date">
                     <h6>Nov <span>26</span></h6>
                   </div>
-                  <a href="movie_details.html">
+                  <a href="{{url_for('movie_details')}}">
                     <h4>Marry Me</h4>
                   </a>
                   <p>PG-13<br>1 HR 52 MIN</p>
@@ -240,13 +240,13 @@ https://templatemo.com/tm-569-edu-meeting
                   <div class="price">
                     <span>$13.59</span>
                   </div>
-                  <a href="movie_details.html"><img src="assets/images/deathotn.jpg" alt="Death on the Nile"></a>
+                  <a href="{{url_for('movie_details')}}"><img src="assets/images/deathotn.jpg" alt="Death on the Nile"></a>
                 </div>
                 <div class="down-content">
                   <div class="date">
                     <h6>Nov <span>30</span></h6>
                   </div>
-                  <a href="movie_details.html">
+                  <a href="{{url_for('movie_details')}}">
                     <h4>Death on the Nile</h4>
                   </a>
                   <p>PG-13<br>2 HR 7 MIN</p>
