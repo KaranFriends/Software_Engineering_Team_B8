@@ -207,15 +207,6 @@ input:focus::-webkit-input-placeholder {
     color: white
 }
 
-alink {
-    color: black
-}
-
-ahover:hover {
-    color: black;
-    text-decoration: none
-}
-
 #code {
     background-image: linear-gradient(to left, rgba(255, 255, 255, 0.253), rgba(255, 255, 255, 0.185)), url("https://img.icons8.com/small/16/000000/long-arrow-right.png");
     background-repeat: no-repeat;
@@ -414,5 +405,11 @@ p.text span {
 .mngTbl {
   color: black;
 }
+
+.checkBox {
+  display:inline-flex;
+}
+
+
 
   
