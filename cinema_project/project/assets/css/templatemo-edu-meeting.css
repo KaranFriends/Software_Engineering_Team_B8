@@ -1117,6 +1117,27 @@ section.our-courses {
   padding-bottom: 130px;
 }
 
+section.our-passwords {
+  background-image: url(../images/apply-bg.jpg);
+  background-position: center center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-top: 140px;
+  padding-bottom: 130px;
+}
+
+section.our-passwords2 {
+  background-image: url(../images/facts-bg.jpg);
+  background-position: center center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-top: 140px;
+  padding-bottom: 130px;
+}
+
+
 .our-courses .item .down-content {
   background-color: #fff;
 }
