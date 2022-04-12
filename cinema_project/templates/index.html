@@ -12,14 +12,14 @@
   <title>Home Page</title>
 
   <!-- Bootstrap core CSS -->
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="static/css/bootstrap.min.css" rel="stylesheet">
 
 
   <!-- Additional CSS Files -->
-  <link rel="stylesheet" href="assets/css/fontawesome.css">
-  <link rel="stylesheet" href="assets/css/templatemo-edu-meeting.css">
-  <link rel="stylesheet" href="assets/css/owl.css">
-  <link rel="stylesheet" href="assets/css/lightbox.css">
+  <link rel="stylesheet" href="static/css/fontawesome.css">
+  <link rel="stylesheet" href="static/css/templatemo-edu-meeting.css">
+  <link rel="stylesheet" href="static/css/owl.css">
+  <link rel="stylesheet" href="static/css/lightbox.css">
   <!--
 
 TemplateMo 569 Edu Meeting
@@ -50,12 +50,18 @@ https://templatemo.com/tm-569-edu-meeting
               <li class="has-sub">
                 <a href="javascript:void(0)">Pages</a>
                 <ul class="sub-menu">
-                  <li><a href="{{url_for('edit_profile')}}">Edit Profile</a></li>
+                  {% if session['email'] or request.cookies.get('email')%}
+                    <li><a href="{{url_for('edit_profile')}}">Edit Profile</a></li>
+                  {% endif %}
                   <li><a href="{{url_for('movie_details')}}">Movie Details</a></li>
                 </ul>
               </li>
+              {% if not session['email']%}
               <li><a href="{{url_for('register')}}">Register</a></li>
               <li><a href="{{url_for('login')}}">Login</a></li>
+              {% else %}
+              <li><a href="{{url_for('logout')}}">Logout</a></li>    
+              {% endif %}
             </ul>
             <a class='menu-trigger'>
               <span>Menu</span>
@@ -71,7 +77,7 @@ https://templatemo.com/tm-569-edu-meeting
   <!-- ***** Main Banner Area Start ***** -->
   <section class="section main-banner" id="top" data-section="section1">
     <video autoplay muted loop id="bg-video">
-      <source src="assets/images/movie_reel.mp4" type="video/mp4" />
+      <source src="static/images/movie_reel.mp4" type="video/mp4" />
     </video>
 
     <div class="video-overlay header-text">
@@ -85,7 +91,9 @@ https://templatemo.com/tm-569-edu-meeting
                 looking to purchase tickets to your favorite movie, we ask that you register an account with us before
                 checking out. Happy browsing! </p>
               <div class="main-button-red">
+                {% if not session['email']%}
                 <div><a href="{{url_for('register')}}">Sign Up Now!</a></div>
+                  {% endif %}
               </div>
             </div>
           </div>
@@ -103,7 +111,7 @@ https://templatemo.com/tm-569-edu-meeting
 
             <div class="item">
               <div class="icon">
-                <img src="assets/images/service-icon-01.png" alt="">
+                <img src="static/images/service-icon-01.png" alt="">
               </div>
               <div class="down-content">
                 <h4>Best Education</h4>
@@ -113,7 +121,7 @@ https://templatemo.com/tm-569-edu-meeting
 
             <div class="item">
               <div class="icon">
-                <img src="assets/images/service-icon-02.png" alt="">
+                <img src="static/images/service-icon-02.png" alt="">
               </div>
               <div class="down-content">
                 <h4>Best Teachers</h4>
@@ -123,7 +131,7 @@ https://templatemo.com/tm-569-edu-meeting
 
             <div class="item">
               <div class="icon">
-                <img src="assets/images/service-icon-03.png" alt="">
+                <img src="static/images/service-icon-03.png" alt="">
               </div>
               <div class="down-content">
                 <h4>Best Students</h4>
@@ -133,7 +141,7 @@ https://templatemo.com/tm-569-edu-meeting
 
             <div class="item">
               <div class="icon">
-                <img src="assets/images/service-icon-02.png" alt="">
+                <img src="static/images/service-icon-02.png" alt="">
               </div>
               <div class="down-content">
                 <h4>Online Movie</h4>
@@ -143,7 +151,7 @@ https://templatemo.com/tm-569-edu-meeting
 
             <div class="item">
               <div class="icon">
-                <img src="assets/images/service-icon-03.png" alt="">
+                <img src="static/images/service-icon-03.png" alt="">
               </div>
               <div class="down-content">
                 <h4>Best Networking</h4>
@@ -183,7 +191,7 @@ https://templatemo.com/tm-569-edu-meeting
                   <div class="price">
                     <span>$13.59</span>
                   </div>
-                  <a href="{{url_for('movie_details')}}"><img src="assets/images/moonfall.jpg" alt="Moonfall"></a>
+                  <a href="{{url_for('movie_details')}}"><img src="static/images/moonfall.jpg" alt="Moonfall"></a>
                 </div>
                 <div class="down-content">
                   <div class="date">
@@ -202,7 +210,7 @@ https://templatemo.com/tm-569-edu-meeting
                   <div class="price">
                     <span>$13.59</span>
                   </div>
-                  <a href="{{url_for('movie_details')}}"><img src="assets/images/ja_forever.jpeg" alt="Jackass Forever"></a>
+                  <a href="{{url_for('movie_details')}}"><img src="static/images/ja_forever.jpeg" alt="Jackass Forever"></a>
                 </div>
                 <div class="down-content">
                   <div class="date">
@@ -221,7 +229,7 @@ https://templatemo.com/tm-569-edu-meeting
                   <div class="price">
                     <span>$13.59</span>
                   </div>
-                  <a href="{{url_for('movie_details')}}"><img src="assets/images/marry_me.jpg" alt="Marry Me"></a>
+                  <a href="{{url_for('movie_details')}}"><img src="static/images/marry_me.jpg" alt="Marry Me"></a>
                 </div>
                 <div class="down-content">
                   <div class="date">
@@ -240,7 +248,7 @@ https://templatemo.com/tm-569-edu-meeting
                   <div class="price">
                     <span>$13.59</span>
                   </div>
-                  <a href="{{url_for('movie_details')}}"><img src="assets/images/deathotn.jpg" alt="Death on the Nile"></a>
+                  <a href="{{url_for('movie_details')}}"><img src="static/images/deathotn.jpg" alt="Death on the Nile"></a>
                 </div>
                 <div class="down-content">
                   <div class="date">
@@ -355,7 +363,7 @@ https://templatemo.com/tm-569-edu-meeting
         <div class="col-lg-12">
           <div class="owl-courses-item owl-carousel">
             <div class="item">
-              <img src="assets/images/dcleague.jpg" alt="Course One">
+              <img src="static/images/dcleague.jpg" alt="Course One">
               <div class="down-content">
                 <h4>DC League of Super-Pets</h4>
                 <div class="info">
@@ -377,7 +385,7 @@ https://templatemo.com/tm-569-edu-meeting
               </div>
             </div>
             <div class="item">
-              <img src="assets/images/bobsburger.png" alt="Course Two">
+              <img src="static/images/bobsburger.png" alt="Course Two">
               <div class="down-content">
                 <h4>The Bob's Burgers Movie</h4>
                 <div class="info">
@@ -398,7 +406,7 @@ https://templatemo.com/tm-569-edu-meeting
             </div>
           
             <div class="item">
-              <img src="assets/images/JurassicWorldDominion.jpg" alt="">
+              <img src="static/images/JurassicWorldDominion.jpg" alt="">
               <div class="down-content">
                 <h4>Jurassic World Dominion</h4>
                 <div class="info">
@@ -420,7 +428,7 @@ https://templatemo.com/tm-569-edu-meeting
               </div>
             </div>
             <div class="item">
-              <img src="assets/images/lightyear3.jpg" alt="">
+              <img src="static/images/lightyear3.jpg" alt="">
               <div class="down-content">
                 <h4>Lightyear</h4>
                 <div class="info">
@@ -442,7 +450,7 @@ https://templatemo.com/tm-569-edu-meeting
               </div>
             </div>
             <div class="item">
-              <img src="assets/images/minions2.jpg" alt="">
+              <img src="static/images/minions2.jpg" alt="">
               <div class="down-content">
                 <h4>Minions: The Rise of Gru</h4>
                 <div class="info">
@@ -464,7 +472,7 @@ https://templatemo.com/tm-569-edu-meeting
               </div>
             </div>
             <div class="item">
-              <img src="assets/images/thor-love-thunder-3.jpg" alt="">
+              <img src="static/images/thor-love-thunder-3.jpg" alt="">
               <div class="down-content">
                 <h4>Thor: Love and Thunder</h4>
                 <div class="info">
@@ -486,7 +494,7 @@ https://templatemo.com/tm-569-edu-meeting
               </div>
             </div>
             <div class="item">
-              <img src="assets/images/fantastic.jpg" alt="">
+              <img src="static/images/fantastic.jpg" alt="">
               <div class="down-content">
                 <h4>Fantastic Beasts: The Secrets of Dumbledore</h4>
                 <div class="info">
@@ -508,7 +516,7 @@ https://templatemo.com/tm-569-edu-meeting
               </div>
             </div>
             <div class="item">
-              <img src="assets/images/nope.jpg" alt="">
+              <img src="static/images/nope.jpg" alt="">
               <div class="down-content">
                 <h4>Nope</h4>
                 <div class="info">
@@ -530,7 +538,7 @@ https://templatemo.com/tm-569-edu-meeting
               </div>
             </div>
             <div class="item">
-              <img src="assets/images/blackadam2.jpg" alt="">
+              <img src="static/images/blackadam2.jpg" alt="">
               <div class="down-content">
                 <h4>Black Adam</h4>
                 <div class="info">
@@ -552,7 +560,7 @@ https://templatemo.com/tm-569-edu-meeting
               </div>
             </div>
             <div class="item">
-              <img src="assets/images/spiderman.jpg" alt="">
+              <img src="static/images/spiderman.jpg" alt="">
               <div class="down-content">
                 <h4>Spider-Man: Across the Spider-Verse (Part One)</h4>
                 <div class="info">
@@ -574,7 +582,7 @@ https://templatemo.com/tm-569-edu-meeting
               </div>
             </div>
             <div class="item">
-              <img src="assets/images/halloween.jpg" alt="">
+              <img src="static/images/halloween.jpg" alt="">
               <div class="down-content">
                 <h4>Halloween Ends</h4>
                 <div class="info">
@@ -596,7 +604,7 @@ https://templatemo.com/tm-569-edu-meeting
               </div>
             </div>
             <div class="item">
-              <img src="assets/images/aquaman.jpg" alt="">
+              <img src="static/images/aquaman.jpg" alt="">
               <div class="down-content">
                 <h4>Aquaman and the Lost Kingdom</h4>
                 <div class="info">
@@ -666,7 +674,7 @@ https://templatemo.com/tm-569-edu-meeting
         </div>
         <div class="col-lg-6 align-self-center">
           <div class="video">
-            <a href="suprise.html" target="_blank"><img src="assets/images/play-icon.png"
+            <a href="{{url_for('suprise')}}" target="_blank"><img src="static/images/play-icon.png"
                 alt=""></a>
           </div>
         </div>
@@ -679,13 +687,13 @@ https://templatemo.com/tm-569-edu-meeting
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <script src="assets/js/isotope.min.js"></script>
-    <script src="assets/js/owl-carousel.js"></script>
-    <script src="assets/js/lightbox.js"></script>
-    <script src="assets/js/tabs.js"></script>
-    <script src="assets/js/video.js"></script>
-    <script src="assets/js/slick-slider.js"></script>
-    <script src="assets/js/custom.js"></script>
+    <script src="static/js/isotope.min.js"></script>
+    <script src="static/js/owl-carousel.js"></script>
+    <script src="static/js/lightbox.js"></script>
+    <script src="static/js/tabs.js"></script>
+    <script src="static/js/video.js"></script>
+    <script src="static/js/slick-slider.js"></script>
+    <script src="static/js/custom.js"></script>
     <script>
       //according to loftblog tut
       $('.nav li:first').addClass('active');
