@@ -8,7 +8,7 @@ from flask_bcrypt import bcrypt
 
 app = Flask(__name__)
 db = SQLAlchemy(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'st
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
