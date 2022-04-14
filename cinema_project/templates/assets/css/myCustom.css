@@ -416,6 +416,19 @@ p.text span {
   padding: 10px 10px;
 }
 
+.categories input[type=text] {
+  float: right;
+  padding: 6px;
+  border: none;
+  size: 5px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  margin-right: 16px;
+  margin-left: 16px;
+  font-size: 15px;
+}
+
+
 
 
   
