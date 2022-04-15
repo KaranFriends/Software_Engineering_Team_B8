@@ -43,9 +43,7 @@ def create_tables():
 # def load_user(user_id):
 #     return User.query.get(int(user_id))
 
-@app.route('/')
 @app.route('/index')
-@app.route('/home')
 def index():
     if session['email']:
         if User.query.filter_by(email = session['email']).first().user_type == 1:
