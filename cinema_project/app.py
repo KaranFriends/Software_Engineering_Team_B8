@@ -1,14 +1,8 @@
 from distutils.log import error
-from http import cookies
-from tkinter import Checkbutton
 from wsgiref.validate import validator
 from flask import Flask, flash, g, make_response, redirect, render_template, url_for, request, session
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin, login_required, LoginManager, login_user, logout_user, current_user
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, validators, EmailField, IntegerField
-from wtforms.validators import InputRequired, Length, ValidationError
-from wtforms.fields import DateField
+from flask_login import login_required, login_user, logout_user, current_user
 from graphviz import render
 from flask_bcrypt import Bcrypt
 from datetime import datetime, timedelta
@@ -43,9 +37,7 @@ def create_tables():
 # def load_user(user_id):
 #     return User.query.get(int(user_id))
 
-@app.route('/')
 @app.route('/index')
-@app.route('/home')
 def index():
     if session['email']:
         if User.query.filter_by(email = session['email']).first().user_type == 1:
