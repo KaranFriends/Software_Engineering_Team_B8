@@ -8,7 +8,7 @@ from flask_bcrypt import Bcrypt
 from datetime import datetime, timedelta
 import emailService
 import random
-from model.model import User, Card
+from model.model import User, Card, Ticket, Review, Movie, MovieCategory, Show, Showroom, Booking, TicketBooking, TicketPrice, Img
 from model.LoginForm import LoginForm
 from model.RegistrationForm import RegistrationForm
 from model.UserEditForm import UserEditForm

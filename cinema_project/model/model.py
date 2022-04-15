@@ -20,6 +20,8 @@ class User(db.Model, UserMixin):
     cards = db.relationship('Card', backref='user', lazy=True)
     promotions = db.Column(db.String(1))
     user_type = db.Column(db.Integer, nullable=False)
+    reviews = db.relationship('Review', backref='user', lazy=True)
+    bookings = db.relationship('Booking', backref='user', lazy=True)
 
 class Card(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
@@ -27,8 +29,10 @@ class Card(db.Model, UserMixin):
     cardName = db.Column(db.String(15), nullable=False)
     cvv = db.Column(db.String(3), nullable=False)
     expirationDate = db.Column(db.String(8), nullable=False)
+    bookings = db.relationship('Booking', backref='card', lazy=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),
         nullable=False)
+
 
 #also change id name??????
 class Ticket(db.Model, UserMixin):
@@ -36,12 +40,13 @@ class Ticket(db.Model, UserMixin):
         ticket_category_id=db.Column(db.Integer, nullable=False)
         ticket_category_quantity=db.Column(db.Integer, default=0, nullable=False)
         seat_no=db.Column(db.Integer, nullable=False)
+        ticketBookings = db.relationship('TicketBooking', backref='ticket', lazy=True)
 
 class Review(db.Model, UserMixin):
         id = db.Column(db.Integer, primary_key=True, nullable=False)
         review_comment = db.Column(db.String(12), nullable=False)
-        review_rating = db.Column(db.String(12), nullable=False)  #int(1)
-        user_ID=db.Column(db.String(12), db.ForeignKey("User.id"), nullable=False) #int(1)
+        review_rating = db.Column(db.Integer, nullable=False)
+        user_ID=db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 
 #not finished
 class Movie(db.Model, UserMixin):
@@ -49,47 +54,53 @@ class Movie(db.Model, UserMixin):
         movie_title = db.Column(db.String(12), nullable=False) #char(50)
         movie_director_name = db.Column(db.String(12), nullable=False) #char(50)
         movie_cast_name = db.Column(db.String(12), nullable=False) #char(50)
-        movie_producer_name = db.Column(db.String(12), nullable=False) #char(50)
-        movie_synopsis = db.Column(db.String(12), nullable=False) #char(10)
-        movie_status = db.Column(db.String(12), nullable=False) #int(1)
-        movie_trailer = db.Column(db.String(12), nullable=False) #int(100)
-        movie_picture = db.Column(db.String(12), nullable=False) #int(100)
-        movie_video = db.Column(db.String(12), nullable=False) #int(100)
-        category_id = db.Column(db.Integer, db.ForeignKey("MovieCategory.id"), nullable=False)
+        movie_producer_name = db.Column(db.String(12), nullable=False)
+        movie_synopsis = db.Column(db.String(12), nullable=False)
+        movie_status = db.Column(db.Integer, nullable=False) 
+        movie_trailer = db.Column(db.Integer, nullable=False) 
+        movie_picture = db.Column(db.Integer, nullable=False)
+        movie_video = db.Column(db.Integer, nullable=False) 
+        category_id = db.Column(db.Integer, db.ForeignKey("movieCategory.id"), nullable=False)
+        shows = db.relationship('Show', backref='movie', lazy=True)
 
 #not finished
 class MovieCategory(db.Model, UserMixin):
         id = db.Column(db.Integer, primary_key=True, nullable=False)
-        category_name = db.Column(db.String(12), nullable=False) #char(10)
+        category_name = db.Column(db.String(12), nullable=False)
+        movies = db.relationship('Movie', backref='movieCategory', lazy=True)
 
 #not finished
 class Show(db.Model, UserMixin):
         id = db.Column(db.Integer, primary_key=True, nullable=False)
         show_date = db.Column(db.Date, nullable=False)
         show_time = db.Column(db.Time, nullable=False)
-        movie_id = db.Column(db.Integer, db.ForeignKey("Movie.id"), nullable=False)
-        showroom_id = db.Column(db.Integer, db.ForeignKey("Showroom.id"), nullable=False)
-        vacant_seats = db.Column(db.ARRAY[db.Integer], nullable=False)
+        movie_id = db.Column(db.Integer, db.ForeignKey("movie.id"), nullable=False)
+        showroom_id = db.Column(db.Integer, db.ForeignKey("showroom.id"), nullable=False)
+        vacant_seats = db.Column(db.ARRAY(db.Integer, as_tuple=False, dimensions=None, zero_indexes=False), nullable=False)
+        shows = db.relationship('Show', backref='show', lazy=True)
+        bookings = db.relationship('Booking', backref='show', lazy=True)
 
 #not finished
 class Showroom(db.Model, UserMixin):
         id = db.Column(db.Integer, primary_key=True, nullable=False)
         total_seats = db.Column(db.Integer, nullable=False)
+        shows = db.relationship('Show', backref='showroom', lazy=True)
 
 
 class Booking(db.Model, UserMixin):
         id = db.Column(db.Integer, primary_key=True, nullable=False)
-        user_id = db.Column(db.Integer, db.ForeignKey("User.id"), nullable=False)
-        show_id = db.Column(db.Integer, db.ForeignKey("Show.id"), nullable=False)
-        card_id = db.Column(db.Integer, db.ForeignKey("Card.id"), nullable=False)
+        user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+        show_id = db.Column(db.Integer, db.ForeignKey("show.id"), nullable=False)
+        card_id = db.Column(db.Integer, db.ForeignKey("card.id"), nullable=False)
         booking_date = db.Column(db.Date, nullable=False)
         booking_time = db.Column(db.Time, nullable=False)
         booking_price = db.Column(db.Integer, nullable=False)
+        ticketBookings = db.relationship('TicketBooking', backref='booking', lazy=True)
 
 
 class TicketBooking(db.Model, UserMixin):
-        booking_id = db.Column(db.Integer, db.ForeignKey("Booking.id"), nullable=False)
-        ticket_id = db.Column(db.Integer, db.ForeignKey("Ticket.id"), nullable=False)
+        booking_id = db.Column(db.Integer, db.ForeignKey("booking.id"), nullable=False)
+        ticket_id = db.Column(db.Integer, db.ForeignKey("ticket.id"), nullable=False)
 
 
 class TicketPrice(db.Model, UserMixin):
