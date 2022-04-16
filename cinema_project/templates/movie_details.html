@@ -191,6 +191,25 @@ https://templatemo.com/tm-569-edu-meeting
     }
 
 
+
+
+    //hide image div on click & video overlay
+    function clickFunction() {
+      var x = document.getElementById("movieImage");
+      var y = document.getElementById("playVideo");
+      var $video = $('#video');
+      src = $video.attr('src');
+      if (x.style.display === "none") {
+        x.style.display = "block";
+        y.style.display = "none";
+      } else {
+        x.style.display = "none";
+        y.style.display = "block";
+        $video.attr('src', src + '?autoplay=1');
+      }
+    }
+
+
     var showSection = function showSection(section, isAnimate) {
       var
         direction = section.replace(/#/, ''),
