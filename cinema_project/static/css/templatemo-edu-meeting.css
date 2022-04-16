@@ -1830,3 +1830,13 @@ responsive
   }
 
 }
+
+.roundTop{
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+}
+
+.loginMargin{
+  margin-right: 1px; 
+  margin-left: 1px;
+}
