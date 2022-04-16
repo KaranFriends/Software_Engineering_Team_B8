@@ -38,6 +38,8 @@ def create_tables():
     db.create_all()
 
 
+
+
 class User(db.Model, UserMixin):
      id = db.Column(db.Integer, primary_key=True, nullable=False) #note: in sqlite, primary key column is not nullable by default
      email = db.Column(db.String(30), nullable=False)
@@ -110,24 +112,18 @@ class Show(db.Model, UserMixin):
          movie_id = db.Column(db.Integer, db.ForeignKey("movie.id"), nullable=False)
          showroom_id = db.Column(db.Integer, db.ForeignKey("showroom.id"), nullable=False)
          bookings = db.relationship('Booking', backref='show', lazy=True)
-         seatAvail= db.relationship('Seatavail', backref='show', lazy=True)
+         seatAvail= db.relationship('Seat', backref='show', lazy=True)
 
 
 class Showroom(db.Model, UserMixin):
          id = db.Column(db.Integer, primary_key=True, nullable=False)
          total_seats = db.Column(db.Integer, nullable=False)
          shows = db.relationship('Show', backref='showroom', lazy=True)
-         seats=db.relationship('Seat', backref='showroom', lazy=True)
 
 class Seat(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    seatAvail=db.relationship('Seatavail', backref='seat', lazy=True)
-
-class Seatavail(db.Model, UserMixin):
-    id=db.Column(db.Integer, primary_key=True, nullable=False)
     show_ID=db.Column(db.Integer, db.ForeignKey('show.id'), nullable=False)
-    seat_ID= db.Column(db.Integer, db.ForeignKey('seat.id'), nullable=False)
-    available=db.Column(db.Integer, nullable=False) #0 for false, 1 for true, sqlite does not have boolean data type
+    seatNumber=db.Column(db.Integer, nullable=False)
 
 
 class Booking(db.Model, UserMixin):
@@ -137,7 +133,6 @@ class Booking(db.Model, UserMixin):
          card_id = db.Column(db.Integer, db.ForeignKey("card.id"), nullable=False)
          booking_date = db.Column(db.Date, nullable=False)
          booking_time = db.Column(db.Time, nullable=False)
-         booking_price = db.Column(db.Integer, nullable=False)
          ticketBookings = db.relationship('TicketBooking', backref='booking', lazy=True)
 
 
@@ -145,6 +140,7 @@ class TicketBooking(db.Model, UserMixin):
          id = db.Column(db.Integer, primary_key=True, nullable=False)
          booking_id = db.Column(db.Integer, db.ForeignKey("booking.id"), nullable=False)
          ticket_id = db.Column(db.Integer, db.ForeignKey("ticket.id"), nullable=False)
+         booking_price = db.Column(db.Integer, nullable=False)
 
 
 class TicketPrice(db.Model, UserMixin):
