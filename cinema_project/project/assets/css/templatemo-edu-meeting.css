@@ -186,7 +186,9 @@ body {
 
 .main-button-yellow a:hover {
   opacity: 0.9;
+  cursor: pointer;
 }
+
 
 .section-heading h2 {
   line-height: 40px;
@@ -1861,4 +1863,8 @@ responsive
     color: #1f272b;
   }
 
+}
+
+#playVideo{
+  display: none;
 }
