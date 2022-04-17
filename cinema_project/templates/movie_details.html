@@ -78,8 +78,7 @@ https://templatemo.com/tm-569-edu-meeting
         <div class="col-lg-12">
           <div class="row">
             <div class="col-lg-12">
-
-              <div class="meeting-item ">
+              <div class="meeting-single-item">
                 <div class="thumb">
                   <div id="movieImage">
                     <a href="movie_details.html"><img src="assets/images/moonfall.jpg" alt=""></a>
@@ -91,54 +90,45 @@ https://templatemo.com/tm-569-edu-meeting
                   </div>
                 </div>
                 <div class="down-content">
-                  <div class="col-lg-6" style="float: left;">
-                    <h4>Moonfall</h4>
+                  <div class="col-lg-12">
+                    <h4>Moonfall</h4>&nbsp;&nbsp;&nbsp;
 
-                    <div class="smallButton">
+                    <div class="smallButton" style="margin-left: 40px;">
                       <a onclick="clickFunction()">Show/Hide Trailer</a>
-                    </div> <br>
-                    <div class="wideSpace">
-                      <p><b>Duration: &nbsp;&nbsp;&nbsp;</b>2 HR 10 MIN</p>
-                      <p><b>Genres: &nbsp;&nbsp;&nbsp;</b> Action, Adventure, Sci-Fi</p>
-                      <p><b>Rating: &nbsp;&nbsp;&nbsp;</b>PG-13</p>
-                      <p><b>Release Date: &nbsp;&nbsp;&nbsp;</b> February 4, 2022</p>
-                    </div>
-                    <p><b>Synopsis:</b></p><br>
-                    <p class="description" style="margin-left: 80px; margin-right: 80px;">
-                      In Moonfall, a mysterious force knocks the Moon from its orbit around Earth and sends it hurtling
-                      on
-                      a collision course with life as we know it. With mere weeks before impact and the world on the
-                      brink
-                      of annihilation, NASA executive and former astronaut Jo Fowler (Academy Award winner Halle Berry)
-                      is
-                      convinced she has the key to saving us all - but only one astronaut from her past...
+                    </div> <br><br>
 
-                      <br>
-                    </p>
+                      <button class="accordionNew">Basic Info</button>
+                      <div class="panelNew" style="max-height: max-content;"><br>
+                        <p><b>Duration: &nbsp;&nbsp;&nbsp;</b>2 HR 10 MIN</p>
+                        <p><b>Genres: &nbsp;&nbsp;&nbsp;</b> Action, Adventure, Sci-Fi</p>
+                        <p><b>Rating: &nbsp;&nbsp;&nbsp;</b>PG-13</p>
+                        <p><b>Release Date: &nbsp;&nbsp;&nbsp;</b> February 4, 2022</p>
+                        <br></div>
+
+                      <button class="accordionNew" >Synopsis</button>
+                      <div class="panelNew" ><br>
+                        <p style="margin-left: 80px; margin-right: 80px;">
+                          In Moonfall, a mysterious force knocks the Moon from its orbit around Earth and sends it
+                          hurtling
+                          on
+                          a collision course with life as we know it. With mere weeks before impact and the world on the
+                          brink
+                          of annihilation, NASA executive and former astronaut Jo Fowler (Academy Award winner Halle
+                          Berry)
+                          is
+                          convinced she has the key to saving us all - but only one astronaut from her past...
+
+                          <br>
+                        </p><br>
+                        <br></div>
+                      <button class="accordionNew">Cast Info</button>
+                      <div class="panelNew"><br>
+                        <p><b>Director: &nbsp;&nbsp;&nbsp;</b>Roland Emmerich</p>
+                        <p><b>Producer: &nbsp;&nbsp;&nbsp;</b>Roland Emmerich, Harald Kloser</p>
+                        <p><b>Cast: &nbsp;&nbsp;&nbsp;</b>Halle Berry, Patrick Wilson, John Bradley, Michael Peña,
+                          Charlie Plummer, Kelly Yu, Donald Sutherland</p>
+                          <br></div>
                   </div><br>
-                  <div class="col-lg-6" style="float: right;">
-                    <div class="section-heading">
-                      <h3>Order Tickets</h3><br>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="hours">
-                        <h5>Times</h5><br>
-                        <p style="float: left;">Monday: 11:00 AM</p>
-                        <div class="row" style="float: right;">
-                          <div class="main-button-yellow">
-                            <a href="seat_selection.html">Book</a>
-                          </div><br>
-                        </div>
-                        <br><br><br>
-                        <p style="float: left;">Saturday: 09:00 PM</p>
-                        <div class="row" style="float: right;">
-                          <div class="main-button-yellow">
-                            <a href="seat_selection.html">Book</a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -148,34 +138,98 @@ https://templatemo.com/tm-569-edu-meeting
     </div>
   </section>
 
-
-  <section class="our-courses" id="courses">
+  <section class="meetings-page" id="meetings">
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
           <div class="row">
             <div class="col-lg-12">
-              <div class="thumb">
-
+              <div class="filters">
+                <ul>
+                  <li data-filter="*" class="active">All Showings</li>
+                  <li data-filter=".current">Afternoon</li>
+                  <li data-filter=".soon">Evening</li>
+                </ul>
               </div>
-              <div class="meeting-item">
-                <div class="down-content">
-
-                  <div class="col-lg-12">
-                    <div class="main-button-red">
-                      <a href="index.html">Back To Home Screen</a>
+            </div>
+            <div class="col-lg-12">
+              <div class="row grid">
+                <div class="col-lg-4 templatemo-item-col all current">
+                  <div class="meeting-item">
+                    <div class="thumb">
+                      <div class="price">
+                        <span>3:15pm</span>
+                      </div>
+                      <a href="meeting-details.html"><img src="assets/images/movie.jpg" alt=""></a>
+                    </div>
+                    <div class="down-content">
+                      <div class="date">
+                        <h6>Nov <span>12</span></h6>
+                      </div>
+                      <div class="col-lg-12">
+                        <div class="main-button-blue">
+                          <a href="index.html">Apply at Checkout</a>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
+                <div class="col-lg-4 templatemo-item-col all current">
+                  <div class="meeting-item">
+                    <div class="thumb">
+                      <div class="price">
+                        <span>4:20pm</span>
+                      </div>
+                      <a href="meeting-details.html"><img src="assets/images/movie.jpg" alt=""></a>
+                    </div>
+                    <div class="down-content">
+                      <div class="date">
+                        <h6>Nov <span>14</span></h6>
+                      </div>
+                      <div class="col-lg-12">
+                        <div class="main-button-blue">
+                          <a href="index.html">Apply at Checkout</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 templatemo-item-col all soon">
+                  <div class="meeting-item">
+                    <div class="thumb">
+                      <div class="price">
+                        <span>7:35pm</span>
+                      </div>
+                      <a href="meeting-details.html"><img src="assets/images/movie.jpg" alt=""></a>
+                    </div>
+                    <div class="down-content">
+                      <div class="date">
+                        <h6>Nov <span>16</span></h6>
+                      </div>
+                      <div class="col-lg-12">
+                        <div class="main-button-blue">
+                          <a href="index.html">Apply at Checkout</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <div class="pagination">
+                <ul>
+                  <li><a href="#">1</a></li>
+                  <li class="active"><a href="#">2</a></li>
+                  <li><a href="#">3</a></li>
+                  <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+                </ul>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-
-
     <div class="footer">
       <p>Copyright © 2022 Virtual Cinemas., Ltd. All Rights Reserved.
         <br>
@@ -200,25 +254,21 @@ https://templatemo.com/tm-569-edu-meeting
     //according to loftblog tut
     $('.nav li:first').addClass('active');
 
+    //accordion 
+    var acc = document.getElementsByClassName("accordionNew");
+    var i;
 
-    //hide image div on click & video overlay
-    function clickFunction() {
-      var x = document.getElementById("movieImage");
-      var y = document.getElementById("playVideo");
-      var $video = $('#video');
-      src = $video.attr('src');
-      if (x.style.display === "none") {
-        x.style.display = "block";
-        y.style.display = "none";
-      } else {
-        x.style.display = "none";
-        y.style.display = "block";
-        $video.attr('src', src + '?autoplay=1');
-      }
-    }
-
-
-
+    for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight) {
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  });
+}
 
     //hide image div on click & video overlay
     function clickFunction() {

@@ -184,16 +184,16 @@ body {
 }
 
 .smallButton {
-  font-size: 12px;
+  font-size: 10px;
   color: #fff;
-  background-color: #4d71d3c6;
-  padding: 10px 26px;
+  background-color: #a12c2f;
+  padding: 8px 24px;
   display: inline-block;
   border-radius: 20px;
   font-weight: 460;
   text-transform: uppercase;
   transition: all .3s;
-  float: right;
+  float: inline-end;
 }
 
 .smallButton a:hover {
@@ -1117,7 +1117,7 @@ section.apply-now .item p {
   transition: transform 200ms ease-in-out;
 }
 .accordion-head.is-open {
-  color: #f5a425;
+  color: #a12c2f;
   border-bottom: none;
 }
 .accordion-head.is-open .icon {
@@ -1903,4 +1903,46 @@ responsive
 .wideSpace{
   
   line-height: 200%;
+}
+
+
+
+/* Style the buttons that are used to open and close the accordion panel */
+.accordionNew {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  transition: 0.4s;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.accordionNew:hover, .accordionNew:active {
+  background-color: #ccc;
+}
+
+.accordionNew:after {
+  content: '\002B';
+  color: #777;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+
+.accordionNew:active::after {
+  content: "\2796"; /* Unicode character for "minus" sign (-) */
+}
+
+/* Style the accordion panel. Note: hidden by default */
+.panelNew {
+  padding: 0 18px;
+  background-color: white;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
 }
