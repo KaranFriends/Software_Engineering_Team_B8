@@ -213,11 +213,57 @@ def logout():
 
 @app.route('/movie_details')
 def movie_details():
-    return render_template('movie_details.html')
+    return render_template('movieDetails.html')
 
-@app.route('/admin_portal3')
+@app.route('/admin_portal')
 def admin_portal3():
-    return render_template('admin_portal3.html')
+    return render_template('adminPortal.html')
+
+@app.route('/edit_payment_details')
+def edit_Payment():
+    return render_template('editPaymentDetails.html')
+
+@app.route('/view_payment_details')
+def view_Payment():
+    return render_template('viewPaymentDetails.html')
+
+@app.route('/forgot_password')
+def forgot_Password():
+    return render_template('forgotPassword.html')
+
+@app.route('/reset_password')
+def reset_Password():
+    return render_template('resetPassword.html')
+
+
+@app.route('/manage_users')
+def manage_Users():
+    return render_template('manageUsers.html')
+
+@app.route('/manage_movies')
+def manage_Movies():
+    return render_template('manageMovies.html')
+
+@app.route('/manage_promotions')
+def manage_Promotions():
+    return render_template('managePromotions.html')
+
+@app.route('/seat_selection')
+def seat_Selection():
+    return render_template('seatSelection.html')
+
+@app.route('/payment')
+def payment():
+    return render_template('payment.html')
+
+@app.route('/checkout')
+def checkout():
+    return render_template('checkout.html')
+
+@app.route('/confirmation')
+def confirmation():
+    return render_template('confirmation.html')
+
 
 @app.route('/promotions')
 def promotions():
@@ -256,7 +302,7 @@ def edit_profile():
                 # db.session.add(card)
                 db.session.commit()
                 flash('Profile has been updated')
-                return render_template('edit_profile.html',form=form)
+                return render_template('editProfile.html',form=form)
         user = User.query.filter_by(email = session['email']).first()
         # card = Card.query.filter_by(user_id = user.id).first()
         form = UserEditForm()
@@ -275,7 +321,7 @@ def edit_profile():
             # form.cvv.data = card.cvv
             # form.expirationDate.data = datetime.strptime(str(card.expirationDate), '%Y-%m-%d')
             
-            return render_template('edit_profile.html',form=form, promo=user.promotions)
+            return render_template('editProfile.html',form=form, promo=user.promotions)
         else:
             flash('Admin cannot access that page')
             return render_template('login.html', form = LoginForm())
