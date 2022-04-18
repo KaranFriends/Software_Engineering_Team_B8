@@ -43,7 +43,7 @@ https://templatemo.com/tm-569-edu-meeting
         <div class="col-12">
           <nav class="main-nav">
             <!-- ***** Logo Start ***** -->
-            <a href="index.html" class="logo">
+            <a href="{{url_for('index')}}" class="logo">
               Virtual Cinemas
             </a>
             <!-- ***** Logo End ***** -->
@@ -92,7 +92,7 @@ https://templatemo.com/tm-569-edu-meeting
                     <a href="movie_details.html"><img src="../static/images/moonfall.jpg" alt=""></a>
                   </div>
                   <div id="playVideo">
-                    <iframe id="video" width="1118" height="615" src="https://www.youtube.com/embed/ivIwdQBlS10" rel="0"
+                    <iframe id="video" width="1250" height="615" src="https://www.youtube.com/embed/ivIwdQBlS10" rel="0"
                       enablejsapi="1" modestbranding="0" controls="0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; 
                           gyroscope; picture-in-picture" allowfullscreen></iframe>
                   </div>
@@ -102,7 +102,7 @@ https://templatemo.com/tm-569-edu-meeting
                     <h4>Moonfall</h4>&nbsp;&nbsp;&nbsp;
 
                     <div class="smallButton" style="margin-left: 40px;">
-                      <a onclick="clickFunction()">Show/Hide Trailer</a>
+                      <a style="color: white;" onclick="clickFunction()">Show/Hide Trailer</a>
                     </div> <br><br>
 
                       <button class="accordionNew">Basic Info</button>
@@ -171,7 +171,7 @@ https://templatemo.com/tm-569-edu-meeting
                       <div class="price">
                         <span>3:15pm</span>
                       </div>
-                      <a href="meeting-details.html"><img src="../static/images/movie.jpg" alt=""></a>
+                      <a href="{{url_for('seat_Selection')}}"><img src="../static/images/movie.jpg" alt=""></a>
                     </div>
                     <div class="down-content">
                       <div class="date">
@@ -179,7 +179,7 @@ https://templatemo.com/tm-569-edu-meeting
                       </div>
                       <div class="col-lg-12">
                         <div class="main-button-yellow">
-                          <a href="seat_selection.html">Book Now</a>
+                          <a href="{{url_for('seat_Selection')}}">Book Now</a>
                         </div>
                       </div>
                     </div>
@@ -191,7 +191,7 @@ https://templatemo.com/tm-569-edu-meeting
                       <div class="price">
                         <span>4:20pm</span>
                       </div>
-                      <a href="meeting-details.html"><img src="../static/images/movie.jpg" alt=""></a>
+                      <a href="{{url_for('seat_Selection')}}"><img src="../static/images/movie.jpg" alt=""></a>
                     </div>
                     <div class="down-content">
                       <div class="date">
@@ -199,7 +199,7 @@ https://templatemo.com/tm-569-edu-meeting
                       </div>
                       <div class="col-lg-12">
                         <div class="main-button-yellow">
-                          <a href="seat_selection.html">Book Now</a>
+                          <a href="{{url_for('seat_Selection')}}">Book Now</a>
                         </div>
                       </div>
                     </div>
@@ -212,7 +212,7 @@ https://templatemo.com/tm-569-edu-meeting
                       <div class="price">
                         <span>7:35pm</span>
                       </div>
-                      <a href="meeting-details.html"><img src="../static/images/movie.jpg" alt=""></a>
+                      <a href="{{url_for('seat_Selection')}}"><img src="../static/images/movie.jpg" alt=""></a>
                     </div>
                     <div class="down-content">
                       <div class="date">
@@ -220,7 +220,7 @@ https://templatemo.com/tm-569-edu-meeting
                       </div>
                       <div class="col-lg-12">
                         <div class="main-button-yellow">
-                          <a href="seat_selection.html">Book Now</a>
+                          <a href="{{url_for('seat_Selection')}}">Book Now</a>
                         </div>
                       </div>
                     </div>
