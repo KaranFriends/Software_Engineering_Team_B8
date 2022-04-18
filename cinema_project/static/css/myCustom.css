@@ -466,6 +466,11 @@ margin-left: 16px;
 font-size: 15px;
 }
 
-
+.extraSpace{
+  margin-left: 40px;
+  margin-right: 40px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
 
 
