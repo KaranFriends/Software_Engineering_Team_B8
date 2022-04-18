@@ -8,7 +8,6 @@ from flask_bcrypt import Bcrypt
 from datetime import datetime, timedelta
 import emailService
 import random
-from model.model import User
 #from model.model import User, Card #Ticket, Review, Movie, MovieCategory, Show, Showroom, Booking, TicketBooking, TicketPrice, Img
 from model.LoginForm import LoginForm
 from model.RegistrationForm import RegistrationForm
@@ -42,13 +41,13 @@ def create_tables():
 
 class User(db.Model, UserMixin):
      id = db.Column(db.Integer, primary_key=True, nullable=False) #note: in sqlite, primary key column is not nullable by default
-     email = db.Column(db.String(30), nullable=False)
+     email = db.Column(db.String(30), nullable=False, unique=True) #no multiple accounts for the same email
      password = db.Column(db.String(80), nullable=False)
      first_name = db.Column(db.String(10), nullable=False)
      last_name = db.Column(db.String(10), nullable=False)
      dob = db.Column(db.String(8), nullable=False)
      addressline1 = db.Column(db.String(20), nullable=False)
-     addressline2 = db.Column(db.String(20), nullable=False)
+     addressline2 = db.Column(db.String(20), nullable=True) #this should be optional
      city = db.Column(db.String(8), nullable=False)
      state = db.Column(db.String(8), nullable=False)
      zip = db.Column(db.String(8), nullable=False)
@@ -85,24 +84,27 @@ class Review(db.Model, UserMixin):
 
 class Movie(db.Model, UserMixin):
           id = db.Column(db.Integer, primary_key=True, nullable=False)
-          movie_title = db.Column(db.String(12), nullable=False) #char(50)
-          movie_director_name = db.Column(db.String(12), nullable=False) #char(50)
-          movie_cast_name = db.Column(db.String(12), nullable=False) #char(50)
+          movie_title = db.Column(db.String(12), nullable=False, unique=True) #the same movie should not appear twice
+          movie_director_name = db.Column(db.String(12), nullable=False)
+          movie_cast_name = db.Column(db.String(12), nullable=False)
           movie_producer_name = db.Column(db.String(12), nullable=False)
           movie_synopsis = db.Column(db.String(12), nullable=False)
-          movie_status = db.Column(db.Integer, nullable=False) 
-          movie_trailer = db.Column(db.Integer, nullable=False) 
-          movie_picture = db.Column(db.Integer, nullable=False)
-          movie_video = db.Column(db.Integer, nullable=False) 
-          category_ID=db.Column(db.Integer, db.ForeignKey('moviecategory.id'), nullable=False)
+          movie_rating = db.Column(db.String(12), nullable=False) #changed to movie rating and is string type
+          #movie_trailer = db.Column(db.String(50), nullable=False) #changed to string to contain url
+          movie_picture = db.Column(db.String(50), nullable=False) #changed to string for now to contain link to image
+          movie_video = db.Column(db.String(50), nullable=False) #changed to string to contain url
+          #category_ID=db.Column(db.Integer, db.ForeignKey('moviecategory.id'), nullable=False)
+          movie_duration=db.Column(db.Time, nullable=False)
           shows = db.relationship('Show', backref='movie', lazy=True)
+          moviesorted = db.relationship('Moviecategory', backref='movie', lazy=True)
 
 
 
 class Moviecategory(db.Model, UserMixin):
          id = db.Column(db.Integer, primary_key=True, nullable=False)
          category_name = db.Column(db.String(12), nullable=False)
-         movies = db.relationship('Movie', backref='moviecategory', lazy=True)
+         movie_ID=db.Column(db.Integer, db.ForeignKey('movie.id'), nullable=False)
+
 
 
 class Show(db.Model, UserMixin):
@@ -155,9 +157,6 @@ class Img(db.Model, UserMixin):
           img=db.Column(db.Text, unique=True, nullable=False)
           name=db.Column(db.String(12), nullable=False )
           mimeType=db.Column(db.String(20), nullable=False)
-
-
-
 
 
 
