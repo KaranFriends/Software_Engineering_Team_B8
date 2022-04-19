@@ -511,3 +511,17 @@ font-size: 15px;
  left: 50%;
 right: 50%;
 }
+
+.grid-container2 {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  background-color:rgba(237, 236, 234, 0.474);
+  padding: 10px;
+}
+.grid-item2 {
+  background-color:rgba(220, 217, 211, 0.63);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  font-size: 20px;
+  text-align: center;
+}

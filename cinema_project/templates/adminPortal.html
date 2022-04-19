@@ -63,40 +63,41 @@ https://templatemo.com/tm-569-edu-meeting
 
     <section class="meetings-page" id="meetings">
         <div class="container">
-            <div class="row">
+            <div class="row center-screen">
                 <div class="col-lg-12">
                     <div class="container">
                         <div class="row text-center">
                             <div class="card-deck mt-2">
                                 <div class=" p-4 m-4">
-                                    <div class="card ">
+                                    <div class="card centeredNew">
                                         <div class="text-center">
                                             <br>
                                             <h2>Admin Portal</h2><br>
                                         </div>
                                         <br><br>
-                                        <table>
-                                            <tr>
-                                                <th>Manage Movies</th>
-                                                <th>Manage Users</th>
-                                                <th>Manage Promotions</th>
-                                            </tr>
-                                            <tr>
-                                                <td><a href="{{url_for('manage_movies')}}"><img
-                                                            src="../static/images/managemovie.png" alt="Movies"><b>Edit
-                                                            Movies</b></a></td>
-                                                <td><a href="{{url_for('manage_users')}}"><img
-                                                            src="../static/images/manageUser.png" alt="Users"><b>Edit
-                                                            Users</b></a></td>
-                                                <td><a href="{{url_for('manage_promotions')}}"><img
-                                                            src="../static/images/managePromo.png"
-                                                            alt="Promotions"><b>Edit Promotions</b></a></td>
-                                                <td><a href="{{url_for('manage_show')}}"><img
-                                                    src="../static/images/managePromo.png"
-                                                    alt="Show"><b>Edit Show</b></a></td>
-                                            </tr>
-                                        </table>
-                                        <br><br>
+                                        <div class="grid-container2">
+                                            
+                                            <div class="grid-item2">
+                                                <a href="{{url_for('manage_movies')}}"><img
+                                                        src="../static/images/managemovie.png" alt="Movies"><b>Edit
+                                                        Movies</b></a>
+                                            </div>
+                                            <div class="grid-item2">
+                                                <a href="{{url_for('manage_users')}}"><img
+                                                        src="../static/images/manageUser.png" alt="Users"><b>Edit
+                                                        Users</b></a>
+                                            </div>
+                                            <div class="grid-item2">
+                                                <a href="{{url_for('manage_promotions')}}"><img
+                                                        src="../static/images/managePromo.png" alt="Promotions"><b>Edit
+                                                        Promotions</b></a>
+                                            </div>
+                                            <div class="grid-item2">
+                                                <a href="{{url_for('manage_show')}}"><img
+                                                        src="../static/images/managePromo.png" alt="Show"><b>Edit
+                                                        Show</b></a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
