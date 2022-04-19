@@ -215,6 +215,10 @@ def logout():
 def movie_details():
     return render_template('movieDetails.html')
 
+@app.route('/promotions')
+def view_promotions():
+    return render_template('promotions.html')
+
 @app.route('/admin_portal')
 def admin_portal3():
     return render_template('adminPortal.html')
