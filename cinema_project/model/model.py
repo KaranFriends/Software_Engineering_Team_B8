@@ -55,19 +55,20 @@ class Movie(db.Model, UserMixin):
           movie_cast_name = db.Column(db.String(12), nullable=False) #char(50)
           movie_producer_name = db.Column(db.String(12), nullable=False)
           movie_synopsis = db.Column(db.String(12), nullable=False)
-          movie_status = db.Column(db.Integer, nullable=False) 
-          movie_trailer = db.Column(db.Integer, nullable=False) 
-          movie_picture = db.Column(db.Integer, nullable=False)
-          movie_video = db.Column(db.Integer, nullable=False) 
-          category_ID=db.Column(db.Integer, db.ForeignKey('moviecategory.id'), nullable=False)
+          movie_rating = db.Column(db.String(12), nullable=False) #changed to movie rating and is string type
+          #movie_trailer = db.Column(db.String(50), nullable=False) #changed to string to contain url
+          movie_picture = db.Column(db.String(50), nullable=False) #changed to string for now to contain link to image
+          movie_video = db.Column(db.String(50), nullable=False) #changed to string to contain url
+          #category_ID=db.Column(db.Integer, db.ForeignKey('moviecategory.id'), nullable=False)
           shows = db.relationship('Show', backref='movie', lazy=True)
+          moviesorted = db.relationship('Moviecategory', backref='movie', lazy=True)
 
 
 
 class Moviecategory(db.Model, UserMixin):
          id = db.Column(db.Integer, primary_key=True, nullable=False)
          category_name = db.Column(db.String(12), nullable=False)
-         movies = db.relationship('Movie', backref='moviecategory', lazy=True)
+         movie_ID=db.Column(db.Integer, db.ForeignKey('movie.id'), nullable=False)
 
 
 class Show(db.Model, UserMixin):

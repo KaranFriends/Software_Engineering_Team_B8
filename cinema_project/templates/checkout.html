@@ -16,12 +16,11 @@
 
 
   <!-- Additional CSS Files -->
-  <link rel="stylesheet" href="assets/css/fontawesome.css">
-  <link rel="stylesheet" href="assets/css/templatemo-edu-meeting.css">
-  <link rel="stylesheet" href="assets/css/owl.css">
-  <link rel="stylesheet" href="assets/css/lightbox.css">
-
-  <link rel="stylesheet" href="assets/css/myCustom.css">
+  <link rel="stylesheet" href="../static/css/fontawesome.css">
+  <link rel="stylesheet" href="../static/css/templatemo-edu-meeting.css">
+  <link rel="stylesheet" href="../static/css/owl.css">
+  <link rel="stylesheet" href="../static/css/lightbox.css">
+  <link rel="stylesheet" href="../static/css/myCustom.css">
   <!--
 
 TemplateMo 569 Edu Meeting
@@ -42,23 +41,31 @@ https://templatemo.com/tm-569-edu-meeting
         <div class="col-12">
           <nav class="main-nav">
             <!-- ***** Logo Start ***** -->
-            <a href="index.html" class="logo">
+            <a href="{{url_for('index')}}" class="logo">
               Virtual Cinemas
             </a>
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->
             <ul class="nav">
-              <li><a href="index.html">Home</a></li>
-              <li><a href="promotions.html">Promotions</a></li>
+              <li class="scroll-to-section">
+                <a href="{{url_for('index')}}" class="active">Home</a>
+              </li>
+              <li><a href="{{url_for('promotions')}}">Promotions</a></li>
               <li class="has-sub">
-                <a href="javascript:void(0)" class="active">Pages</a>
+                <a href="javascript:void(0)">Pages</a>
                 <ul class="sub-menu">
-                  <li><a href="meetings.html">Movie Meetings</a></li>
-                  <li><a href="movie_details.html">Movie Details</a></li>
+                  {% if session['email'] or request.cookies.get('email')%}
+                  <li><a href="{{url_for('edit_profile')}}">Edit Profile</a></li>
+                  {% endif %}
+                  <li><a href="{{url_for('view_Payment')}}">Edit Payment Details</a></li>
                 </ul>
               </li>
-              <li><a href="register.html">Register</a></li>
-              <li><a href="login.html">Login</a></li>
+              {% if not session['email']%}
+              <li><a href="{{url_for('register')}}">Register</a></li>
+              <li><a href="{{url_for('login')}}">Login</a></li>
+              {% else %}
+              <li><a href="{{url_for('logout')}}">Logout</a></li>
+              {% endif %}
             </ul>
             <a class='menu-trigger'>
               <span>Menu</span>
@@ -96,116 +103,6 @@ https://templatemo.com/tm-569-edu-meeting
                 </form>
 
 
-                <!-- <form id="contact" action="" method="post">
-                  <div class="row">
-                    <div class=" card cart">
-                      <fieldset>
-
-
-                        <div class="control-group">
-                          <p style="text-align:left">Card Holder's Name</p>
-                          <div class="controls">
-                            <input type="text" id="username" name="username" placeholder="" class="input-xlarge">
-                          </div>
-                        </div>
-
-                        <div class="control-group">
-                          <p style="text-align:left">Card Number</p>
-                          <div class="controls">
-                            <input type="text" id="email" name="email" placeholder="" class="input-xlarge">
-                          </div>
-                        </div>
-
-
-                        <div class="control-group">
-                          <p style="text-align:left">CVV</p>
-                          <div class="controls">
-                            <input type="password" id="password_confirm" name="password_confirm" placeholder=""
-                              class="span2">
-                          </div>
-                        </div>
-
-                        <div class="control-group">
-                          <p>Expiration Date</p>
-                          <div class="controls">
-                            <select class="span3" name="expiry_month" id="expiry_month">
-                              <option></option>
-                              <option value="01">Jan (01)</option>
-                              <option value="02">Feb (02)</option>
-                              <option value="03">Mar (03)</option>
-                              <option value="04">Apr (04)</option>
-                              <option value="05">May (05)</option>
-                              <option value="06">June (06)</option>
-                              <option value="07">July (07)</option>
-                              <option value="08">Aug (08)</option>
-                              <option value="09">Sep (09)</option>
-                              <option value="10">Oct (10)</option>1
-                              <option value="11">Nov (11)</option>
-                              <option value="12">Dec (12)</option>
-                            </select>
-                            <select class="span2" name="expiry_year">
-                              <option value="13">2013</option>
-                              <option value="14">2014</option>
-                              <option value="15">2015</option>
-                              <option value="16">2016</option>
-                              <option value="17">2017</option>
-                              <option value="18">2018</option>
-                              <option value="19">2019</option>
-                              <option value="20">2020</option>
-                              <option value="21">2021</option>
-                              <option value="22">2022</option>
-                              <option value="23">2023</option>
-                            </select>
-                          </div>
-                        </div>
-                      </fieldset>
-                    </div>
-                  </div>
-                  <div class="col-lg-12">
-                    <fieldset>
-                      <br><button type="submit" id="form-submit" class="button">Submit</button>
-                    </fieldset>
-                  </div>
-                </form> -->
-
-
-                <div class="container-fluid  ">
-                  <div class="row d-flex justify-content-center">
-                    <div class="col-sm-12">
-                      <div class="card mx-auto">
-                        <form class="card-details myImage ">
-
-                          <div class="form-group mb-0">
-                            <p class="mb-0" style="color:rgba(26, 26, 32, 0.678);">Card Number</p> <input type="text" name="card-num"
-                              placeholder="1234 5678 9012 3457" size="17" id="cno" minlength="19" maxlength="19">
-                          </div>
-                          <div class="form-group">
-                            <p class="mb-0" style="color:rgba(26, 26, 32, 0.678);">Cardholder's Name</p> <input type="text" name="name"
-                              placeholder="Name" size="17">
-                          </div>
-                          <div class="form-group pt-2">
-                            <div class="row d-flex">
-                              <div class="col-sm-4">
-                                <p class=" mb-0" style="color:rgba(26, 26, 32, 0.678);">Expiration</p> <input type="text" name="exp"
-                                  placeholder="MM/YYYY" size="7" id="exp" minlength="7" maxlength="7">
-                              </div>
-                              <div class="col-sm-3">
-                                <p class=" mb-0" style="color:rgba(26, 26, 32, 0.678);">Cvv</p> <input type="password" name="cvv"
-                                  placeholder="&#9679;&#9679;&#9679;" size="1" minlength="3" maxlength="3">
-                              </div>
-
-                            </div><br><br>
-                            <div class="main-button-yellow">
-                              <a href="">Add Payment</a>
-                            </div>
-
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
 
               </div>
               <div class="col-md-4 summary " style="border-left: 1px solid rgba(0,0,0,.1); padding: 2em;">
@@ -225,12 +122,13 @@ https://templatemo.com/tm-569-edu-meeting
                 <div class="row">
                   <div class="col" style="padding-left:0;">TOTAL PRICE</div>
                   <div class="col text-right">&dollar; 52.77</div>
-                  <div class="main-button-red">
-                    <a href="payment.html">Back to Cart</a>
+                  <br><div class="main-button-red centeredNew">
+                    <a href="{{url_for('confirmation')}}">Confirm Purchase</a>
+                  </div><br><br><br><br>
+                  <div class="main-button-yellow centeredNew">
+                    <a href="{{url_for('payment')}}">Back to Cart</a>
                   </div><br>
-                  <div class="main-button-red">
-                    <a href="confirmation.html">Confirm Purchase</a>
-                  </div><br>
+                 
                 </div>
               </div>
             </div>
@@ -238,20 +136,6 @@ https://templatemo.com/tm-569-edu-meeting
         </div>
       </div>
     </div><br>
-    <!-- Change the `data-field` of buttons and `name` of input field's for multiple plus minus buttons
-    <div class="input-group plus-minus-input ">
-      <div class="input-group-button">
-        <button type="button" class="button hollow circle" data-quantity="minus" data-field="quantity">
-          <i class="fa fa-minus" aria-hidden="true"></i>
-        </button>
-      </div>
-      <input class="input-group-field" type="number" name="quantity" value="0">
-      <div class="input-group-button">
-        <button type="button" class="button hollow circle" data-quantity="plus" data-field="quantity">
-          <i class="fa fa-plus" aria-hidden="true"></i>
-        </button>
-      </div>
-    </div> -->
     <div class="footer">
       <p>Copyright © 2022 Virtual Cinemas., Ltd. All Rights Reserved.
         <br>
@@ -265,13 +149,13 @@ https://templatemo.com/tm-569-edu-meeting
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-  <script src="assets/js/isotope.min.js"></script>
-  <script src="assets/js/owl-carousel.js"></script>
-  <script src="assets/js/lightbox.js"></script>
-  <script src="assets/js/tabs.js"></script>
-  <script src="assets/js/video.js"></script>
-  <script src="assets/js/slick-slider.js"></script>
-  <script src="assets/js/examp.js"></script>
+  <script src="../static/js/isotope.min.js"></script>
+  <script src="../static/js/owl-carousel.js"></script>
+  <script src="../static/js/lightbox.js"></script>
+  <script src="../static/js/tabs.js"></script>
+  <script src="../static/js/video.js"></script>
+  <script src="../static/js/slick-slider.js"></script>
+  <script src="../static/js/examp.js"></script>
   <script>
     //according to loftblog tut
     $('.nav li:first').addClass('active');

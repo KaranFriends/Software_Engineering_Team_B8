@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="Template Mo">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+
+  <title>View Payment Methods</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+
+  <!-- Additional CSS Files -->
+  <link rel="stylesheet" href="../static/css/fontawesome.css">
+  <link rel="stylesheet" href="../static/css/templatemo-edu-meeting.css">
+  <link rel="stylesheet" href="../static/css/owl.css">
+  <link rel="stylesheet" href="../static/css/lightbox.css">
+  <link rel="stylesheet" href="../static/css/myCustom.css">
+
+
+  <!--
+
+TemplateMo 569 Edu Meeting
+
+https://templatemo.com/tm-569-edu-meeting
+
+-->
+</head>
+
+<body>
+
+
+
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <nav class="main-nav">
+            <!-- ***** Logo Start ***** -->
+            <a href="{{url_for('index')}}" class="logo">
+              Virtual Cinemas
+            </a>
+            <!-- ***** Logo End ***** -->
+            <!-- ***** Menu Start ***** -->
+            <ul class="nav">
+              <li><a href="{{url_for('index')}}">Home</a></li>
+              <li><a href="{{url_for('promotions')}}">Promotions</a></li>
+              <li class="has-sub">
+                <a href="javascript:void(0)">Pages</a>
+                <ul class="sub-menu">
+                  <li><a href="{{url_for('edit_profile')}}">Edit Profile</a></li>
+                  <!-- <li><a href="{{url_for('view_Payment')}}">Edit Payment Details</a></li> -->
+                </ul>
+              </li>
+              <!-- <li><a href="register.html" class="active">Register</a></li> -->
+              <li><a href="{{url_for('logout')}}">Logout</a></li>
+            </ul>
+            <a class='menu-trigger'>
+              <span>Menu</span>
+            </a>
+            <!-- ***** Menu End ***** -->
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
+
+
+  <section class="meetings-page" id="meetings">
+    <div class="container">
+      <div class="row center-screen">
+        <div class="col-lg-12">
+          <div class="row center-screen">
+            <div class="card2" style="background-color:rgba(220, 217, 211, 0.338);">
+              <div class="meeting-single-item">
+                <div class="thumb">
+                  <section class="contact-us" id="contact">
+                    <h2>Wallet</h2><br><br>
+                    <div class="container">
+                      <div class="row">
+                        <div class="align-self-center">
+                          <div class="row">
+                            <div class="col-lg-6 mb-lg-4">
+                              <div class="card creditCard">
+                                <br>
+                                <div class="number"> <label class="fw-bold" for="">**** **** **** 1234</label> </div>
+                                <div class="d-flex align-items-center justify-content-between"> <small><span
+                                      class="fw-bold">Expiry date: </span><span>MM/YY</span></small> <small><span
+                                      class="fw-bold">Name: </span><span>Kumar</span></small><br><br><br> </div>
+                                <div class="main-button-yellow">
+                                  <a href="{{url_for('edit_Payment')}}">Edit Card</a>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-6 mb-lg-4">
+                              <div class="card creditCard">
+                                <br>
+                                <div class="number"> <label class="fw-bold" for="">**** **** **** 5678</label> </div>
+                                <div class="d-flex align-items-center justify-content-between"> <small><span
+                                      class="fw-bold">Expiry date: </span><span>MM/YY</span></small> <small><span
+                                      class="fw-bold">Name: </span><span>Kumar</span></small><br><br><br> </div>
+                                <div class="main-button-yellow">
+                                  <a href="{{url_for('edit_Payment')}}">Edit Card</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </div><br>
+              <div class="col-lg-12">
+                <div class="main-button-blue">
+                  <a href="{{url_for('edit_Payment')}}">Add a Card</a>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="main-button-red">
+                  <a href="{{url_for('index')}}">Back To Home Screen</a>
+                </div>
+              </div><br><br>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <div class="footer">
+        <p>Copyright © 2022 Virtual Cinemas., Ltd. All Rights Reserved.
+          <br>
+        </p>
+      </div>
+  </section>
+
+
+
+
+  <!-- Scripts -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <script src="../static/js/isotope.min.js"></script>
+  <script src="../static/js/owl-carousel.js"></script>
+  <script src="../static/js/lightbox.js"></script>
+  <script src="../static/js/tabs.js"></script>
+  <script src="../static/js/video.js"></script>
+  <script src="../static/js/slick-slider.js"></script>
+  <script src="../static/js/custom.js"></script>
+  <script>
+    //according to loftblog tut
+    $('.nav li:first').addClass('active');
+
+    var showSection = function showSection(section, isAnimate) {
+      var
+        direction = section.replace(/#/, ''),
+        reqSection = $('.section').filter('[data-section="' + direction + '"]'),
+        reqSectionPos = reqSection.offset().top - 0;
+
+      if (isAnimate) {
+        $('body, html').animate({
+          scrollTop: reqSectionPos
+        },
+          800);
+      } else {
+        $('body, html').scrollTop(reqSectionPos);
+      }
+
+    };
+
+    var checkSection = function checkSection() {
+      $('.section').each(function () {
+        var
+          $this = $(this),
+          topEdge = $this.offset().top - 80,
+          bottomEdge = topEdge + $this.height(),
+          wScroll = $(window).scrollTop();
+        if (topEdge < wScroll && bottomEdge > wScroll) {
+          var
+            currentId = $this.data('section'),
+            reqLink = $('a').filter('[href*=\\#' + currentId + ']');
+          reqLink.closest('li').addClass('active').
+            siblings().removeClass('active');
+        }
+      });
+    };
+
+    $('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function (e) {
+      e.preventDefault();
+      showSection($(this).attr('href'), true);
+    });
+
+    $(window).scroll(function () {
+      checkSection();
+    });
+  </script>
+</body>
+
+
+</body>
+
+</html>

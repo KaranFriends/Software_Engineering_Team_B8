@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="static/css/templatemo-edu-meeting.css">
   <link rel="stylesheet" href="static/css/owl.css">
   <link rel="stylesheet" href="static/css/lightbox.css">
+  <link rel="stylesheet" href="static/css/myCustom.css">
   <!--
 
 TemplateMo 569 Edu Meeting
@@ -39,28 +40,29 @@ https://templatemo.com/tm-569-edu-meeting
           <nav class="main-nav">
             <!-- ***** Logo Start ***** -->
             <a href="{{url_for('index')}}" class="logo">
-              Virtual Cinemas 
+              Virtual Cinemas
             </a>
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->
             <ul class="nav">
               <li class="scroll-to-section">
-                <a href="{{url_for('index')}}" class="active">Home</a></li>
+                <a href="{{url_for('index')}}" class="active">Home</a>
+              </li>
               <li><a href="{{url_for('promotions')}}">Promotions</a></li>
               <li class="has-sub">
                 <a href="javascript:void(0)">Pages</a>
                 <ul class="sub-menu">
                   {% if session['email'] or request.cookies.get('email')%}
-                    <li><a href="{{url_for('edit_profile')}}">Edit Profile</a></li>
+                  <li><a href="{{url_for('edit_profile')}}">Edit Profile</a></li>
                   {% endif %}
-                  <li><a href="{{url_for('movie_details')}}">Movie Details</a></li>
+                  <li><a href="{{url_for('view_Payment')}}">Edit Payment Details</a></li>
                 </ul>
               </li>
               {% if not session['email']%}
               <li><a href="{{url_for('register')}}">Register</a></li>
               <li><a href="{{url_for('login')}}">Login</a></li>
               {% else %}
-              <li><a href="{{url_for('logout')}}">Logout</a></li>    
+              <li><a href="{{url_for('logout')}}">Logout</a></li>
               {% endif %}
             </ul>
             <a class='menu-trigger'>
@@ -93,7 +95,7 @@ https://templatemo.com/tm-569-edu-meeting
               <div class="main-button-red">
                 {% if not session['email']%}
                 <div><a href="{{url_for('register')}}">Sign Up Now!</a></div>
-                  {% endif %}
+                {% endif %}
               </div>
             </div>
           </div>
@@ -105,57 +107,53 @@ https://templatemo.com/tm-569-edu-meeting
 
   <section class="services">
     <div class="container">
+      <h2 class="centeredNew" style="color: white;">Now Showing</h2><br><br><br>
       <div class="row">
         <div class="col-lg-12">
+
           <div class="owl-service-item owl-carousel">
-
-            <div class="item">
+            <div class="item" style="background-image: url(../static/images/moonfall.jpg);">
               <div class="icon">
-                <img src="static/images/service-icon-01.png" alt="">
+                <a href="{{url_for('movie_details')}}"><img src="../static/images/play-icon.png" alt=""></a>
               </div>
               <div class="down-content">
-                <h4>Best Education</h4>
-                <p>Suspendisse tempor mauris a sem elementum bibendum. Praesent facilisis massa non vestibulum.</p>
+                <br><br><br>
               </div>
             </div>
 
-            <div class="item">
+            <div class="item" style="background-image: url(../static/images/JackassForever.jpeg);">
               <div class="icon">
-                <img src="static/images/service-icon-02.png" alt="">
+                <a href="{{url_for('movie_details')}}"><img src="../static/images/play-icon.png" alt=""></a>
               </div>
               <div class="down-content">
-                <h4>Best Teachers</h4>
-                <p>Suspendisse tempor mauris a sem elementum bibendum. Praesent facilisis massa non vestibulum.</p>
+                <br><br><br>
               </div>
             </div>
 
-            <div class="item">
+            <div class="item" style="background-image: url(../static/images/MarryMe.jpg);">
               <div class="icon">
-                <img src="static/images/service-icon-03.png" alt="">
+                <a href="{{url_for('movie_details')}}"><img src="../static/images/play-icon.png" alt=""></a>
               </div>
               <div class="down-content">
-                <h4>Best Students</h4>
-                <p>Suspendisse tempor mauris a sem elementum bibendum. Praesent facilisis massa non vestibulum.</p>
+                <br><br><br>
               </div>
             </div>
 
-            <div class="item">
+            <div class="item" style="background-image: url(../static/images/DeathOnTheNile.jpg);">
               <div class="icon">
-                <img src="static/images/service-icon-02.png" alt="">
+                <a href="{{url_for('movie_details')}}"><img src="../static/images/play-icon.png" alt=""></a>
               </div>
               <div class="down-content">
-                <h4>Online Movie</h4>
-                <p>Suspendisse tempor mauris a sem elementum bibendum. Praesent facilisis massa non vestibulum.</p>
+                <br><br><br>
               </div>
             </div>
 
-            <div class="item">
+            <div class="item" style="background-image: url(../static/images/FantasticBeasts.jpg);">
               <div class="icon">
-                <img src="static/images/service-icon-03.png" alt="">
+                <a href="{{url_for('movie_details')}}"><img src="../static/images/play-icon.png" alt=""></a>
               </div>
               <div class="down-content">
-                <h4>Best Networking</h4>
-                <p>Suspendisse tempor mauris a sem elementum bibendum. Praesent facilisis massa non vestibulum.</p>
+                <br><br><br>
               </div>
             </div>
 
@@ -163,133 +161,14 @@ https://templatemo.com/tm-569-edu-meeting
         </div>
       </div>
     </div>
-  </section>
-
-  <section class="upcoming-meetings" id="meetings">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="section-heading">
-            <h2>Now Showing</h2>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="categories">
-            <h4>Special Offers</h4>
-            <p>We value our members here at Virtual Cinemas, and we want to share the love! Take a look at our newest
-              movie offers and promotions to see what gifts we have waiting...</p>
-            <div class="main-button-red">
-              <a href="{{url_for('promotions')}}">Claim</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-8">
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="meeting-item">
-                <div class="thumb">
-                  <div class="price">
-                    <span>$13.59</span>
-                  </div>
-                  <a href="{{url_for('movie_details')}}"><img src="../static/images/Moonfall.jpg" alt="Moonfall"></a>
-                </div>
-                <div class="down-content">
-                  <div class="date">
-                    <h6>Nov <span>10</span></h6>
-                  </div>
-                  <a href="{{url_for('movie_details')}}">
-                    <h4>Moonfall</h4>
-                  </a>
-                  <p>PG-13<br>2 HR 10 MIN</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="meeting-item">
-                <div class="thumb">
-                  <div class="price">
-                    <span>$13.59</span>
-                  </div>
-                  <a href="{{url_for('movie_details')}}"><img src="../static/images/JackassForever.jpeg" alt="Jackass Forever"></a>
-                </div>
-                <div class="down-content">
-                  <div class="date">
-                    <h6>Nov <span>24</span></h6>
-                  </div>
-                  <a href="movie_details.html">
-                    <h4>Jackass Forever</h4>
-                  </a>
-                  <p>R<br>1 HR 36 MIN</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="meeting-item">
-                <div class="thumb">
-                  <div class="price">
-                    <span>$13.59</span>
-                  </div>
-                  <a href="{{url_for('movie_details')}}"><img src="../static/images/MarryMe.jpg" alt="Marry Me"></a>
-                </div>
-                <div class="down-content">
-                  <div class="date">
-                    <h6>Nov <span>26</span></h6>
-                  </div>
-                  <a href="{{url_for('movie_details')}}">
-                    <h4>Marry Me</h4>
-                  </a>
-                  <p>PG-13<br>1 HR 52 MIN</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="meeting-item">
-                <div class="thumb">
-                  <div class="price">
-                    <span>$13.59</span>
-                  </div>
-                  <a href="{{url_for('movie_details')}}"><img src="../static/images/DeathOnTheNile.jpg" alt="Death on the Nile"></a>
-                </div>
-                <div class="down-content">
-                  <div class="date">
-                    <h6>Nov <span>30</span></h6>
-                  </div>
-                  <a href="{{url_for('movie_details')}}">
-                    <h4>Death on the Nile</h4>
-                  </a>
-                  <p>PG-13<br>2 HR 7 MIN</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  </section><br><br><br>
 
   <section class="apply-now" id="apply">
     <div class="container">
       <div class="row">
         <div class="col-lg-6 align-self-center">
           <div class="row">
-            <div class="col-lg-12">
-              <div class="item">
-                <h3>APPLY FOR MOVIE</h3>
-                <p>Movies are so much fun to watch and that's why we make money. We sell you movies and you watch them in our buildings!</p>
-                <div class="main-button-red">
-                  <div class="scroll-to-section"><a href="#contact">Sign Up Now!</a></div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-12">
-              <div class="item">
-                <h3>APPLY FOR BETTER MOVIE</h3>
-                <p>We have some good movies, some great movies, and some better movies; which one will you choose? Great news, they all cost the same, so your pockets will not judge!</p>
-                <div class="main-button-yellow">
-                  <div class="scroll-to-section"><a href="#contact">Sign Up Now!</a></div>
-                </div>
-              </div>
-            </div>
+            <br><br><br>
           </div>
         </div>
         <div class="col-lg-6">
@@ -303,7 +182,8 @@ https://templatemo.com/tm-569-edu-meeting
               </div>
               <div class="accordion-body">
                 <div class="content">
-                  <p>Don't settle for the low quality, iPhone camera footage you can find on 123M*vies, we've got huge speakers and screens to curate a completely immersive viewing experience.</p>
+                  <p>Don't settle for the low quality, iPhone camera footage you can find on 123M*vies, we've got huge
+                    speakers and screens to curate a completely immersive viewing experience.</p>
                 </div>
               </div>
             </article>
@@ -329,7 +209,8 @@ https://templatemo.com/tm-569-edu-meeting
               </div>
               <div class="accordion-body">
                 <div class="content">
-                  <p>Unfortunately, we do have many more ads than your traditional movie pirating site, but you can always come in late to miss the nuissance altogether.</p>
+                  <p>Unfortunately, we do have many more ads than your traditional movie pirating site, but you can
+                    always come in late to miss the nuissance altogether.</p>
                 </div>
               </div>
             </article>
@@ -342,7 +223,9 @@ https://templatemo.com/tm-569-edu-meeting
               </div>
               <div class="accordion-body">
                 <div class="content">
-                  <p>Lastly, we'd appreciate it if you left us a friendly review on our socials! To ensure we recieve an adequate number of responses, you will be held back after the movie to submit a quick review, as well as a movie summary to prove you're an acturate source. </p>
+                  <p>Lastly, we'd appreciate it if you left us a friendly review on our socials! To ensure we recieve an
+                    adequate number of responses, you will be held back after the movie to submit a quick review, as
+                    well as a movie summary to prove you're an acturate source. </p>
                 </div>
               </div>
             </article>
@@ -356,13 +239,145 @@ https://templatemo.com/tm-569-edu-meeting
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
-          <div class="section-heading">
-            <h2>Upcoming Movies</h2>
+          <div class="section-heading centeredNew">
+            <h2>All Movies</h2><br><br><br>
           </div>
-        </div>
+        </div><br><br><br><br><br><br>
+        <div class="col-lg-12 card centeredNew">
+          <div class="categories">
+            <div class="row" style="float: right;">
+              <div class="row-cols-lg-1">
+                <h3>Search</h3><br>
+                <input type="text" placeholder="Search.."><br><br><br>
+              </div>
+
+            </div>
+            <div class="row" style="float: left;">
+              <h3>Filters</h3><br><br><br>
+              <div class="filters">
+                <ul>
+                  <li data-filter="*" class="active">All Movies</li>
+                  <li data-filter=".current">Now showing</li>
+                  <li data-filter=".soon">Coming Soon</li>
+                </ul><br><br>
+              </div>
+            </div>
+          </div>
+        </div><br><br><br><br><br><br><br><br><br><br><br><br>
+
         <div class="col-lg-12">
           <div class="owl-courses-item owl-carousel">
             <div class="item">
+              <img src="../static/images/moonfall2.jpg" alt="Course One">
+              <div class="down-content">
+                <h4>Moonfall</h4>
+                <div class="info">
+                  <div class="row">
+                    <div class="col-8">
+                      <ul>
+                        <li><i class="fa fa-star"></i></li>
+                        <li><i class="fa fa-star"></i></li>
+                        <li><i class="fa fa-star"></i></li>
+                        <li><i class="fa fa-star"></i></li>
+                        <li><i class="fa fa-star"></i></li>
+                      </ul>
+                    </div>
+                    <div class="col-4">
+                      <span>May 20</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <img src="../static/images/jackassforever2.jpg" alt="Course One">
+              <div class="down-content">
+                <h4>Jackass Forever</h4>
+                <div class="info">
+                  <div class="row">
+                    <div class="col-8">
+                      <ul>
+                        <li><i class="fa fa-star"></i></li>
+                        <li><i class="fa fa-star"></i></li>
+                        <li><i class="fa fa-star"></i></li>
+                        <li><i class="fa fa-star"></i></li>
+                        <li><i class="fa fa-star"></i></li>
+                      </ul>
+                    </div>
+                    <div class="col-4">
+                      <span>May 20</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <img src="../static/images/marryme2.jpg" alt="Course One">
+              <div class="down-content">
+                <h4>Marry Me</h4>
+                <div class="info">
+                  <div class="row">
+                    <div class="col-8">
+                      <ul>
+                        <li><i class="fa fa-star"></i></li>
+                        <li><i class="fa fa-star"></i></li>
+                        <li><i class="fa fa-star"></i></li>
+                        <li><i class="fa fa-star"></i></li>
+                        <li><i class="fa fa-star"></i></li>
+                      </ul>
+                    </div>
+                    <div class="col-4">
+                      <span>May 20</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <img src="../static/images/deathOnTheNile2.jpg" alt="Course One">
+              <div class="down-content">
+                <h4>Death On The Nile</h4>
+                <div class="info">
+                  <div class="row">
+                    <div class="col-8">
+                      <ul>
+                        <li><i class="fa fa-star"></i></li>
+                        <li><i class="fa fa-star"></i></li>
+                        <li><i class="fa fa-star"></i></li>
+                        <li><i class="fa fa-star"></i></li>
+                        <li><i class="fa fa-star"></i></li>
+                      </ul>
+                    </div>
+                    <div class="col-4">
+                      <span>May 20</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+              <div class="item">
+                <img src="../static/images/FantasticBeasts.jpg" alt="Course One">
+                <div class="down-content">
+                  <h4>Fantastic Beasts</h4>
+                  <div class="info">
+                    <div class="row">
+                      <div class="col-8">
+                        <ul>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                        </ul>
+                      </div>
+                      <div class="col-4">
+                        <span>May 20</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
               <img src="../static/images/superpets.jpg" alt="Course One">
               <div class="down-content">
                 <h4>DC League of Super-Pets</h4>
@@ -404,7 +419,7 @@ https://templatemo.com/tm-569-edu-meeting
                 </div>
               </div>
             </div>
-          
+
             <div class="item">
               <img src="../static/images/JurassicWorldDominion.jpg" alt="">
               <div class="down-content">
@@ -493,28 +508,7 @@ https://templatemo.com/tm-569-edu-meeting
                 </div>
               </div>
             </div>
-            <div class="item">
-              <img src="../static/images/FantasticBeasts.jpg" alt="">
-              <div class="down-content">
-                <h4>Fantastic Beasts: The Secrets of Dumbledore</h4>
-                <div class="info">
-                  <div class="row">
-                    <div class="col-8">
-                      <ul>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                      </ul>
-                    </div>
-                    <div class="col-4">
-                      <span>July 15</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+
             <div class="item">
               <img src="../static/images/Nope.jpg" alt="">
               <div class="down-content">
@@ -674,8 +668,7 @@ https://templatemo.com/tm-569-edu-meeting
         </div>
         <div class="col-lg-6 align-self-center">
           <div class="video">
-            <a href="{{url_for('suprise')}}" target="_blank"><img src="static/images/play-icon.png"
-                alt=""></a>
+            <a href="{{url_for('suprise')}}" target="_blank"><img src="static/images/play-icon.png" alt=""></a>
           </div>
         </div>
       </div>
@@ -687,13 +680,13 @@ https://templatemo.com/tm-569-edu-meeting
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <script src="static/js/isotope.min.js"></script>
-    <script src="static/js/owl-carousel.js"></script>
-    <script src="static/js/lightbox.js"></script>
-    <script src="static/js/tabs.js"></script>
-    <script src="static/js/video.js"></script>
-    <script src="static/js/slick-slider.js"></script>
-    <script src="static/js/custom.js"></script>
+    <script src="../static/js/isotope.min.js"></script>
+    <script src="../static/js/owl-carousel.js"></script>
+    <script src="../static/js/lightbox.js"></script>
+    <script src="../static/js/tabs.js"></script>
+    <script src="../static/js/video.js"></script>
+    <script src="../static/js/slick-slider.js"></script>
+    <script src="../static/js/custom.js"></script>
     <script>
       //according to loftblog tut
       $('.nav li:first').addClass('active');

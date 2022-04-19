@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Template Mo">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+
+    <title>Manage Movies</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="../static/css/fontawesome.css">
+    <link rel="stylesheet" href="../static/css/templatemo-edu-meeting.css">
+    <link rel="stylesheet" href="../static/css/owl.css">
+    <link rel="stylesheet" href="../static/css/lightbox.css">
+    <link rel="stylesheet" href="../static/css/myCustom.css">
+    <!--
+
+TemplateMo 569 Edu Meeting
+
+https://templatemo.com/tm-569-edu-meeting
+
+-->
+</head>
+
+<body>
+
+
+
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo Start ***** -->
+                        <a href="index.html" class="logo">
+                            Virtual Cinemas
+                        </a>
+                        <!-- ***** Logo End ***** -->
+                        <!-- ***** Menu Start ***** -->
+                        <ul class="nav">
+                            <li><a href="admin_portal3.html">Home</a></li>
+                           
+                        </ul>
+                        <a class='menu-trigger'>
+                            <span>Menu</span>
+                        </a>
+                        <!-- ***** Menu End ***** -->
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ***** Header Area End ***** -->
+
+    <section class="meetings-page" id="meetings">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card container">
+                      <div class="text-center">
+                        <br><h2>Manage Users</h2><br>
+                    </div>
+                      
+                        <div class="searchClass">
+                            <form class="my-2" action="#" th:action="@{/searchUser}" method="post">
+                                
+                                <input type="text" placeholder="Search a User" id="searchUser" name="searchUser"
+                                    aria-label="Search a User">
+                                <button class="btn btn-sm btn-primary bg-primary text-light"
+                                    type="submit">Search</button>
+                            </form>
+                        </div>
+                        <div id="table-scroll" th:if="${not #lists.isEmpty(users)}" class="userTable">
+                            <div class="scrollit">
+                                <form action="{{ url_for('manage_users') }}" method="POST">
+                                <table class="table table-bordered table-hover mngTbl">
+                                        <tr>
+                                            <th>Email</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>DOB</th>
+                                            <th>Address Line 1</th>
+                                            <th>Address Line 2</th>
+                                            <th>City</th>
+                                            <th>State</th>
+                                            <th>ZIP</th>
+                                            <th>Country</th>
+
+                                        </tr>
+                                        {%for userP in user%}
+                                        <tr>
+                                            <td>{{userP.email}}</td>
+                                            <td>{{userP.first_name}}</td>
+                                            <td>{{userP.last_name}}</td>
+                                            <td>{{userP.dob}}</td>
+                                            <td>{{userP.addressline1}}</td>
+                                            <td>{{userP.addressline2}}</td>
+                                            <td>{{userP.city}}</td>
+                                            <td>{{userP.state}}</td>
+                                            <td>{{userP.country}}</td>
+                                            <td><button type="submit" value="{{userP.id}}" name="editUser"> Edit </button></td>>
+                                        </tr>
+                                        {%endfor%}
+                                </table>
+                            </form>
+                            </div>
+                        </div>
+                        <!-- <div class="text-center text-danger" th:if="${ #lists.isEmpty(users)}">
+                            <span>No users found for the search criteria</span>
+                        </div> -->
+
+                        <div class="addUser">
+                          <a class="btn btn-sm btn-primary my-2 text-uppercase "
+                              th:href="@{add_user_by_admin.html}">Add a Movie</a>
+                      </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Copyright © 2022 Virtual Cinemas., Ltd. All Rights Reserved.
+                <br>
+            </p>
+        </div>
+    </section>
+
+
+    <!-- Scripts -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="../static/js/isotope.min.js"></script>
+    <script src="../static/js/owl-carousel.js"></script>
+    <script src="../static/js/lightbox.js"></script>
+    <script src="../static/js/tabs.js"></script>
+    <script src="../static/js/video.js"></script>
+    <script src="../static/js/slick-slider.js"></script>
+    <script src="../static/js/custom.js"></script>
+    <script>
+        //according to loftblog tut
+        $('.nav li:first').addClass('active');
+
+        var showSection = function showSection(section, isAnimate) {
+            var
+                direction = section.replace(/#/, ''),
+                reqSection = $('.section').filter('[data-section="' + direction + '"]'),
+                reqSectionPos = reqSection.offset().top - 0;
+
+            if (isAnimate) {
+                $('body, html').animate({
+                    scrollTop: reqSectionPos
+                },
+                    800);
+            } else {
+                $('body, html').scrollTop(reqSectionPos);
+            }
+
+        };
+
+        var checkSection = function checkSection() {
+            $('.section').each(function () {
+                var
+                    $this = $(this),
+                    topEdge = $this.offset().top - 80,
+                    bottomEdge = topEdge + $this.height(),
+                    wScroll = $(window).scrollTop();
+                if (topEdge < wScroll && bottomEdge > wScroll) {
+                    var
+                        currentId = $this.data('section'),
+                        reqLink = $('a').filter('[href*=\\#' + currentId + ']');
+                    reqLink.closest('li').addClass('active').
+                        siblings().removeClass('active');
+                }
+            });
+        };
+
+        $('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function (e) {
+            e.preventDefault();
+            showSection($(this).attr('href'), true);
+        });
+
+        $(window).scroll(function () {
+            checkSection();
+        });
+    </script>
+</body>
+
+
+</body>
+
+</html>

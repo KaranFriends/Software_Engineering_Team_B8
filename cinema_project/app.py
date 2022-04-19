@@ -8,7 +8,6 @@ from flask_bcrypt import Bcrypt
 from datetime import datetime, timedelta
 import emailService
 import random
-from model.model import User
 #from model.model import User, Card #Ticket, Review, Movie, MovieCategory, Show, Showroom, Booking, TicketBooking, TicketPrice, Img
 from model.LoginForm import LoginForm
 from model.RegistrationForm import RegistrationForm
@@ -214,11 +213,57 @@ def logout():
 
 @app.route('/movie_details')
 def movie_details():
-    return render_template('movie_details.html')
+    return render_template('movieDetails.html')
 
-@app.route('/admin_portal3')
+@app.route('/admin_portal')
 def admin_portal3():
-    return render_template('admin_portal3.html')
+    return render_template('adminPortal.html')
+
+@app.route('/edit_payment_details')
+def edit_Payment():
+    return render_template('editPaymentDetails.html')
+
+@app.route('/view_payment_details')
+def view_Payment():
+    return render_template('viewPaymentDetails.html')
+
+@app.route('/forgot_password')
+def forgot_Password():
+    return render_template('forgotPassword.html')
+
+@app.route('/reset_password')
+def reset_Password():
+    return render_template('resetPassword.html')
+
+
+@app.route('/manage_users')
+def manage_Users():
+    return render_template('manageUsers.html')
+
+@app.route('/manage_movies')
+def manage_Movies():
+    return render_template('manageMovies.html')
+
+@app.route('/manage_promotions')
+def manage_Promotions():
+    return render_template('managePromotions.html')
+
+@app.route('/seat_selection')
+def seat_Selection():
+    return render_template('seatSelection.html')
+
+@app.route('/payment')
+def payment():
+    return render_template('payment.html')
+
+@app.route('/checkout')
+def checkout():
+    return render_template('checkout.html')
+
+@app.route('/confirmation')
+def confirmation():
+    return render_template('confirmation.html')
+
 
 @app.route('/add_promotions')
 def promotions():
@@ -397,7 +442,7 @@ def edit_profile():
                 db.session.add(user)
                 db.session.commit()
                 flash('Profile has been updated')
-                return render_template('edit_profile.html',form=form)
+                return render_template('editProfile.html',form=form)
         user = User.query.filter_by(email = session['email']).first()
         form = UserEditForm()
         if user.user_type == 0:
