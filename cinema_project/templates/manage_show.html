@@ -9,7 +9,7 @@
     <meta name="author" content="Template Mo">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
 
-    <title>Admin Portal</title>
+    <title>Manage Movies</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -47,8 +47,8 @@ https://templatemo.com/tm-569-edu-meeting
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <li><a href="{{url_for('admin_portal3')}}">Home</a></li>
-                            <li><a href="{{url_for('logout')}}">Logout</a></li>
+                            <li><a href="admin_portal3.html">Home</a></li>
+
                         </ul>
                         <a class='menu-trigger'>
                             <span>Menu</span>
@@ -62,46 +62,47 @@ https://templatemo.com/tm-569-edu-meeting
     <!-- ***** Header Area End ***** -->
 
     <section class="meetings-page" id="meetings">
+
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="container">
-                        <div class="row text-center">
-                            <div class="card-deck mt-2">
-                                <div class=" p-4 m-4">
-                                    <div class="card ">
-                                        <div class="text-center">
-                                            <br>
-                                            <h2>Admin Portal</h2><br>
-                                        </div>
-                                        <br><br>
-                                        <table>
-                                            <tr>
-                                                <th>Manage Movies</th>
-                                                <th>Manage Users</th>
-                                                <th>Manage Promotions</th>
-                                            </tr>
-                                            <tr>
-                                                <td><a href="{{url_for('manage_movies')}}"><img
-                                                            src="../static/images/managemovie.png" alt="Movies"><b>Edit
-                                                            Movies</b></a></td>
-                                                <td><a href="{{url_for('manage_users')}}"><img
-                                                            src="../static/images/manageUser.png" alt="Users"><b>Edit
-                                                            Users</b></a></td>
-                                                <td><a href="{{url_for('manage_promotions')}}"><img
-                                                            src="../static/images/managePromo.png"
-                                                            alt="Promotions"><b>Edit Promotions</b></a></td>
-                                                <td><a href="{{url_for('manage_show')}}"><img
-                                                    src="../static/images/managePromo.png"
-                                                    alt="Show"><b>Edit Show</b></a></td>
-                                            </tr>
-                                        </table>
-                                        <br><br>
-                                    </div>
-                                </div>
+                    <div class="card container">
+                        <div class="text-center">
+                            <br>
+                            <h2>Manage Show</h2><br>
+                        </div>
 
+                        <div id="table-scroll" th:if="${not #lists.isEmpty(users)}" class="userTable">
+                            <div class="scrollit">
+                                <form action="{{ url_for('manage_movies') }}" method="POST">
+                                    <table class="table table-bordered table-hover mngTbl">
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Time</th>
+                                            <th>Movie</th>>
+                                        </tr>
+                                        {%for showP in show%}
+                                        <tr>
+                                            <td>{{showP.show_date}}</td>
+                                            <td>{{showP.show_time}}</td>
+                                            <td>{{showP.movie_id}}</td>
+                                            <!-- <td><button type="submit" value="{{showP.id}}" name="editMovie"> Edit
+                                                </button></td>> -->
+                                        </tr>
+                                        {%endfor%}
+                                    </table>
+                                </form>
                             </div>
                         </div>
+                        <!-- <div class="text-center text-danger" th:if="${ #lists.isEmpty(users)}">
+                            <span>No users found for the search criteria</span>
+                        </div> -->
+
+                        <div class="addUser">
+                            <a class="btn btn-sm btn-primary my-2 text-uppercase " href="{{url_for('add_show')}}">Add a
+                                Show</a>
+                        </div>
+
                     </div>
 
                 </div>

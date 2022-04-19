@@ -9,7 +9,7 @@
   <meta name="author" content="Template Mo">
   <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
 
-  <title>Movie Details Page</title>
+  <title>Register Page</title>
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -20,10 +20,10 @@
   <link rel="stylesheet" href="static/css/templatemo-edu-meeting.css">
   <link rel="stylesheet" href="static/css/owl.css">
   <link rel="stylesheet" href="static/css/lightbox.css">
+  <link rel="stylesheet" href="static/css/myCustom.css">
+
 
   <!--
-
-    
 
 TemplateMo 569 Edu Meeting
 
@@ -43,23 +43,22 @@ https://templatemo.com/tm-569-edu-meeting
         <div class="col-12">
           <nav class="main-nav">
             <!-- ***** Logo Start ***** -->
-            <a href="index.html" class="logo">
+            <a href="{{url_for('index')}}" class="logo">
               Virtual Cinemas
             </a>
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->
             <ul class="nav">
-              <li><a href="index.html">Home</a></li>
-              <li><a href="promotions.html">Promotions</a></li>
+              <li><a href="{{url_for('index')}}">Home</a></li>
+              <li><a href="{{url_for('promotions')}}">Promotions</a></li>
               <li class="has-sub">
-                <a href="javascript:void(0)" class="active">Pages</a>
+                <a href="javascript:void(0)">Pages</a>
                 <ul class="sub-menu">
-                  <li><a href="edit_profile.html">Edit Profile</a></li>
-                  <li><a href="movie_details.html">Movie Details</a></li>
+                  <li><a href="{{url_for('movie_details')}}">Movie Details</a></li>
                 </ul>
               </li>
-              <li><a href="register.html">Register</a></li>
-              <li><a href="login.html">Login</a></li>
+              <li><a href="{{url_for('register')}}">Register</a></li>
+              <li><a href="{{url_for('login')}}">Login</a></li>
             </ul>
             <a class='menu-trigger'>
               <span>Menu</span>
@@ -72,88 +71,77 @@ https://templatemo.com/tm-569-edu-meeting
   </header>
   <!-- ***** Header Area End ***** -->
 
+
   <section class="meetings-page" id="meetings">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
+      <div class="row center-screen">
+        <div class="col-lg-8">
           <div class="row">
             <div class="col-lg-12">
               <div class="meeting-single-item">
                 <div class="thumb">
-                  <a href="movie_details.html"><img src="static/images/moonfall.jpg" alt=""></a>
-                </div>
-                <div class="down-content">
-                  <a href="movie_details.html">
-                    <h4>Moonfall</h4>
-                  </a>
-                  <p>PG-13</p>
-                  <p>2 HR 10 MIN</p>
-                  <p>Release Date: February 4, 2022</p>
-                  <p class="description">
-                    In Moonfall, a mysterious force knocks the Moon from its orbit around Earth and sends it hurtling on
-                    a collision course with life as we know it. With mere weeks before impact and the world on the brink
-                    of annihilation, NASA executive and former astronaut Jo Fowler (Academy Award winner Halle Berry) is
-                    convinced she has the key to saving us all - but only one astronaut from her past...
-
-                    <br>
-                  </p>
-
-                  <div class="card">
-                    <iframe width="1035" height="400" src="https://www.youtube.com/embed/ivIwdQBlS10"
-                      title="YouTube video player" frameborder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowfullscreen></iframe>
-                  </div><br>
-
-
-                  <div class="row">
-                    <div class="section-heading">
-                      <h3>Order Tickets</h3><br>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="hours">
-                        <h5>Times</h5>
-                        <p>Monday: 11:00 AM<br><br><br>Saturday: 09:00 PM</p>
-                      </div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="location">
-                        <h5>Location</h5>
-                        <p>Boyd Graduate Research Center
-                          <br><br><br>Science Library
-                        </p>
-                      </div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="book now">
-                        <h5>Book Now</h5>
-                        <div class="main-button-yellow">
-                          <a href="seat_selection.html">Book</a>
-                        </div><br>
-                        <div class="main-button-yellow">
-                          <a href="seat_selection.html">Book</a>
+                  <section class="contact-us" id="contact">
+                    <div class="container">
+                      <div class="row">
+                        <div class=" align-self-center">
+                          <div class="row">
+                            <form id="contact" action="" method="post">
+                              <div class="row">
+                                <div class="col-lg-12">
+                                  <h1>Add Promotion</h1><br>
+                                </div>
+                                <div class="col-lg-12"></div>
+                                <hr>
+                                {% with messages = get_flashed_messages() %}
+                                  {% if messages %}
+                                    <ul class=flashes>
+                                      {% for message in messages %}
+                                        <h3>{{ message }}</h3>
+                                      {% endfor %}
+                                    </ul>
+                                  {% endif %}
+                                {% endwith %}
+                                <h2>Movie Information </h2>
+                                {% for field, errors in form.errors.items() %}
+                                {{ ', '.join(errors) }}
+                                {% endfor %}
+                                <form class="form-horizontal" action="{{url_for('add_promotions')}}" method="POST">
+                                    {{ form.csrf_token() }}
+                                    <div class="col-lg-12 form-group">
+                                      {{ form.code.label }}
+                                      {{ form.code(class="form-control") }}
+                                    </div>
+                                    <div class="col-lg-12 form-group">
+                                      {{ form.submit(class="form-control") }}
+                                    </div>
+                                  </form>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-            </div>
-            <div class="col-lg-12">
-              <div class="main-button-red">
-                <a href="index.html">Back To Home Screen</a>
+              </div><br>
+              <div class="col-lg-12">
+                <div class="main-button-red">
+                  <a href="{{url_for('index')}}">Back To Home Screen</a>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="footer">
-      <p>Copyright © 2022 Virtual Cinemas., Ltd. All Rights Reserved.
-        <br>
-      </p>
-    </div>
+
+
+
+
+      <div class="footer">
+        <p>Copyright © 2022 Virtual Cinemas., Ltd. All Rights Reserved.
+          <br>
+        </p>
+      </div>
   </section>
+
+
 
 
   <!-- Scripts -->

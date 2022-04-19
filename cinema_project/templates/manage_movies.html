@@ -16,11 +16,11 @@
 
 
     <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="assets/css/fontawesome.css">
-    <link rel="stylesheet" href="assets/css/templatemo-edu-meeting.css">
-    <link rel="stylesheet" href="assets/css/owl.css">
-    <link rel="stylesheet" href="assets/css/lightbox.css">
-    <link rel="stylesheet" href="assets/css/myCustom.css">
+    <link rel="stylesheet" href="static/css/fontawesome.css">
+    <link rel="stylesheet" href="static/css/templatemo-edu-meeting.css">
+    <link rel="stylesheet" href="static/css/owl.css">
+    <link rel="stylesheet" href="static/css/lightbox.css">
+    <link rel="stylesheet" href="static/css/myCustom.css">
     <!--
 
 TemplateMo 569 Edu Meeting
@@ -48,7 +48,7 @@ https://templatemo.com/tm-569-edu-meeting
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
                             <li><a href="admin_portal3.html">Home</a></li>
-                           
+
                         </ul>
                         <a class='menu-trigger'>
                             <span>Menu</span>
@@ -67,13 +67,14 @@ https://templatemo.com/tm-569-edu-meeting
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card container">
-                      <div class="text-center">
-                        <br><h2>Manage Movies</h2><br>
-                    </div>
-                      
+                        <div class="text-center">
+                            <br>
+                            <h2>Manage Movies</h2><br>
+                        </div>
+
                         <div class="searchClass">
                             <form class="my-2" action="#" th:action="@{/searchUser}" method="post">
-                                
+
                                 <input type="text" placeholder="Search a User" id="searchUser" name="searchUser"
                                     aria-label="Search a User">
                                 <button class="btn btn-sm btn-primary bg-primary text-light"
@@ -82,52 +83,42 @@ https://templatemo.com/tm-569-edu-meeting
                         </div>
                         <div id="table-scroll" th:if="${not #lists.isEmpty(users)}" class="userTable">
                             <div class="scrollit">
-                                <table class="table table-bordered table-hover mngTbl">
-                                    <thead>
+                                <form action="{{ url_for('manage_movies') }}" method="POST">
+                                    <table class="table table-bordered table-hover mngTbl">
                                         <tr>
-                                            <th scope="col" class="mngTbl"><i class="fa fa-fw fa-list-ol mngTbl"></i>Index</th>
-                                            <th scope="col" class="mngTbl"><i class="fa fa-fw fa-user mngTbl"></i>First Name</th>
-                                            <th scope="col" class="mngTbl"><i class="fa fa-fw fa-user mngTbl"></i>Last Name</th>
-                                            <th scope="col" class="mngTbl"><i class="fa fa-fw fa-envelope-o mngTbl" aria-hidden="true"></i>Email</th>
-                                            <th scope="col" class="mngTbl"><i class="fa fa-fw fa-user-plus mngTbl" aria-hidden="true"></i>User Type</th>
-                                            <th scope="col" class="mngTbl"><i class="fa fa-fw fa-pencil-square-o mngTbl"></i>Edit</th>
-                                            <th scope="col" class="mngTbl"><i class="fa fa-fw fa-check-square mngTbl"></i>Is Active</th>
-                                            <th scope="col" class="mngTbl"><i class="fa fa-fw fa-ban mngTbl" aria-hidden="true"></i>Suspend</th>
-                                            <th scope="col" class="mngTbl"><i class="fa fa-fw fa-check mngTbl" aria-hidden="true"></i>Activate</th>
+                                            <th>Title</th>
+                                            <th>Director</th>
+                                            <th>Cast</th>
+                                            <th>Producer</th>
+                                            <th>Synopsis</th>
+                                            <th>Status</th>
+                                            <th>Trailer</th>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr th:each="user,iterator : ${users}">
-                                            <td th:text="${iterator.index + 1}"></td>
-                                            <td th:text="${user.first_Name}"></td>
-                                            <td th:text="${user.last_Name}"></td>
-                                            <td th:text="${user.email}"></td>
-                                            <td th:switch="${user.user_Type}">
-                                            </td>
-                                            <td><a class="btn btn-sm btn-warning btn-block text-uppercase"
-                                                    th:href="@{'/edit_user_admin/' + ${user.user_Id}}">Edit</a></td>
-                                            <td th:text="${user.is_Active}"></td>
-                                            <td th:if="${user.is_Active} == 'Y'"><a
-                                                    class="btn btn btn-danger btn-block text-uppercase"
-                                                    onclick="return (confirm('Are you sure you want to Suspend this user?'))"
-                                                    th:href="@{'/suspend_user/' + ${user.user_Id}}">Suspend</a>
-                                            <td th:if="${user.is_Active} == 'N'"><a
-                                                    class="btn btn-success btn-block text-uppercase"
-                                                    onclick="return (confirm('Are you sure you want to Activate this user?'))"
-                                                    th:href="@{'/activate_user/' + ${user.user_Id}}">Activate</a>
+                                        {%for movieP in movie%}
+                                        <tr>
+                                            <td>{{movieP.movie_title}}</td>
+                                            <td>{{movieP.movie_director_name}}</td>
+                                            <td>{{movieP.movie_cast_name}}</td>
+                                            <td>{{movieP.movie_producer_name}}</td>
+                                            <td>{{movieP.movie_synopsis}}</td>
+                                            <td>{{movieP.movie_status}}</td>
+                                            <td>{{movieP.movie_trailer}}</td>
+                                            <td><button type="submit" value="{{movieP.id}}" name="editMovie"> Edit
+                                                </button></td>>
                                         </tr>
-                                    </tbody>
-                                </table>
+                                        {%endfor%}
+                                    </table>
+                                </form>
                             </div>
                         </div>
-                        <div class="text-center text-danger" th:if="${ #lists.isEmpty(users)}">
+                        <!-- <div class="text-center text-danger" th:if="${ #lists.isEmpty(users)}">
                             <span>No users found for the search criteria</span>
-                        </div>
+                        </div> -->
 
                         <div class="addUser">
-                          <a class="btn btn-sm btn-primary my-2 text-uppercase "
-                              th:href="@{add_user_by_admin.html}">Add a Movie</a>
-                      </div>
+                            <a class="btn btn-sm btn-primary my-2 text-uppercase " href="{{url_for('addMovie')}}">Add a
+                                Movie</a>
+                        </div>
 
                     </div>
 
@@ -148,13 +139,13 @@ https://templatemo.com/tm-569-edu-meeting
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <script src="assets/js/isotope.min.js"></script>
-    <script src="assets/js/owl-carousel.js"></script>
-    <script src="assets/js/lightbox.js"></script>
-    <script src="assets/js/tabs.js"></script>
-    <script src="assets/js/video.js"></script>
-    <script src="assets/js/slick-slider.js"></script>
-    <script src="assets/js/custom.js"></script>
+    <script src="static/js/isotope.min.js"></script>
+    <script src="static/js/owl-carousel.js"></script>
+    <script src="static/js/lightbox.js"></script>
+    <script src="static/js/tabs.js"></script>
+    <script src="static/js/video.js"></script>
+    <script src="static/js/slick-slider.js"></script>
+    <script src="static/js/custom.js"></script>
     <script>
         //according to loftblog tut
         $('.nav li:first').addClass('active');

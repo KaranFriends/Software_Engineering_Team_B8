@@ -16,9 +16,15 @@ from model.UserEditForm import UserEditForm
 from model.ChangePasswordEnterEmail import ChangePasswordEnterEmail
 from model.ChangePasswordVerifyOTP import ChangePasswordVerifyOTP
 from model.ChangePasswordNewPassword import ChangePasswordNewPassword
+from model.MovieEdit import MovieEdit
+from model.UserEdit import UserEdit
+from model.AddMovie import AddMovie
+from model.PromotionAdd import PromotionAdd
+from model.ShowAdd import ShowAdd
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
+import json
 
 
 app = Flask(__name__)
@@ -37,88 +43,79 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 def create_tables():
     db.create_all()
 
-
-
-
 class User(db.Model, UserMixin):
-     id = db.Column(db.Integer, primary_key=True, nullable=False) #note: in sqlite, primary key column is not nullable by default
-     email = db.Column(db.String(30), nullable=False)
-     password = db.Column(db.String(80), nullable=False)
-     first_name = db.Column(db.String(10), nullable=False)
-     last_name = db.Column(db.String(10), nullable=False)
-     dob = db.Column(db.String(8), nullable=False)
-     addressline1 = db.Column(db.String(20), nullable=False)
-     addressline2 = db.Column(db.String(20), nullable=False)
-     city = db.Column(db.String(8), nullable=False)
-     state = db.Column(db.String(8), nullable=False)
-     zip = db.Column(db.String(8), nullable=False)
-     country = db.Column(db.String(8), nullable=False)
-     cards = db.relationship('Card', backref='user', lazy=True)
-     promotions = db.Column(db.String(1))
-     user_type = db.Column(db.Integer, nullable=False)
-     reviews = db.relationship('Review', backref='user', lazy=True)
-     bookings = db.relationship('Booking', backref='user', lazy=True)
+    id = db.Column(db.Integer, primary_key=True, nullable=False) #note: in sqlite, primary key column is not nullable by default
+    email = db.Column(db.String(30), nullable=False)
+    password = db.Column(db.String(80), nullable=False)
+    first_name = db.Column(db.String(10), nullable=False)
+    last_name = db.Column(db.String(10), nullable=False)
+    dob = db.Column(db.String(8), nullable=False)
+    addressline1 = db.Column(db.String(20), nullable=False)
+    addressline2 = db.Column(db.String(20), nullable=False)
+    city = db.Column(db.String(8), nullable=False)
+    state = db.Column(db.String(8), nullable=False)
+    zip = db.Column(db.String(8), nullable=False)
+    country = db.Column(db.String(8), nullable=False)
+    cards = db.relationship('Card', backref='user', lazy=True)
+    promotions = db.Column(db.String(1))
+    user_type = db.Column(db.Integer, nullable=False)
+    reviews = db.relationship('Review', backref='user', lazy=True)
+    bookings = db.relationship('Booking', backref='user', lazy=True)
 
 class Card(db.Model, UserMixin):
-     id = db.Column(db.Integer, primary_key=True, nullable=False)
-     cardNumber = db.Column(db.String(12), nullable=False)
-     cardName = db.Column(db.String(15), nullable=False)
-     cvv = db.Column(db.String(3), nullable=False)
-     expirationDate = db.Column(db.String(8), nullable=False)
-     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),
-         nullable=False)
-     bookings = db.relationship('Booking', backref='card', lazy=True)
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    cardNumber = db.Column(db.String(12), nullable=False)
+    cardName = db.Column(db.String(15), nullable=False)
+    cvv = db.Column(db.String(3), nullable=False)
+    expirationDate = db.Column(db.String(8), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    bookings = db.relationship('Booking', backref='card', lazy=True)
 
 class Ticket(db.Model, UserMixin):
-         id = db.Column(db.Integer, primary_key=True, nullable=False)
-         ticket_category_id=db.Column(db.Integer, nullable=False)
-         ticket_category_quantity=db.Column(db.Integer, default=0, nullable=False)
-         seat_no=db.Column(db.Integer, nullable=False)
-         ticketBookings = db.relationship('TicketBooking', backref='ticket', lazy=True)
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    ticket_category_id=db.Column(db.Integer, nullable=False)
+    ticket_category_quantity=db.Column(db.Integer, default=0, nullable=False)
+    seat_no=db.Column(db.Integer, nullable=False)
+    ticketBookings = db.relationship('TicketBooking', backref='ticket', lazy=True)
 
 class Review(db.Model, UserMixin):
-         id = db.Column(db.Integer, primary_key=True, nullable=False)
-         review_comment = db.Column(db.String(12), nullable=False)
-         review_rating = db.Column(db.Integer, nullable=False)
-         user_ID=db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    review_comment = db.Column(db.String(12), nullable=False)
+    review_rating = db.Column(db.Integer, nullable=False)
+    user_ID=db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 
 class Movie(db.Model, UserMixin):
-          id = db.Column(db.Integer, primary_key=True, nullable=False)
-          movie_title = db.Column(db.String(12), nullable=False) #char(50)
-          movie_director_name = db.Column(db.String(12), nullable=False) #char(50)
-          movie_cast_name = db.Column(db.String(12), nullable=False) #char(50)
-          movie_producer_name = db.Column(db.String(12), nullable=False)
-          movie_synopsis = db.Column(db.String(12), nullable=False)
-          movie_status = db.Column(db.Integer, nullable=False) 
-          movie_trailer = db.Column(db.Integer, nullable=False) 
-          movie_picture = db.Column(db.Integer, nullable=False)
-          movie_video = db.Column(db.Integer, nullable=False) 
-          category_ID=db.Column(db.Integer, db.ForeignKey('moviecategory.id'), nullable=False)
-          shows = db.relationship('Show', backref='movie', lazy=True)
-
-
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    movie_title = db.Column(db.String(12), nullable=False) #char(50)
+    movie_director_name = db.Column(db.String(12), nullable=False) #char(50)
+    movie_cast_name = db.Column(db.String(12), nullable=False) #char(50)
+    movie_producer_name = db.Column(db.String(12), nullable=False)
+    movie_synopsis = db.Column(db.String(12), nullable=False)
+    movie_status = db.Column(db.Integer, nullable=False) 
+    movie_trailer = db.Column(db.Integer, nullable=False) 
+    movie_picture = db.Column(db.Integer, nullable=False)
+    movie_video = db.Column(db.Integer, nullable=False) 
+    category_ID=db.Column(db.Integer, db.ForeignKey('moviecategory.id'), nullable=False)
+    shows = db.relationship('Show', backref='movie', lazy=True)
 
 class Moviecategory(db.Model, UserMixin):
-         id = db.Column(db.Integer, primary_key=True, nullable=False)
-         category_name = db.Column(db.String(12), nullable=False)
-         movies = db.relationship('Movie', backref='moviecategory', lazy=True)
-
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    category_name = db.Column(db.String(12), nullable=False)
+    movies = db.relationship('Movie', backref='moviecategory', lazy=True)
 
 class Show(db.Model, UserMixin):
-         id = db.Column(db.Integer, primary_key=True, nullable=False)
-         show_date = db.Column(db.Date, nullable=False)
-         show_time = db.Column(db.Time, nullable=False)
-         movie_id = db.Column(db.Integer, db.ForeignKey("movie.id"), nullable=False)
-         showroom_id = db.Column(db.Integer, db.ForeignKey("showroom.id"), nullable=False)
-         bookings = db.relationship('Booking', backref='show', lazy=True)
-         seatAvail= db.relationship('Seat', backref='show', lazy=True)
-
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    show_date = db.Column(db.String(10), nullable=False)
+    show_time = db.Column(db.String(10), nullable=False)
+    movie_id = db.Column(db.Integer, db.ForeignKey("movie.id"), nullable=False)
+    showroom_id = db.Column(db.Integer, db.ForeignKey("showroom.id"), nullable=False)
+    bookings = db.relationship('Booking', backref='show', lazy=True)
+    seatAvail= db.relationship('Seat', backref='show', lazy=True)
 
 class Showroom(db.Model, UserMixin):
-         id = db.Column(db.Integer, primary_key=True, nullable=False)
-         total_seats = db.Column(db.Integer, nullable=False)
-         shows = db.relationship('Show', backref='showroom', lazy=True)
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    total_seats = db.Column(db.Integer, nullable=False)
+    shows = db.relationship('Show', backref='showroom', lazy=True)
 
 class Seat(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
@@ -127,44 +124,48 @@ class Seat(db.Model, UserMixin):
 
 
 class Booking(db.Model, UserMixin):
-         id = db.Column(db.Integer, primary_key=True, nullable=False)
-         user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-         show_id = db.Column(db.Integer, db.ForeignKey("show.id"), nullable=False)
-         card_id = db.Column(db.Integer, db.ForeignKey("card.id"), nullable=False)
-         booking_date = db.Column(db.Date, nullable=False)
-         booking_time = db.Column(db.Time, nullable=False)
-         ticketBookings = db.relationship('TicketBooking', backref='booking', lazy=True)
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    show_id = db.Column(db.Integer, db.ForeignKey("show.id"), nullable=False)
+    card_id = db.Column(db.Integer, db.ForeignKey("card.id"), nullable=False)
+    booking_date = db.Column(db.Date, nullable=False)
+    booking_time = db.Column(db.Time, nullable=False)
+    ticketBookings = db.relationship('TicketBooking', backref='booking', lazy=True)
 
 
 class TicketBooking(db.Model, UserMixin):
-         id = db.Column(db.Integer, primary_key=True, nullable=False)
-         booking_id = db.Column(db.Integer, db.ForeignKey("booking.id"), nullable=False)
-         ticket_id = db.Column(db.Integer, db.ForeignKey("ticket.id"), nullable=False)
-         booking_price = db.Column(db.Integer, nullable=False)
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    booking_id = db.Column(db.Integer, db.ForeignKey("booking.id"), nullable=False)
+    ticket_id = db.Column(db.Integer, db.ForeignKey("ticket.id"), nullable=False)
+    booking_price = db.Column(db.Integer, nullable=False)
 
 
 class TicketPrice(db.Model, UserMixin):
-         id = db.Column(db.Integer, primary_key=True, nullable=False)
-         ticket_price = db.Column(db.Integer, nullable=False)
-         ticket_category_name = db.Column(db.Enum, nullable=False)
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    ticket_price = db.Column(db.Integer, nullable=False)
+    ticket_category_name = db.Column(db.Enum, nullable=False)
 
 
 # # table for storing images directly
 class Img(db.Model, UserMixin):
-          id=db.Column(db.Integer, primary_key=True, nullable=False)
-          img=db.Column(db.Text, unique=True, nullable=False)
-          name=db.Column(db.String(12), nullable=False )
-          mimeType=db.Column(db.String(20), nullable=False)
+    id=db.Column(db.Integer, primary_key=True, nullable=False)
+    img=db.Column(db.Text, unique=True, nullable=False)
+    name=db.Column(db.String(12), nullable=False )
+    mimeType=db.Column(db.String(20), nullable=False)
 
-
-
-
+class Promotion(db.Model, UserMixin):
+    id=db.Column(db.Integer, primary_key=True, nullable=False)
+    code=db.Column(db.String(10), unique=True, nullable=False)
+    # startDate = db.Column(db.String(8), nullable=False)
+    # endDate = db.Column(db.String(8), nullable=False)
 
 
 # @login_manager.user_loader
 # def load_user(user_id):
 #     return User.query.get(int(user_id))
 
+@app.route('/')
+@app.route('/home')
 @app.route('/index')
 def index():
     if session['email']:
@@ -219,9 +220,156 @@ def movie_details():
 def admin_portal3():
     return render_template('admin_portal3.html')
 
-@app.route('/promotions')
+@app.route('/add_promotions')
 def promotions():
-    return render_template('promotions.html')
+    form = PromotionAdd()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            promotion=Promotion(code = form.code.data,\
+                _type = 0
+                )
+            db.session.add(promotion)
+            db.session.commit()
+            flash('Promotion Added Successfully successful')
+            return redirect('manage_movies')
+        else:
+            flash('Add Promotion')
+            return render_template('addMovie.html', form=form)
+    else:
+        flash('Welcome to show addition page')
+        return render_template('addPromotions.html', form=form)
+
+@app.route('/add_show')
+def add_show():
+    form = ShowAdd()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            show = Show(show_time = form.show_time.data,\
+                    show_date = form.show_date.data,\
+                    movie_id = form.request["movie"],\
+                _type = 0
+                )
+            db.session.add(show)
+            db.session.commit()
+            flash('Promotion Added Successfully successful')
+            return redirect('manage_movies')
+        else:
+            flash('Add Promotion')
+            return render_template('addShow.html', form=form)
+    else:
+        flash('Welcome to promotion addition page')
+        movie = Show.query.order_by(Show.id).all()
+        movieName = Movie.query.order_by(Movie.id).all()
+        movieNameList = []
+        for i in range(len(movieName)):
+            movieNameList.append(movieName[i].movie_title)
+        print(movieNameList)
+        return render_template('addShow.html', form=form, movieList = movieNameList)
+
+@app.route('/manage_show', methods=['POST','GET'])
+def manage_show():
+    show = Show.query.order_by(Show.id).all()
+    if request.method == 'GET':
+        return render_template('manage_show.html', show=show)
+
+@app.route('/manage_movies', methods=['POST','GET'])
+def manage_movies():
+    movie = Movie.query.order_by(Movie.id).all()
+    if request.method == 'GET':
+        for i in range(0,len(movie)):
+            print(movie[i].movie_title)
+        return render_template('manage_movies.html', movie=movie)
+    elif request.method == 'POST':
+        for i in range(0,len(movie)):
+            if request.form['editMovie'] == str(movie[i].id):
+                return redirect(url_for('edit_movie', movie=movie[i].id))
+
+@app.route('/manage_promotions', methods=['POST','GET'])
+def manage_promotions():
+    promotion = Promotion.query.order_by(Promotion.id).all()
+    if request.method == 'GET':
+        # for i in range(0,len(promotion)):
+        #     print(promotion[i].code)
+        return render_template('manage_promotions.html', promotion=promotion)
+    elif request.method == 'POST':
+        for i in range(0,len(promotion)):
+            if request.form['sendPromotion'] == str(promotion[i].id):
+                return render_template('manage_promotions.html', promotion=promotion)
+
+@app.route('/manage_users', methods=['POST','GET'])
+def manage_users():
+    user = User.query.order_by(User.id).all()
+    if request.method == 'GET':
+        # for i in range(0,len(user)):
+        #     print(user[i].email)
+        return render_template('manage_users.html', user=user)
+    elif request.method == 'POST':
+        for i in range(0,len(user)):
+            if request.form['editUser'] == str(user[i].id):
+                return redirect(url_for('edit_user', user=user[i].id))
+
+@app.route('/edit_user/<user>', methods=['GET'])
+# @login_required
+def edit_user(user):
+    print(user)
+    user = User.query.filter_by(id = user).first()
+    print(user)
+    if session['email']:
+        form = UserEdit()
+        if user.user_type == 1:
+            form.email.data =       user.email
+            form.first_name.data =  user.first_name
+            form.last_name.data =   user.last_name
+            # form.dob.data =         user.dob
+            form.addressline1.data =user.addressline1
+            form.addressline2.data =user.addressline2
+            form.city.data =        user.city
+            form.state.data =       user.state
+            form.zip.data =         user.zip
+            form.country.data =     user.country
+            return render_template('editUser.html', form=form)
+        else:
+            flash('User cannot access that page')
+            return render_template('login.html', form = LoginForm())
+    flash('Please Login first to access page')
+    return render_template('login.html', form = LoginForm())
+
+@app.route('/update_user', methods=['POST'])
+def update_user():
+    return render_template(index.html)
+
+@app.route('/update_movie', methods=['POST'])
+def update_movie():
+    return render_template(index.html)
+
+@app.route('/edit_movie/<movie>', methods=['GET'])
+# @login_required
+def edit_movie(movie):
+    print(movie)
+    movie = Movie.query.filter_by(id = movie).first()
+    print(movie)
+    print("---------------")
+    if session['email']:
+        user = User.query.filter_by(email = session['email']).first()
+        form = MovieEdit()
+        if user.user_type == 1:
+            form.movie_title.data = movie.movie_title
+            form.movie_director.data = movie.movie_director_name
+            form.movie_cast.data = movie.movie_cast_name
+            form.movie_producer.data = movie.movie_producer_name
+            form.movie_synopsis.data = movie.movie_synopsis
+            form.movie_status.data = movie.movie_status
+            form.movie_trailer.data = movie.movie_trailer
+            return render_template('editMovie.html', form=form)
+        else:
+            flash('User cannot access that page')
+            return render_template('login.html', form = LoginForm())
+    flash('Please Login first to access page')
+    return render_template('login.html', form = LoginForm())
+
+# @app.route('/manage_usres')
+# def manage_users():
+#     return render_template('manage_users.html')
 
 @app.route('/edit_profile', methods=['POST','GET'])
 # @login_required
@@ -246,19 +394,11 @@ def edit_profile():
                     user.promotions = "1"
                 else:
                     user.promotion = "0"
-                # card.cardNumber = form.cardnumber.data
-                # card.cardName = form.cardName.data
-                # card.cvv = form.cvv.data
-                # card.expirationDate = str(form.expirationDate.data).split(" ")[0]
-                
-                # db.session.flush()
                 db.session.add(user)
-                # db.session.add(card)
                 db.session.commit()
                 flash('Profile has been updated')
                 return render_template('edit_profile.html',form=form)
         user = User.query.filter_by(email = session['email']).first()
-        # card = Card.query.filter_by(user_id = user.id).first()
         form = UserEditForm()
         if user.user_type == 0:
             form.first_name.data = user.first_name
@@ -269,12 +409,7 @@ def edit_profile():
             form.addressline2.data = user.addressline2
             form.city.data = user.city
             form.state.data = user.state
-            form.zip.data = user.zip
-            # form.cardName.data = card.cardName
-            # form.cardnumber.data = card.Number
-            # form.cvv.data = card.cvv
-            # form.expirationDate.data = datetime.strptime(str(card.expirationDate), '%Y-%m-%d')
-            
+            form.zip.data = user.zip            
             return render_template('edit_profile.html',form=form, promo=user.promotions)
         else:
             flash('Admin cannot access that page')
@@ -393,6 +528,34 @@ def register():
         flash('Welcome to registration page')
         return render_template('register.html', form=form)
 
+
+@app.route('/addMovie', methods=['POST','GET'])
+def addMovie():
+    form = AddMovie()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            movie=Movie(movie_title = form.movie_title.data,\
+                movie_director_name = form.movie_director_name.data,\
+                movie_cast_name     = form.movie_cast_name.data,\
+                movie_producer_name = form.movie_producer_name.data,\
+                movie_synopsis      = form.movie_synopsis.data,\
+                movie_status        = form.movie_status.data,\
+                movie_trailer       = form.movie_trailer.data,\
+                movie_picture       = form.movie_picture.data,\
+                movie_video         = form.movie_video.data,\
+                category_ID         = 1,\
+                _type = 0
+                )
+            db.session.add(movie)
+            db.session.commit()
+            flash('Movie Added Successfully successful')
+            return redirect('manage_movies')
+        else:
+            flash('Add Movie')
+            return render_template('addMovie.html', form=form)
+    else:
+        flash('Welcome to movie addition page')
+        return render_template('addMovie.html', form=form)
 # @app.before_request
 # def before_request():
 #     g.user = None
