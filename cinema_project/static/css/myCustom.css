@@ -525,3 +525,8 @@ right: 50%;
   font-size: 20px;
   text-align: center;
 }
+
+
+.spacedTable {
+  border-spacing: 30px;
+}
