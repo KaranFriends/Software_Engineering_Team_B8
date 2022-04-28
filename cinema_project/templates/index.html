@@ -48,7 +48,6 @@ https://templatemo.com/tm-569-edu-meeting
               <li class="scroll-to-section">
                 <a href="{{url_for('index')}}" class="active">Home</a>
               </li>
-              <li><a href="{{url_for('promotions')}}">Promotions</a></li>
               <li class="has-sub">
                 <a href="javascript:void(0)">Pages</a>
                 <ul class="sub-menu">
@@ -112,54 +111,21 @@ https://templatemo.com/tm-569-edu-meeting
         <div class="col-lg-12">
 
           <div class="owl-service-item owl-carousel">
-            <div class="item" style="background-image: url(../static/images/moonfall.jpg);">
+            {%for movieP in allmovies%}
+            <div class="item" style="background-image: url(../static/images/{{movieP.movie_picture}});">
               <div class="icon">
-                <a href="{{url_for('movie_details')}}"><img src="../static/images/play-icon.png" alt=""></a>
+                <a href="{{url_for('movie_details', movie=movieP.id)}}"><img src="../static/images/play-icon.png"
+                    alt=""></a>
               </div>
               <div class="down-content">
                 <br><br><br>
               </div>
             </div>
-
-            <div class="item" style="background-image: url(../static/images/JackassForever.jpeg);">
-              <div class="icon">
-                <a href="{{url_for('movie_details')}}"><img src="../static/images/play-icon.png" alt=""></a>
-              </div>
-              <div class="down-content">
-                <br><br><br>
-              </div>
-            </div>
-
-            <div class="item" style="background-image: url(../static/images/MarryMe.jpg);">
-              <div class="icon">
-                <a href="{{url_for('movie_details')}}"><img src="../static/images/play-icon.png" alt=""></a>
-              </div>
-              <div class="down-content">
-                <br><br><br>
-              </div>
-            </div>
-
-            <div class="item" style="background-image: url(../static/images/DeathOnTheNile.jpg);">
-              <div class="icon">
-                <a href="{{url_for('movie_details')}}"><img src="../static/images/play-icon.png" alt=""></a>
-              </div>
-              <div class="down-content">
-                <br><br><br>
-              </div>
-            </div>
-
-            <div class="item" style="background-image: url(../static/images/FantasticBeasts.jpg);">
-              <div class="icon">
-                <a href="{{url_for('movie_details')}}"><img src="../static/images/play-icon.png" alt=""></a>
-              </div>
-              <div class="down-content">
-                <br><br><br>
-              </div>
-            </div>
-
+            {%endfor%}
           </div>
         </div>
       </div>
+    </div>
     </div>
   </section><br><br><br>
 
@@ -245,382 +211,76 @@ https://templatemo.com/tm-569-edu-meeting
         </div><br><br><br><br><br><br>
         <div class="col-lg-12 card centeredNew">
           <div class="categories">
-            <div class="row" style="float: right;">
-              <div class="row-cols-lg-1">
-                <h3>Search</h3><br>
-                <input type="text" placeholder="Search.."><br><br><br>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul class=flashes>
+              {% for message in messages %}
+              <h3>{{ message }}</h3>
+              {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+            <!-- {% if error %}
+              <p class=error><strong>Error:</strong> {{ error }}
+                {% endif %} -->
+            {% for field, errors in form.errors.items() %}
+            {{ ', '.join(errors) }}
+            {% endfor %}
+            <form action="{{ url_for('index') }}" method="POST">
+              <div class="row" style="float: right;">
+                <div class="row-cols-lg-1">
+                  
+                  <div class="col-lg-12 form-group">
+
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    {{ form.text(class="form-control", type="text", style="float: none;") }}
+                  </div>
+                  {{ form.search(class="btn btn-primary", type="submit", value="search")}}
+                  <!-- <button type="submit" value="search" name="search"> Edit </button> -->
+                </div>
               </div>
 
-            </div>
-            <div class="row" style="float: left;">
-              <h3>Filters</h3><br><br><br>
-              <div class="filters">
-                <ul>
-                  <li data-filter="*" class="active">All Movies</li>
-                  <li data-filter=".current">Now showing</li>
-                  <li data-filter=".soon">Coming Soon</li>
-                </ul><br><br>
-              </div>
-            </div>
           </div>
-        </div><br><br><br><br><br><br><br><br><br><br><br><br>
-
-        <div class="col-lg-12">
-          <div class="owl-courses-item owl-carousel">
-            <div class="item">
-              <img src="../static/images/moonfall2.jpg" alt="Course One">
-              <div class="down-content">
-                <h4>Moonfall</h4>
-                <div class="info">
-                  <div class="row">
-                    <div class="col-8">
-                      <ul>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                      </ul>
-                    </div>
-                    <div class="col-4">
-                      <span>May 20</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <img src="../static/images/jackassforever2.jpg" alt="Course One">
-              <div class="down-content">
-                <h4>Jackass Forever</h4>
-                <div class="info">
-                  <div class="row">
-                    <div class="col-8">
-                      <ul>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                      </ul>
-                    </div>
-                    <div class="col-4">
-                      <span>May 20</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <img src="../static/images/marryme2.jpg" alt="Course One">
-              <div class="down-content">
-                <h4>Marry Me</h4>
-                <div class="info">
-                  <div class="row">
-                    <div class="col-8">
-                      <ul>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                      </ul>
-                    </div>
-                    <div class="col-4">
-                      <span>May 20</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <img src="../static/images/deathOnTheNile2.jpg" alt="Course One">
-              <div class="down-content">
-                <h4>Death On The Nile</h4>
-                <div class="info">
-                  <div class="row">
-                    <div class="col-8">
-                      <ul>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                      </ul>
-                    </div>
-                    <div class="col-4">
-                      <span>May 20</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-              <div class="item">
-                <img src="../static/images/FantasticBeasts.jpg" alt="Course One">
-                <div class="down-content">
-                  <h4>Fantastic Beasts</h4>
-                  <div class="info">
-                    <div class="row">
-                      <div class="col-8">
-                        <ul>
-                          <li><i class="fa fa-star"></i></li>
-                          <li><i class="fa fa-star"></i></li>
-                          <li><i class="fa fa-star"></i></li>
-                          <li><i class="fa fa-star"></i></li>
-                          <li><i class="fa fa-star"></i></li>
-                        </ul>
-                      </div>
-                      <div class="col-4">
-                        <span>May 20</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-              <img src="../static/images/superpets.jpg" alt="Course One">
-              <div class="down-content">
-                <h4>DC League of Super-Pets</h4>
-                <div class="info">
-                  <div class="row">
-                    <div class="col-8">
-                      <ul>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                      </ul>
-                    </div>
-                    <div class="col-4">
-                      <span>May 20</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <img src="../static/images/BobsBurgers.png" alt="Course Two">
-              <div class="down-content">
-                <h4>The Bob's Burgers Movie</h4>
-                <div class="info">
-                  <div class="row">
-                    <div class="col-8">
-                      <ul>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                      </ul>
-                    </div>
-                    <div class="col-4">
-                      <span>May 27</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="item">
-              <img src="../static/images/JurassicWorldDominion.jpg" alt="">
-              <div class="down-content">
-                <h4>Jurassic World Dominion</h4>
-                <div class="info">
-                  <div class="row">
-                    <div class="col-8">
-                      <ul>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                      </ul>
-                    </div>
-                    <div class="col-4">
-                      <span>June 10</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <img src="../static/images/Lightyear.jpg" alt="">
-              <div class="down-content">
-                <h4>Lightyear</h4>
-                <div class="info">
-                  <div class="row">
-                    <div class="col-8">
-                      <ul>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                      </ul>
-                    </div>
-                    <div class="col-4">
-                      <span>June 17</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <img src="../static/images/MinionsRiseOfGru.jpg" alt="">
-              <div class="down-content">
-                <h4>Minions: The Rise of Gru</h4>
-                <div class="info">
-                  <div class="row">
-                    <div class="col-8">
-                      <ul>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                      </ul>
-                    </div>
-                    <div class="col-4">
-                      <span>July 1</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <img src="../static/images/ThorLoveAndThunder.jpg" alt="">
-              <div class="down-content">
-                <h4>Thor: Love and Thunder</h4>
-                <div class="info">
-                  <div class="row">
-                    <div class="col-8">
-                      <ul>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                      </ul>
-                    </div>
-                    <div class="col-4">
-                      <span>July 8</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="item">
-              <img src="../static/images/Nope.jpg" alt="">
-              <div class="down-content">
-                <h4>Nope</h4>
-                <div class="info">
-                  <div class="row">
-                    <div class="col-8">
-                      <ul>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                      </ul>
-                    </div>
-                    <div class="col-4">
-                      <span>July 22</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <img src="../static/images/BlackAdam2.jpg" alt="">
-              <div class="down-content">
-                <h4>Black Adam</h4>
-                <div class="info">
-                  <div class="row">
-                    <div class="col-8">
-                      <ul>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                      </ul>
-                    </div>
-                    <div class="col-4">
-                      <span>July 29</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <img src="../static/images/Spiderman.jpg" alt="">
-              <div class="down-content">
-                <h4>Spider-Man: Across the Spider-Verse (Part One)</h4>
-                <div class="info">
-                  <div class="row">
-                    <div class="col-8">
-                      <ul>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                      </ul>
-                    </div>
-                    <div class="col-4">
-                      <span>October 7</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <img src="../static/images/HalloweenEnds.jpg" alt="">
-              <div class="down-content">
-                <h4>Halloween Ends</h4>
-                <div class="info">
-                  <div class="row">
-                    <div class="col-8">
-                      <ul>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                      </ul>
-                    </div>
-                    <div class="col-4">
-                      <span>October 14</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <img src="../static/images/Aquaman.jpg" alt="">
-              <div class="down-content">
-                <h4>Aquaman and the Lost Kingdom</h4>
-                <div class="info">
-                  <div class="row">
-                    <div class="col-8">
-                      <ul>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                      </ul>
-                    </div>
-                    <div class="col-4">
-                      <span>December 22</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <div class="row" style="float: left;">
+            <h3>Filters</h3><br><br><br>
+            <div class="filters">
+              <ul>
+                {{ form.filter1(class="btn btn-primary", type="submit" ,value="horror")}}
+                {{ form.filter2(class="btn btn-primary", type="submit", value="comedy")}}
+                {{ form.filter3(class="btn btn-primary" ,type="submit", value="action")}}
+                <!-- <button type="submit" value="horror" name="horror"> Horror </button>
+                  <button type="submit" value="comedy" name="comedy"> Comedy </button>
+                  <button type="submit" value="action" name="action"> Action </button> -->
+              </ul><br><br>
             </div>
           </div>
         </div>
+      </div><br><br><br><br><br><br><br><br><br><br><br><br>
+
+      <div class="col-lg-12">
+        <div class="grid-container">
+          {%for movieP in movie%}
+          <div class="grid-item">
+            <div class="down-content">
+              <!-- <h4>Moonfall</h4> -->
+              <div class="info">
+                <div class="row">
+                  <div class="col-8">
+                    <a href="{{url_for('movie_details', movie=movieP.id)}}"><img class="gridImage"
+                        src="../static/images/{{movieP.movie_picture}}" alt=""></a>
+                  </div>
+                  <div class="col-4">
+                    <h4>{{movieP.movie_title}}</h4>
+                    <!-- <span>May 20</span> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {%endfor%}
+        </div>
       </div>
+    </div>
     </div>
   </section>
 

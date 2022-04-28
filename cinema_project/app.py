@@ -1,3 +1,4 @@
+from curses.ascii import NUL
 from distutils.log import error
 from wsgiref.validate import validator
 from flask import Flask, flash, g, make_response, redirect, render_template, url_for, request, session
@@ -6,6 +7,8 @@ from flask_login import login_required, login_user, logout_user, current_user
 from graphviz import render
 from flask_bcrypt import Bcrypt
 from datetime import datetime, timedelta
+
+from sqlalchemy import null
 import emailService
 import random
 #from model.model import User, Card #Ticket, Review, Movie, MovieCategory, Show, Showroom, Booking, TicketBooking, TicketPrice, Img
@@ -20,6 +23,7 @@ from model.UserEdit import UserEdit
 from model.AddMovie import AddMovie
 from model.PromotionAdd import PromotionAdd
 from model.ShowAdd import ShowAdd
+from model.Search import SearchAndFilter
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
@@ -79,21 +83,20 @@ class Ticket(db.Model, UserMixin):
 
 class Review(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    review_comment = db.Column(db.String(12), nullable=False)
+    review_comment = db.Column(db.String(20), nullable=False)
     review_rating = db.Column(db.Integer, nullable=False)
     user_ID=db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 
 class Movie(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    movie_title = db.Column(db.String(12), nullable=False) #char(50)
-    movie_director_name = db.Column(db.String(12), nullable=False) #char(50)
-    movie_cast_name = db.Column(db.String(12), nullable=False) #char(50)
-    movie_producer_name = db.Column(db.String(12), nullable=False)
-    movie_synopsis = db.Column(db.String(12), nullable=False)
+    movie_title = db.Column(db.String(30), nullable=False) #char(50)
+    movie_director_name = db.Column(db.String(30), nullable=False) #char(50)
+    movie_cast_name = db.Column(db.String(30), nullable=False) #char(50)
+    movie_producer_name = db.Column(db.String(30), nullable=False)
+    movie_synopsis = db.Column(db.String(1000), nullable=False)
     movie_status = db.Column(db.Integer, nullable=False) 
-    movie_trailer = db.Column(db.Integer, nullable=False) 
-    movie_picture = db.Column(db.Integer, nullable=False)
-    movie_video = db.Column(db.Integer, nullable=False) 
+    movie_picture = db.Column(db.String(30), nullable=False)
+    movie_video = db.Column(db.String(100), nullable=False) 
     category_ID=db.Column(db.Integer, db.ForeignKey('moviecategory.id'), nullable=False)
     shows = db.relationship('Show', backref='movie', lazy=True)
 
@@ -107,6 +110,7 @@ class Show(db.Model, UserMixin):
     show_date = db.Column(db.String(10), nullable=False)
     show_time = db.Column(db.String(10), nullable=False)
     movie_id = db.Column(db.Integer, db.ForeignKey("movie.id"), nullable=False)
+    movie_title = db.Column(db.String(30), nullable=False)
     showroom_id = db.Column(db.Integer, db.ForeignKey("showroom.id"), nullable=False)
     bookings = db.relationship('Booking', backref='show', lazy=True)
     seatAvail= db.relationship('Seat', backref='show', lazy=True)
@@ -154,7 +158,7 @@ class Img(db.Model, UserMixin):
 
 class Promotion(db.Model, UserMixin):
     id=db.Column(db.Integer, primary_key=True, nullable=False)
-    code=db.Column(db.String(10), unique=True, nullable=False)
+    code=db.Column(db.String(20), unique=True, nullable=False)
     # startDate = db.Column(db.String(8), nullable=False)
     # endDate = db.Column(db.String(8), nullable=False)
 
@@ -165,13 +169,50 @@ class Promotion(db.Model, UserMixin):
 
 @app.route('/')
 @app.route('/home')
-@app.route('/index')
+@app.route('/index', methods=['POST','GET'])
 def index():
-    if session['email']:
-        if User.query.filter_by(email = session['email']).first().user_type == 1:
-            flash("admin cannot access this portal")
-            return render_template('login.html', form=LoginForm())
-    return render_template('index.html')
+    movie = Movie.query.order_by(Movie.id).all()
+    print(movie)
+    form = SearchAndFilter()
+    if request.method == 'GET':
+        if session['email']:
+            if User.query.filter_by(email = session['email']).first().user_type == 1:
+                flash("admin cannot access this portal")
+                return render_template('login.html', form=LoginForm())
+        return render_template('index.html', allmovies=movie, movie=movie, form=form)
+    else:
+        filteredMovie = []
+        if form.search.data:
+            if form.text.data != null:
+                movie = Movie.query.order_by(Movie.id).all()
+                form = SearchAndFilter()
+                moviesearched = []
+                for i in range(len(movie)):
+                    if form.text.data in movie[i].movie_title:
+                        moviesearched.append(movie[i])
+                return render_template('index.html', movie=moviesearched, form=form)
+                # return redirect(url_for('search',text=form.text.data))
+            else:
+                flash('Please enter text before searching',"error")
+                return render_template('login.html', form = form)
+        elif form.filter1.data :
+            for i in range(len(movie)):
+                if movie[i].category_ID == 1:
+                    filteredMovie.append(movie[i])
+        elif form.filter2.data:
+            for i in range(len(movie)):
+                if movie[i].category_ID == 2:
+                    filteredMovie.append(movie[i])
+        elif form.filter3.data:
+            for i in range(len(movie)):
+                if movie[i].category_ID == 3:
+                    filteredMovie.append(movie[i])
+        return render_template('index.html', allmovies=movie, movie=filteredMovie, form=form)
+
+# @app.route('/search/<text>')
+# def search(text):
+
+
 
 
 @app.route('/login', methods=['POST','GET'])
@@ -211,9 +252,12 @@ def logout():
     return resp
 
 
-@app.route('/movie_details')
-def movie_details():
-    return render_template('movieDetails.html')
+@app.route('/movie_details/<movie>')
+def movie_details(movie):
+    movie = Movie.query.filter_by(id = movie).first()
+    print(movie)
+    show = Show.query.filter_by(movie_id = movie.id).all()
+    return render_template('movieDetails.html', movie = movie, show=show)
 
 @app.route('/admin_portal')
 def admin_portal3():
@@ -236,17 +280,17 @@ def reset_Password():
     return render_template('resetPassword.html')
 
 
-@app.route('/manage_users')
-def manage_Users():
-    return render_template('manageUsers.html')
+# @app.route('/manage_users')
+# def manage_Users():
+#     return render_template('manageUsers.html')
 
-@app.route('/manage_movies')
-def manage_Movies():
-    return render_template('manageMovies.html')
+# # @app.route('/manage_movies')
+# # def manage_Movies():
+# #     return render_template('manageMovies.html')
 
-@app.route('/manage_promotions')
-def manage_Promotions():
-    return render_template('managePromotions.html')
+# @app.route('/manage_promotions')
+# def manage_Promotions():
+#     return render_template('managePromotions.html')
 
 @app.route('/seat_selection')
 def seat_Selection():
@@ -265,13 +309,12 @@ def confirmation():
     return render_template('confirmation.html')
 
 
-@app.route('/add_promotions')
-def promotions():
+@app.route('/add_promotions', methods=['POST','GET'])
+def add_promotions():
     form = PromotionAdd()
     if request.method == 'POST':
         if form.validate_on_submit():
-            promotion=Promotion(code = form.code.data,\
-                _type = 0
+            promotion=Promotion(code = form.code.data
                 )
             db.session.add(promotion)
             db.session.commit()
@@ -281,34 +324,46 @@ def promotions():
             flash('Add Promotion')
             return render_template('addMovie.html', form=form)
     else:
-        flash('Welcome to show addition page')
+        flash('Welcome to Promo addition page')
         return render_template('addPromotions.html', form=form)
 
-@app.route('/add_show')
+@app.route('/add_show', methods=['POST','GET'])
 def add_show():
     form = ShowAdd()
+    movie = Show.query.order_by(Show.id).all()
+    movieName = Movie.query.order_by(Movie.id).all()
+    movieNameList = []
+    for i in range(len(movieName)):
+        movieNameList.append(movieName[i].movie_title)
+    print(movieNameList)
     if request.method == 'POST':
         if form.validate_on_submit():
-            show = Show(show_time = form.show_time.data,\
-                    show_date = form.show_date.data,\
-                    movie_id = form.request["movie"],\
-                _type = 0
+            show = Show.query.order_by(Show.id).all()
+            inputshowdatetimecombo = str(form.show_date.data).split(" ")[0] + str(form.show_time.data).split(" ")[0]
+            for i in range(len(show)):
+                if(inputshowdatetimecombo == show[i].show_date + show[i].show_time):
+                    flash('Movie with same time and date already exists')
+                    return render_template('addShow.html', form=form, movieList = movieNameList)
+            id = 0
+            for i in range(len(movieName)):
+                if movieName[i].movie_title == request.form.get("movie"):
+                    id=i
+                    break
+            show = Show(show_date = str(form.show_date.data).split(" ")[0],\
+                    show_time = str(form.show_time.data).split(" ")[0],\
+                    movie_id = i,\
+                    movie_title = request.form.get("movie"),\
+                    showroom_id = 1
                 )
             db.session.add(show)
             db.session.commit()
-            flash('Promotion Added Successfully successful')
-            return redirect('manage_movies')
+            flash('show added successfully')
+            return redirect('admin_portal')
         else:
-            flash('Add Promotion')
+            flash('Add Show')
             return render_template('addShow.html', form=form)
     else:
-        flash('Welcome to promotion addition page')
-        movie = Show.query.order_by(Show.id).all()
-        movieName = Movie.query.order_by(Movie.id).all()
-        movieNameList = []
-        for i in range(len(movieName)):
-            movieNameList.append(movieName[i].movie_title)
-        print(movieNameList)
+        flash('Welcome to show addition page')
         return render_template('addShow.html', form=form, movieList = movieNameList)
 
 @app.route('/manage_show', methods=['POST','GET'])
@@ -321,6 +376,7 @@ def manage_show():
 def manage_movies():
     movie = Movie.query.order_by(Movie.id).all()
     if request.method == 'GET':
+        print('-------------------------------------------')
         for i in range(0,len(movie)):
             print(movie[i].movie_title)
         return render_template('manage_movies.html', movie=movie)
@@ -337,8 +393,12 @@ def manage_promotions():
         #     print(promotion[i].code)
         return render_template('manage_promotions.html', promotion=promotion)
     elif request.method == 'POST':
+        user = User.query.filter_by(promotions = '1').all()
+        print(user)
         for i in range(0,len(promotion)):
             if request.form['sendPromotion'] == str(promotion[i].id):
+                for userP in user:
+                    emailService.emailS(userP.email, "Promo Code is "+ promotion[i].code, "Promotion")
                 return render_template('manage_promotions.html', promotion=promotion)
 
 @app.route('/manage_users', methods=['POST','GET'])
@@ -353,39 +413,46 @@ def manage_users():
             if request.form['editUser'] == str(user[i].id):
                 return redirect(url_for('edit_user', user=user[i].id))
 
-@app.route('/edit_user/<user>', methods=['GET'])
+@app.route('/edit_user/<user>', methods=['GET','POST'])
 # @login_required
 def edit_user(user):
-    print(user)
-    user = User.query.filter_by(id = user).first()
-    print(user)
-    if session['email']:
-        form = UserEdit()
-        if user.user_type == 1:
-            form.email.data =       user.email
-            form.first_name.data =  user.first_name
-            form.last_name.data =   user.last_name
-            # form.dob.data =         user.dob
-            form.addressline1.data =user.addressline1
-            form.addressline2.data =user.addressline2
-            form.city.data =        user.city
-            form.state.data =       user.state
-            form.zip.data =         user.zip
-            form.country.data =     user.country
-            return render_template('editUser.html', form=form)
-        else:
-            flash('User cannot access that page')
-            return render_template('login.html', form = LoginForm())
-    flash('Please Login first to access page')
-    return render_template('login.html', form = LoginForm())
+    if request.method == 'GET':
+        print(user)
+        user = User.query.filter_by(id = user).first()
+        print(user)
+        if session['email']:
+            form = UserEdit()
+            if user.user_type == 1:
+                form.email.data =       user.email
+                form.first_name.data =  user.first_name
+                form.last_name.data =   user.last_name
+                # form.dob.data =         user.dob
+                form.addressline1.data =user.addressline1
+                form.addressline2.data =user.addressline2
+                form.city.data =        user.city
+                form.state.data =       user.state
+                form.zip.data =         user.zip
+                form.country.data =     user.country
+                return render_template('editUser.html', form=form)
+            else:
+                flash('User cannot access that page')
+                return render_template('login.html', form = LoginForm())
+        flash('Please Login first to access page')
+        return render_template('login.html', form = LoginForm())
+    else:
+        # user = User.query.filter_by(email = user).first()
+        # user.status = 0
+        # db.session.add(user)
+        # db.session.commit()
+        flash('user deactivated')
+        return redirect( url_for('manage_users'))
 
-@app.route('/update_user', methods=['POST'])
-def update_user():
-    return render_template(index.html)
+
 
 @app.route('/update_movie', methods=['POST'])
 def update_movie():
-    return render_template(index.html)
+    if request.method == 'POST':
+        return redirect('manage_movies')
 
 @app.route('/edit_movie/<movie>', methods=['GET'])
 # @login_required
@@ -404,7 +471,7 @@ def edit_movie(movie):
             form.movie_producer.data = movie.movie_producer_name
             form.movie_synopsis.data = movie.movie_synopsis
             form.movie_status.data = movie.movie_status
-            form.movie_trailer.data = movie.movie_trailer
+            form.movie_video.data = movie.movie_video
             return render_template('editMovie.html', form=form)
         else:
             flash('User cannot access that page')
@@ -580,16 +647,14 @@ def addMovie():
     if request.method == 'POST':
         if form.validate_on_submit():
             movie=Movie(movie_title = form.movie_title.data,\
-                movie_director_name = form.movie_director_name.data,\
-                movie_cast_name     = form.movie_cast_name.data,\
-                movie_producer_name = form.movie_producer_name.data,\
+                movie_director_name = form.movie_director.data,\
+                movie_cast_name     = form.movie_cast.data,\
+                movie_producer_name = form.movie_producer.data,\
                 movie_synopsis      = form.movie_synopsis.data,\
                 movie_status        = form.movie_status.data,\
-                movie_trailer       = form.movie_trailer.data,\
-                movie_picture       = form.movie_picture.data,\
                 movie_video         = form.movie_video.data,\
-                category_ID         = 1,\
-                _type = 0
+                movie_picture       = 'FantasticBeasts.jpg',\
+                category_ID         = 1
                 )
             db.session.add(movie)
             db.session.commit()

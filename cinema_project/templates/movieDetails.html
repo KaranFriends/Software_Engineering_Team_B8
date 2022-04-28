@@ -52,7 +52,6 @@ https://templatemo.com/tm-569-edu-meeting
               <li class="scroll-to-section">
                 <a href="{{url_for('index')}}" class="active">Home</a>
               </li>
-              <li><a href="{{url_for('promotions')}}">Promotions</a></li>
               <li class="has-sub">
                 <a href="javascript:void(0)">Pages</a>
                 <ul class="sub-menu">
@@ -89,53 +88,47 @@ https://templatemo.com/tm-569-edu-meeting
               <div class="meeting-single-item">
                 <div class="thumb">
                   <div id="movieImage">
-                    <a href="movie_details.html"><img src="../static/images/moonfall.jpg" alt=""></a>
+                    <a href="movie_details.html"><img src="../static/images/{{movie.movie_picture}}" alt=""></a>
                   </div>
                   <div id="playVideo">
-                    <iframe id="video" width="1250" height="615" src="https://www.youtube.com/embed/ivIwdQBlS10" rel="0"
-                      enablejsapi="1" modestbranding="0" controls="0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; 
+                    <iframe id="video" width="1250" height="615" src="{{movie.movie_video}}" rel="0" enablejsapi="1"
+                      modestbranding="0" controls="0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; 
                           gyroscope; picture-in-picture" allowfullscreen></iframe>
                   </div>
                 </div>
                 <div class="down-content">
                   <div class="col-lg-12">
-                    <h4>Moonfall</h4>&nbsp;&nbsp;&nbsp;
+                    <h4>{{movie.movie_title}}</h4>&nbsp;&nbsp;&nbsp;
 
                     <div class="smallButton" style="margin-left: 40px;">
                       <a style="color: white;" onclick="clickFunction()">Show/Hide Trailer</a>
                     </div> <br><br>
 
-                      <button class="accordionNew">Basic Info</button>
-                      <div class="panelNew" style="max-height: max-content;"><br>
-                        <p><b>Duration: &nbsp;&nbsp;&nbsp;</b>2 HR 10 MIN</p>
-                        <p><b>Genres: &nbsp;&nbsp;&nbsp;</b> Action, Adventure, Sci-Fi</p>
-                        <p><b>Rating: &nbsp;&nbsp;&nbsp;</b>PG-13</p>
-                        <p><b>Release Date: &nbsp;&nbsp;&nbsp;</b> February 4, 2022</p>
-                        <br></div>
+                    <button class="accordionNew">Basic Info</button>
+                    <div class="panelNew" style="max-height: max-content;"><br>
+                      <p><b>Duration: &nbsp;&nbsp;&nbsp;</b>2 HR 10 MIN</p>
+                      <p><b>Genres: &nbsp;&nbsp;&nbsp;</b> Action, Adventure, Sci-Fi</p>
+                      <p><b>Rating: &nbsp;&nbsp;&nbsp;</b>PG-13</p>
+                      <p><b>Release Date: &nbsp;&nbsp;&nbsp;</b> February 4, 2022</p>
+                      <br>
+                    </div>
 
-                      <button class="accordionNew" >Synopsis</button>
-                      <div class="panelNew" ><br>
-                        <p style="margin-left: 80px; margin-right: 80px;">
-                          In Moonfall, a mysterious force knocks the Moon from its orbit around Earth and sends it
-                          hurtling
-                          on
-                          a collision course with life as we know it. With mere weeks before impact and the world on the
-                          brink
-                          of annihilation, NASA executive and former astronaut Jo Fowler (Academy Award winner Halle
-                          Berry)
-                          is
-                          convinced she has the key to saving us all - but only one astronaut from her past...
-
-                          <br>
-                        </p><br>
-                        <br></div>
-                      <button class="accordionNew">Cast Info</button>
-                      <div class="panelNew"><br>
-                        <p><b>Director: &nbsp;&nbsp;&nbsp;</b>Roland Emmerich</p>
-                        <p><b>Producer: &nbsp;&nbsp;&nbsp;</b>Roland Emmerich, Harald Kloser</p>
-                        <p><b>Cast: &nbsp;&nbsp;&nbsp;</b>Halle Berry, Patrick Wilson, John Bradley, Michael Peña,
-                          Charlie Plummer, Kelly Yu, Donald Sutherland</p>
-                          <br></div>
+                    <button class="accordionNew">Synopsis</button>
+                    <div class="panelNew"><br>
+                      <p style="margin-left: 80px; margin-right: 80px;">
+                        {{movie.movie_synopsis}}
+                        <br>
+                      </p><br>
+                      <br>
+                    </div>
+                    <button class="accordionNew">Cast Info</button>
+                    <div class="panelNew"><br>
+                      <p><b>Director: &nbsp;&nbsp;&nbsp;</b>Roland Emmerich</p>
+                      <p><b>Producer: &nbsp;&nbsp;&nbsp;</b>Roland Emmerich, Harald Kloser</p>
+                      <p><b>Cast: &nbsp;&nbsp;&nbsp;</b>Halle Berry, Patrick Wilson, John Bradley, Michael Peña,
+                        Charlie Plummer, Kelly Yu, Donald Sutherland</p>
+                      <br>
+                    </div>
                   </div><br>
                 </div>
               </div>
@@ -158,24 +151,26 @@ https://templatemo.com/tm-569-edu-meeting
                 </div>
                 <ul>
                   <li data-filter="*" class="active">All Showings</li>
-                  <li data-filter=".current">Afternoon</li>
-                  <li data-filter=".soon">Evening</li>
+                  <!-- <li data-filter=".current">Afternoon</li>
+                  <li data-filter=".soon">Evening</li> -->
                 </ul>
               </div>
             </div>
+
+            {%for showP in show%}
             <div class="col-lg-12">
               <div class="row grid">
                 <div class="col-lg-4 templatemo-item-col all current">
                   <div class="meeting-item">
                     <div class="thumb">
                       <div class="price">
-                        <span>3:15pm</span>
+                        <span>{{showP.show_time}}</span>
                       </div>
                       <a href="{{url_for('seat_Selection')}}"><img src="../static/images/movie.jpg" alt=""></a>
                     </div>
                     <div class="down-content">
                       <div class="date">
-                        <h6>Nov <span>12</span></h6>
+                        <h6>{{showP.show_date}}</span></h6>
                       </div>
                       <div class="col-lg-12">
                         <div class="main-button-yellow">
@@ -185,63 +180,13 @@ https://templatemo.com/tm-569-edu-meeting
                     </div>
                   </div>
                 </div>
-                <div class="col-lg-4 templatemo-item-col all current">
-                  <div class="meeting-item">
-                    <div class="thumb">
-                      <div class="price">
-                        <span>4:20pm</span>
-                      </div>
-                      <a href="{{url_for('seat_Selection')}}"><img src="../static/images/movie.jpg" alt=""></a>
-                    </div>
-                    <div class="down-content">
-                      <div class="date">
-                        <h6>Nov <span>14</span></h6>
-                      </div>
-                      <div class="col-lg-12">
-                        <div class="main-button-yellow">
-                          <a href="{{url_for('seat_Selection')}}">Book Now</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                <div class="col-lg-4 templatemo-item-col all soon">
-                  <div class="meeting-item">
-                    <div class="thumb">
-                      <div class="price">
-                        <span>7:35pm</span>
-                      </div>
-                      <a href="{{url_for('seat_Selection')}}"><img src="../static/images/movie.jpg" alt=""></a>
-                    </div>
-                    <div class="down-content">
-                      <div class="date">
-                        <h6>Nov <span>16</span></h6>
-                      </div>
-                      <div class="col-lg-12">
-                        <div class="main-button-yellow">
-                          <a href="{{url_for('seat_Selection')}}">Book Now</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              </div>
-            </div>
-            <div class="col-lg-12">
-              <div class="pagination">
-                <ul>
-                  <li><a href="#">1</a></li>
-                  <li class="active"><a href="#">2</a></li>
-                  <li><a href="#">3</a></li>
-                  <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-                </ul>
+                {%endfor%}
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
     </div>
     <div class="footer">
       <p>Copyright © 2022 Virtual Cinemas., Ltd. All Rights Reserved.
@@ -272,16 +217,16 @@ https://templatemo.com/tm-569-edu-meeting
     var i;
 
     for (i = 0; i < acc.length; i++) {
-  acc[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var panel = this.nextElementSibling;
-    if (panel.style.maxHeight) {
-      panel.style.maxHeight = null;
-    } else {
-      panel.style.maxHeight = panel.scrollHeight + "px";
-    } 
-  });
-}
+      acc[i].addEventListener("click", function () {
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+        if (panel.style.maxHeight) {
+          panel.style.maxHeight = null;
+        } else {
+          panel.style.maxHeight = panel.scrollHeight + "px";
+        }
+      });
+    }
 
     //hide image div on click & video overlay
     function clickFunction() {
