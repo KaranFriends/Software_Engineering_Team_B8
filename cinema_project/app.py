@@ -259,6 +259,10 @@ def movie_details(movie):
     show = Show.query.filter_by(movie_id = movie.id).all()
     return render_template('movieDetails.html', movie = movie, show=show)
 
+@app.route('/promotions')
+def view_promotions():
+    return render_template('promotions.html')
+
 @app.route('/admin_portal')
 def admin_portal3():
     return render_template('adminPortal.html')

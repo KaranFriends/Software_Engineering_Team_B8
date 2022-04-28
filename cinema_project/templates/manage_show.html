@@ -64,9 +64,9 @@ https://templatemo.com/tm-569-edu-meeting
     <section class="meetings-page" id="meetings">
 
         <div class="container">
-            <div class="row">
+            <div class="row center-screen">
                 <div class="col-lg-12">
-                    <div class="card container">
+                    <div class="card container" style="width: 100%">
                         <div class="text-center">
                             <br>
                             <h2>Manage Show</h2><br>
@@ -75,7 +75,7 @@ https://templatemo.com/tm-569-edu-meeting
                         <div id="table-scroll" th:if="${not #lists.isEmpty(users)}" class="userTable">
                             <div class="scrollit">
                                 <form action="{{ url_for('manage_movies') }}" method="POST">
-                                    <table class="table table-bordered table-hover mngTbl">
+                                    <table class="table table-bordered table-hover mngTbl spacedTable">
                                         <tr>
                                             <th>Date</th>
                                             <th>Time</th>
