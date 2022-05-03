@@ -1,4 +1,4 @@
-from curses.ascii import NUL
+#from curses.ascii import NUL
 from distutils.log import error
 from wsgiref.validate import validator
 from flask import Flask, flash, g, make_response, redirect, render_template, url_for, request, session
@@ -507,7 +507,7 @@ def edit_profile():
             form.city.data = user.city
             form.state.data = user.state
             form.zip.data = user.zip            
-            return render_template('edit_profile.html',form=form, promo=user.promotions)
+            return render_template('editProfile.html',form=form, promo=user.promotions)
         else:
             flash('Admin cannot access that page')
             return render_template('login.html', form = LoginForm())

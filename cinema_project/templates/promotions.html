@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="../static/css/templatemo-edu-meeting.css">
     <link rel="stylesheet" href="../static/css/owl.css">
     <link rel="stylesheet" href="../static/css/lightbox.css">
+    <link rel="stylesheet" href="static/css/myCustom.css">
     <!--
 
 TemplateMo 569 Edu Meeting
@@ -50,7 +51,7 @@ https://templatemo.com/tm-569-edu-meeting
                             <li class="scroll-to-section">
                                 <a href="{{url_for('index')}}" class="active">Home</a>
                             </li>
-                            <li><a href="{{url_for('view_promotions')}}">Promotions</a></li>
+                            <li><a href="{{url_for('promotions')}}">Promotions</a></li>
                             <li class="has-sub">
                                 <a href="javascript:void(0)">Pages</a>
                                 <ul class="sub-menu">
@@ -88,292 +89,86 @@ https://templatemo.com/tm-569-edu-meeting
         </div>
     </section>
 
-
-
-
-
-    <section class="our-courses" id="courses">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="section-heading centeredNew">
-                <h2>All Movies</h2><br><br><br>
-              </div>
-            </div><br><br><br><br><br><br>
-            <div class="col-lg-12 card centeredNew">
-              <div class="categories">
-                {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                <ul class=flashes>
-                  {% for message in messages %}
-                  <h3>{{ message }}</h3>
-                  {% endfor %}
-                </ul>
-                {% endif %}
-                {% endwith %}
-                <!-- {% if error %}
-                  <p class=error><strong>Error:</strong> {{ error }}
-                    {% endif %}
-                {% for field, errors in form.errors.items() %}
-                {{ ', '.join(errors) }}
-                {% endfor %}
-                <form action="{{ url_for('index') }}" method="POST">
-                  <div class="row" style="float: right;">
-                    <div class="row-cols-lg-1">
-                      <h3>Search</h3><br>
-                      <input type="text" placeholder="Search.."><br><br><br>
-                      <div class="col-lg-12 form-group">
-    
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        {{ form.text(class="form-control", type="text", style="float: none;") }}
-                      </div>
-                      {{ form.search(class="btn btn-primary", type="submit", value="search")}}
-                      <!-- <button type="submit" value="search" name="search"> Edit </button> -->
-                    </div>
-                  </div>
-              </div>
-              <div class="row" style="float: left;">
-                <h3>Filters</h3><br><br><br>
-                <div class="filters">
-                  <ul>
-                    {{ form.filter1(class="btn btn-primary", type="submit" ,value="horror")}}
-                    {{ form.filter2(class="btn btn-primary", type="submit", value="comedy")}}
-                    {{ form.filter3(class="btn btn-primary" ,type="submit", value="action")}}
-                    <!-- <button type="submit" value="horror" name="horror"> Horror </button>
-                      <button type="submit" value="comedy" name="comedy"> Comedy </button>
-                      <button type="submit" value="action" name="action"> Action </button> -->
-                  </ul><br><br>
-                </div>
-              </div>
-            </div>
-          </div><br><br><br><br><br><br><br><br><br><br><br><br>
-    
-          <div class="col-lg-12">
-            <div class="grid-container">
-              {%for movieP in movie%}
-              <div class="grid-item">
-                <div class="down-content">
-                  <!-- <h4>Moonfall</h4> -->
-                  <div class="info">
-                    <div class="row">
-                      <div class="col-8">
-                        <a href="{{url_for('movie_details')}}"><img class="gridImage"
-                            src="../static/images/{{movieP.movie_picture}}" alt=""></a>
-                      </div>
-                      <div class="col-4">
-                        <h4>{{movieP.movie_title}}</h4>
-                        <!-- <span>May 20</span> -->
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {%endfor%}
-            </div>
-          </div>
-        </div>
-        </div>
-      </section> -->
-
-
-
-
-    <section class="meetings-page" id="meetings">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-heading centeredNew">
-                        <h2>All Promotions</h2><br><br><br>
-                    </div>
-                </div><br><br><br><br><br><br>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="filters">
-                                        <ul>
-                                            <li data-filter="*" class="active">All Promotions</li>
-                                            <li data-filter=".current">Current</li>
-                                            <li data-filter=".soon">Coming Soon</li>
-                                        </ul>
+    <section class="our-courses" id="courses"><br><br><br><br><br><br><br><br>
+        <div class="container" >
+            <div class="row center-screen">
+                <div class="col-lg-12 card centeredNew">
+                    <div class="col-lg-12">
+                        <h4>Make sure you are signed up for promotions to recieve the coupon codes in your email inbox!</h4><br>
+                        {% if session['email'] or request.cookies.get('email')%}
+                           <h3 class="main-button-blue"><a href="{{url_for('edit_profile')}}">Edit Profile</a></h3> <br>
+                        {% endif %}
+                        <div class="grid-container2">
+                            <div class="grid-item2">
+                                <div class="down-content">
+                                    <div class="info">
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <img src="../static/images/promoAll.png" alt="Promotion">
+                                            </div>
+                                            <div class="col-4">
+                                                <h4>20% OFF Next Booking</h4>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-12 card centeredNew">
-                                    <div class="col-lg-12">
-                                        <div class="grid-container">
-                                            <div class="grid-item">
-                                                <div class="meeting-item">
-                                                    <div class="thumb">
-                                                        <div class="price">
-                                                            <span>20% OFF</span>
-                                                        </div>
-                                                        <a href="meeting-details.html"><img
-                                                                src="../static/images/bookingpromo.jpg" alt=""></a>
-                                                    </div>
-                                                    <div class="down-content">
-                                                        <div class="date">
-                                                            <h6>Nov <span>12</span></h6>
-                                                        </div>
-                                                        <a href="meeting-details.html">
-                                                            <h4>20% Off Your Next Booking With Us!</h4>
-                                                        </a>
-                                                        <div class="col-lg-12">
-                                                            <div class="main-button-blue">
-                                                                <a href="index.html">Apply at Checkout</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                            </div>
 
-                                                    <div class="down-content">
-                                                        <div class="info">
-                                                            <div class="row">
-                                                                <div class="col-8">
-                                                                    <a href="{{url_for('checkout')}}"></a>
-                                                                </div>
-                                                                <div class="col-4">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    </div>
-                                                </div>
-                                                <div class="grid-item">
-                                                    <div class="meeting-item">
-                                                        <div class="thumb">
-                                                            <div class="price">
-                                                                <span>15% OFF</span>
-                                                            </div>
-                                                            <a href="meeting-details.html"><img
-                                                                    src="../static/images/childpromo.jpeg" alt=""></a>
-                                                        </div>
-                                                        <div class="down-content">
-                                                            <div class="date">
-                                                                <h6>Nov <span>12</span></h6>
-                                                            </div>
-                                                            <a href="meeting-details.html">
-                                                                <h4>15% Off Children's Tickets!</h4>
-                                                            </a>
-                                                            <div class="col-lg-12">
-                                                                <div class="main-button-blue">
-                                                                    <a href="index.html">Apply at Checkout</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                            <div class="grid-item2">
+                                <div class="down-content">
+                                    <div class="info">
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <img src="../static/images/promoAll.png" alt="Promotion">
+                                            </div>
+                                            <div class="col-4">
+                                                <h4>15% OFF Children's Tickets</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                                                    <div class="down-content">
-                                                        <div class="info">
-                                                            <div class="row">
-                                                                <div class="col-8">
-                                                                    <a href="{{url_for('checkout')}}"></a>
-                                                                </div>
-                                                                <div class="col-4">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="grid-item">
-                                                    <div class="meeting-item">
-                                                        <div class="thumb">
-                                                            <div class="price">
-                                                                <span>BUY 1 GET 1</span>
-                                                            </div>
-                                                            <a href="meeting-details.html"><img
-                                                                    src="../static/images/datenightpromo.jpg"
-                                                                    alt=""></a>
-                                                        </div>
-                                                        <div class="down-content">
-                                                            <div class="date">
-                                                                <h6>Nov <span>12</span></h6>
-                                                            </div>
-                                                            <a href="meeting-details.html">
-                                                                <h4>2 For 1 Date Night Special Offer!</h4>
-                                                            </a>
-                                                            <div class="col-lg-12">
-                                                                <div class="main-button-blue">
-                                                                    <a href="index.html">Apply at Checkout</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                            <div class="grid-item2">
+                                <div class="down-content">
+                                    <div class="info">
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <img src="../static/images/promoAll.png" alt="Promotion">
+                                            </div>
+                                            <div class="col-4">
+                                                <h4>BUY 1 GET 1 Date Night Special</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                                                    <div class="down-content">
-                                                        <div class="info">
-                                                            <div class="row">
-                                                                <div class="col-8">
-                                                                    <a href="{{url_for('checkout')}}"></a>
-                                                                </div>
-                                                                <div class="col-4">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="grid-item">
-                                                    <div class="meeting-item">
-                                                        <div class="thumb">
-                                                            <div class="price">
-                                                                <span>BUY 3 GET 1</span>
-                                                            </div>
-                                                            <a href="meeting-details.html"><img
-                                                                    src="../static/images/grouppromo.jpg" alt=""></a>
-                                                        </div>
-                                                        <div class="down-content">
-                                                            <div class="date">
-                                                                <h6>Nov <span>12</span></h6>
-                                                            </div>
-                                                            <a href="meeting-details.html">
-                                                                <h4>4 For 3 Special Group Ticket Purchases!</h4>
-                                                            </a>
-                                                            <div class="col-lg-12">
-                                                                <div class="main-button-blue">
-                                                                    <a href="index.html">Apply at Checkout</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="down-content">
-                                                        <div class="info">
-                                                            <div class="row">
-                                                                <div class="col-8">
-                                                                    <a href="{{url_for('checkout')}}"></a>
-                                                                </div>
-                                                                <div class="col-4">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                            <div class="grid-item2">
+                                <div class="down-content">
+                                    <div class="info">
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <img src="../static/images/promoAll.png" alt="Promotion">
+                                            </div>
+                                            <div class="col-4">
+                                                <h4>BUY 3 GET 4 Group Night Special</h4>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-12">
-                            <div class="col-lg-12">
-                                <div class="pagination">
-                                    <ul>
-                                        <li><a href="#">1</a></li>
-                                        <li class="active"><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
                     </div>
-
-                    <div class="footer">
-                        <p>Copyright © 2022 Virtual Cinemas., Ltd. All Rights Reserved.
-                            <br>
-                        </p>
-                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <p>Copyright © 2022 Virtual Cinemas., Ltd. All Rights Reserved.
+                    <br>
+                </p>
+            </div>
+        </div>
     </section>
-
 
 
     <!-- Scripts -->
