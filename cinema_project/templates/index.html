@@ -110,16 +110,11 @@ https://templatemo.com/tm-569-edu-meeting
       <h2 class="centeredNew" style="color: white;">Now Showing</h2><br><br><br>
       <div class="row">
         <div class="col-lg-12">
-
           <div class="owl-service-item owl-carousel">
             {%for movieP in allmovies%}
             <div class="item" style="background-image: url(../static/images/{{movieP.movie_picture}});">
-              <div class="icon">
-                <a href="{{url_for('movie_details', movie=movieP.id)}}"><img src="../static/images/play-icon.png"
-                    alt=""></a>
-              </div>
               <div class="down-content">
-                <br><br><br>
+                <br><br><br><br><br><br><br><br><br>
               </div>
             </div>
             {%endfor%}
@@ -202,14 +197,9 @@ https://templatemo.com/tm-569-edu-meeting
     </div>
   </section>
 
-  <section class="our-courses" id="courses">
+  <section class="our-courses" id="courses"><br><br><br><br><br><br><br>
     <div class="container">
       <div class="row">
-        <div class="col-lg-12">
-          <div class="section-heading centeredNew">
-            <h2>All Movies</h2><br><br><br>
-          </div>
-        </div><br><br><br><br><br><br>
         <div class="col-lg-12 card centeredNew">
           <div class="categories">
             {% with messages = get_flashed_messages() %}
@@ -221,66 +211,107 @@ https://templatemo.com/tm-569-edu-meeting
             </ul>
             {% endif %}
             {% endwith %}
-            <!-- {% if error %}
-              <p class=error><strong>Error:</strong> {{ error }}
-                {% endif %} -->
             {% for field, errors in form.errors.items() %}
             {{ ', '.join(errors) }}
             {% endfor %}
             <form action="{{ url_for('index') }}" method="POST">
-              <div class="row" style="float: right;">
-                <div class="row-cols-lg-1">
-                  
-                  <div class="col-lg-12 form-group">
-
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    {{ form.text(class="form-control", type="text", style="float: none;") }}
-                  </div>
-                  {{ form.search(class="btn btn-primary", type="submit", value="search")}}
-                  <!-- <button type="submit" value="search" name="search"> Edit </button> -->
-                </div>
-              </div>
-
-          </div>
-          <div class="row" style="float: left;">
-            <h3>Filters</h3><br><br><br>
-            <div class="filters">
-              <ul>
-                {{ form.filter1(class="btn btn-primary", type="submit" ,value="horror")}}
-                {{ form.filter2(class="btn btn-primary", type="submit", value="comedy")}}
-                {{ form.filter3(class="btn btn-primary" ,type="submit", value="action")}}
-                <!-- <button type="submit" value="horror" name="horror"> Horror </button>
-                  <button type="submit" value="comedy" name="comedy"> Comedy </button>
-                  <button type="submit" value="action" name="action"> Action </button> -->
-              </ul><br><br>
-            </div>
-          </div>
-        </div>
-      </div><br><br><br><br><br><br><br><br><br><br><br><br>
-
-      <div class="col-lg-12">
-        <div class="grid-container">
-          {%for movieP in movie%}
-          <div class="grid-item">
-            <div class="down-content">
-              <!-- <h4>Moonfall</h4> -->
-              <div class="info">
-                <div class="row">
-                  <div class="col-8">
-                    <a href="{{url_for('movie_details', movie=movieP.id)}}"><img class="gridImage"
-                        src="../static/images/{{movieP.movie_picture}}" alt=""></a>
-                  </div>
-                  <div class="col-4">
-                    <h4>{{movieP.movie_title}}</h4>
-                    <!-- <span>May 20</span> -->
+              <div class="grid-container3 roundedGrid">
+                <div class="grid-item3">
+                  <div class="down-content">
+                    <div class="info">
+                      <div class="row">
+                        <div class="col-8">
+                          <div class="align-self-center">
+                            <div class="col-lg-6 mb-lg-4">
+                              <div class=" roundedDiv">
+                                <div class="row" style="float: left;">
+                                  <h3>Filters</h3><br><br><br>
+                                  <div class="filters">
+                                    <ul>
+                                      {{ form.filter1(class="roundedGrid", type="submit" ,value="Horror",
+                                      style="background-color: #f5a425;
+                                      color: white;
+                                      font-family: 'Poppins', sans-serif; width: 100px;")}}
+                                      {{ form.filter2(class="roundedGrid", type="submit", value="Comedy",
+                                      style="background-color: #f5a425;
+                                      color: white;
+                                      font-family: 'Poppins', sans-serif; width: 100px;")}}
+                                      {{ form.filter3(class="roundedGrid" ,type="submit", value="Action",
+                                      style="background-color: #f5a425;
+                                      color: white;
+                                      font-family: 'Poppins', sans-serif; width: 100px;")}}
+                                    </ul><br><br>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
+                <div class="grid-item3">
+                  <div class="down-content">
+                    <div class="info">
+                      <div class="row">
+                        <div class="col-8">
+                          <div class="align-self-center">
+                            <div class="col-lg-6 mb-lg-4" >
+                              <div class=" roundedDiv">
+                                <div class="row" style="float: right;">
+                                  <h3>Search</h3><br><br><br>
+                                  <div class="row-cols-lg-1">
+                                    <div class="col-lg-12 form-group">
+                                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                      {{ form.text(class="form-control", type="text", style="float: none;") }}
+                                      {{ form.search(class="roundedGrid", type="submit", value="Search",
+                                      style="background-color:
+                                      #2c739fba; color: white;
+                                      font-family: 'Poppins', sans-serif; width: 100px;")}}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
+            </form>
           </div>
-          {%endfor%}
-        </div>
+        </div><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
       </div>
+    </div>
+
+
+
+    <div class="col-lg-12">
+      <div class="grid-container roundedGrid">
+        {%for movieP in movie%}
+        <div class="grid-item">
+          <div class="down-content">
+            <!-- <h4>Moonfall</h4> -->
+            <div class="info">
+              <div class="row">
+                <div class="col-8">
+                  <a href="{{url_for('movie_details', movie=movieP.id)}}"><img class="gridImage"
+                      src="../static/images/{{movieP.movie_picture}}" alt=""></a>
+                </div>
+                <div class="col-4">
+                  <h4>{{movieP.movie_title}}</h4>
+                  <!-- <span>May 20</span> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {%endfor%}
+      </div>
+    </div>
     </div>
     </div>
   </section>
@@ -325,11 +356,6 @@ https://templatemo.com/tm-569-edu-meeting
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="col-lg-6 align-self-center">
-          <div class="video">
-            <a href="{{url_for('suprise')}}" target="_blank"><img src="static/images/play-icon.png" alt=""></a>
           </div>
         </div>
       </div>
@@ -396,7 +422,4 @@ https://templatemo.com/tm-569-edu-meeting
       });
     </script>
 </body>
-
-</body>
-
 </html>
