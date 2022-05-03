@@ -66,8 +66,8 @@ https://templatemo.com/tm-569-edu-meeting
         <div class="container">
             <div class="row center-screen">
                 <div class="col-lg-12">
-                    <div class="card container" style="width: 100%">
-                      <div class="text-center">
+                    <div class="card container" style="overflow: auto;">
+                      <div class="text-center centeredNew">
                         <br><h2>Manage Users</h2><br>
                     </div>
                       
@@ -99,7 +99,7 @@ https://templatemo.com/tm-569-edu-meeting
                                             <td>{{userP.city}}</td>
                                             <td>{{userP.state}}</td>
                                             <td>{{userP.country}}</td>
-                                            <td><button type="submit" value="{{userP.id}}" name="editUser"> Edit </button></td>>
+                                            <td><button type="submit" value="{{userP.id}}" name="editUser"> Edit </button></td>
                                         </tr>
                                         {%endfor%}
                                 </table>
@@ -110,10 +110,11 @@ https://templatemo.com/tm-569-edu-meeting
                             <span>No users found for the search criteria</span>
                         </div> -->
 
-                        <div class="addUser">
-                          <a class="btn btn-sm btn-primary my-2 text-uppercase "
-                              th:href="@{add_user_by_admin.html}">Add a User</a>
-                      </div>
+                        <div class="col-lg-12 addUser centeredNew">
+                            <div class="main-button-blue"><br>
+                              <a th:href="@{add_user_by_admin.html}">Add a User</a>
+                            </div>
+                        </div>
 
                     </div>
 
