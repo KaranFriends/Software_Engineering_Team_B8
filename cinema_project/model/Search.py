@@ -5,7 +5,7 @@ from flask_wtf import FlaskForm
 
 
 class SearchAndFilter(FlaskForm):
-    text = StringField("Search Movie", render_kw={"placeholder": "Search Movie"})
+    text = StringField("Search Movie", validators=[InputRequired()], render_kw={"placeholder": "Search Movie"})
     filter1 = SubmitField(label = "Horrow")
     filter2 = SubmitField(label = "Comedy")
     filter3 = SubmitField(label = "Action")

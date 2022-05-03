@@ -125,7 +125,6 @@ class Seat(db.Model, UserMixin):
     show_ID=db.Column(db.Integer, db.ForeignKey('show.id'), nullable=False)
     seatNumber=db.Column(db.Integer, nullable=False)
 
-
 class Booking(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
@@ -135,19 +134,16 @@ class Booking(db.Model, UserMixin):
     booking_time = db.Column(db.Time, nullable=False)
     ticketBookings = db.relationship('TicketBooking', backref='booking', lazy=True)
 
-
 class TicketBooking(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     booking_id = db.Column(db.Integer, db.ForeignKey("booking.id"), nullable=False)
     ticket_id = db.Column(db.Integer, db.ForeignKey("ticket.id"), nullable=False)
     booking_price = db.Column(db.Integer, nullable=False)
 
-
 class TicketPrice(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     ticket_price = db.Column(db.Integer, nullable=False)
     ticket_category_name = db.Column(db.Enum, nullable=False)
-
 
 # # table for storing images directly
 class Img(db.Model, UserMixin):
@@ -167,8 +163,8 @@ class Promotion(db.Model, UserMixin):
 # def load_user(user_id):
 #     return User.query.get(int(user_id))
 
-@app.route('/')
-@app.route('/home')
+@app.route('/', methods=['POST','GET'])
+@app.route('/home', methods=['POST','GET'])
 @app.route('/index', methods=['POST','GET'])
 def index():
     movie = Movie.query.order_by(Movie.id).all()
@@ -177,10 +173,9 @@ def index():
     if request.method == 'GET':
         if session['email']:
             if User.query.filter_by(email = session['email']).first().user_type == 1:
-                flash("admin cannot access this portal")
-                return render_template('login.html', form=LoginForm())
+                return redirect(url_for('admin_portal'))
         return render_template('index.html', allmovies=movie, movie=movie, form=form)
-    else:
+    elif request.method == 'POST':
         filteredMovie = []
         if form.search.data:
             if form.text.data != null:
@@ -190,11 +185,9 @@ def index():
                 for i in range(len(movie)):
                     if form.text.data in movie[i].movie_title:
                         moviesearched.append(movie[i])
-                return render_template('index.html', movie=moviesearched, form=form)
+                return redirect(url_for('index', movie=moviesearched, form=form))
                 # return redirect(url_for('search',text=form.text.data))
-            else:
-                flash('Please enter text before searching',"error")
-                return render_template('login.html', form = form)
+            
         elif form.filter1.data :
             for i in range(len(movie)):
                 if movie[i].category_ID == 1:
@@ -208,11 +201,6 @@ def index():
                 if movie[i].category_ID == 3:
                     filteredMovie.append(movie[i])
         return render_template('index.html', allmovies=movie, movie=filteredMovie, form=form)
-
-# @app.route('/search/<text>')
-# def search(text):
-
-
 
 
 @app.route('/login', methods=['POST','GET'])
@@ -232,7 +220,7 @@ def login():
                         resp.set_cookie('email', user.email)
                         return resp
                     if user.user_type == 1:
-                        return redirect(url_for('admin_portal3'))
+                        return redirect(url_for('admin_portal'))
                     else:
                         return redirect(url_for('index'))
                 else:
@@ -241,7 +229,12 @@ def login():
             flash('Invalid Login credentials')
             return render_template('login.html', form = form)
     else:
-        # request.form.setlist('remember',["1"])
+        if session['email']:
+            user = User.query.filter_by(email = session['email']).first()
+            if user.user_type == 1:
+                return redirect(url_for('admin_portal'))
+            else:
+                return redirect(url_for('index'))
         return render_template('login.html', form=form)
 
 @app.route('/logout')
@@ -260,11 +253,11 @@ def movie_details(movie):
     return render_template('movieDetails.html', movie = movie, show=show)
 
 @app.route('/promotions')
-def view_promotions():
+def promotions():
     return render_template('promotions.html')
 
 @app.route('/admin_portal')
-def admin_portal3():
+def admin_portal():
     return render_template('adminPortal.html')
 
 @app.route('/edit_payment_details')
@@ -283,18 +276,6 @@ def forgot_Password():
 def reset_Password():
     return render_template('resetPassword.html')
 
-
-# @app.route('/manage_users')
-# def manage_Users():
-#     return render_template('manageUsers.html')
-
-# # @app.route('/manage_movies')
-# # def manage_Movies():
-# #     return render_template('manageMovies.html')
-
-# @app.route('/manage_promotions')
-# def manage_Promotions():
-#     return render_template('managePromotions.html')
 
 @app.route('/seat_selection')
 def seat_Selection():
@@ -678,6 +659,11 @@ def addMovie():
 #         users
 #         user = [x for x in users if x.id == session['user_id']][0]
 #         g.user = user
+
+@app.after_request
+def add_header(response):
+    response.headers.add('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0')
+    return response
 
 if __name__ == '__main__':
     app.run(debug=True)
