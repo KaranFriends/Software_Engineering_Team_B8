@@ -77,7 +77,7 @@ https://templatemo.com/tm-569-edu-meeting
                                 <form action="{{ url_for('manage_promotions') }}" method="POST">
                                     <table class="table table-bordered table-hover mngTbl spacedTable">
                                         <tr>
-                                            <th>Code</th>
+                                            <th class="centeredNew">Code</th>
                                             <!-- <th>Start Date</th>
                                             <th>End Date</th> -->
                                         </tr>
@@ -98,12 +98,11 @@ https://templatemo.com/tm-569-edu-meeting
                         <!-- <div class="text-center text-danger" th:if="${ #lists.isEmpty(users)}">
                             <span>No users found for the search criteria</span>
                         </div> -->
-
-                        <div class="addUser">
+                        <div class="main-button-blue"><br>
                             <a class="btn btn-sm btn-primary my-2 text-uppercase "
                                 href="{{url_for('add_promotions')}}">Add a
                                 Promotion</a>
-                        </div>
+                          </div>
 
                     </div>
 

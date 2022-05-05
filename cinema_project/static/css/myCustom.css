@@ -659,9 +659,23 @@ background: linear-gradient(90deg, rgba(87,63,251,1) 0%, rgba(70,215,252,1) 100%
   border-radius: 20px;
 }
 
-.paddAndMargin {
+.marginLR {
   margin-left: 10px;
   margin-right: 10px;
+}
+
+.marginBot {
+  margin-bottom: 600px;
+}
+
+.marginTB {
+  margin-top: 300px;
+  margin-bottom: 100px;
+}
+
+.paddOnly {
+  padding-top: 50px;
+  padding-bottom: 30px;
 }
 
 
