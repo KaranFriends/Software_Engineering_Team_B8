@@ -99,6 +99,17 @@ label {
   border: transparent;
 }
 
+.card4 {
+  background-color: rgba(255, 255, 255, 0.907);
+  margin-bottom: 10px;
+  margin-top: 10px;
+  padding: 6vh 4vh;
+  width: 35%;
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 1rem;
+  border: transparent;
+}
+
 @media(max-width:767px) {
   .card {
     margin: 3vh auto
@@ -586,6 +597,7 @@ background: linear-gradient(90deg, rgba(87,63,251,1) 0%, rgba(70,215,252,1) 100%
   right: 50%;
 }
 
+
 .grid-item {
   background-color: rgba(220, 217, 211, 0.388);
   color: rgba(25, 24, 24, 0.94);
@@ -641,6 +653,21 @@ background: linear-gradient(90deg, rgba(87,63,251,1) 0%, rgba(70,215,252,1) 100%
 }
 
 
+.grid-container4 {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  background-color: rgba(237, 236, 234, 0);
+  padding: 5px;
+}
+
+.grid-item4 {
+  background-color: rgba(220, 217, 211, 0);
+  padding: 10px;
+  font-size: 20px;
+  text-align: center;
+}
+
+
 
 .spacedTable {
   border-spacing: 30px;
@@ -666,6 +693,11 @@ background: linear-gradient(90deg, rgba(87,63,251,1) 0%, rgba(70,215,252,1) 100%
 
 .marginBot {
   margin-bottom: 600px;
+}
+
+
+.marginTop {
+  margin-top: 100px;
 }
 
 .marginTB {
