@@ -1,5 +1,5 @@
 #from curses.ascii import NUL
-from crypt import methods
+#from crypt import methods
 from distutils.log import error
 from wsgiref.validate import validator
 from flask import Flask, flash, g, make_response, redirect, render_template, url_for, request, session

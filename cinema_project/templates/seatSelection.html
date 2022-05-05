@@ -82,7 +82,7 @@ https://templatemo.com/tm-569-edu-meeting
     <div class="container">
       <div class="row ">
         <div class="col-lg-12 center-screen">
-          <div class="card bodyody">
+          <div class="card bodyNew">
             {% with messages = get_flashed_messages() %}
             {% if messages %}
             <ul class=flashes>
@@ -98,8 +98,8 @@ https://templatemo.com/tm-569-edu-meeting
             <h3>Seat Selection</h3><br><br>
             <ul class="showcase">
               <li>
-                <div class="seat"></div>
-                <small>Available</small>
+                <div class="seatFake"></div>
+                <small style="color: white;">Available</small>
               </li>
               <li>
                 <div class="seatFakeSelected"></div>
@@ -112,10 +112,10 @@ https://templatemo.com/tm-569-edu-meeting
             </ul>
 
             <form action="{{ url_for('seatSelection', movie=movie, show=show) }}" method="POST">
-              <div class="containtain">
+              <div class="containNew">
                 <div class="screen"></div>
 
-                <div class="rowow">
+                <div class="rowNew">
                   {% for i in range(1,9) %}
                   {% if i in seatVacant %}
                   <div class="seat"> <input type="checkbox" name="seatInput" value={{i}}><span class="checkmark"></span></div>
@@ -125,7 +125,7 @@ https://templatemo.com/tm-569-edu-meeting
                   {%endif%}
                   {%endfor%}
                 </div>
-                <div class="rowow">
+                <div class="rowNew">
                   {% for i in range(9,17) %}
                   {% if i in seatVacant %}
                   <div class="seat"> <input type="checkbox" name="seatInput" value={{i}}> <span class="checkmark"></span></div>
@@ -135,7 +135,7 @@ https://templatemo.com/tm-569-edu-meeting
                   {%endif%}
                   {%endfor%}
                 </div>
-                <div class="rowow">
+                <div class="rowNew">
                   {% for i in range(17,25) %}
                   {% if i in seatVacant %}
                   <div class="seat"> <input type="checkbox" name="seatInput" value={{i}}> <span class="checkmark"></span></div>
@@ -145,7 +145,7 @@ https://templatemo.com/tm-569-edu-meeting
                   {%endif%}
                   {%endfor%}
                 </div>
-                <div class="rowow">
+                <div class="rowNew">
                   {% for i in range(25,33) %}
                   {% if i in seatVacant %}
                   <div class="seat"> <input type="checkbox" name="seatInput" value={{i}}> <span class="checkmark"></span></div>
@@ -155,7 +155,7 @@ https://templatemo.com/tm-569-edu-meeting
                   {%endif%}
                   {%endfor%}
                 </div>
-                <div class="rowow">
+                <div class="rowNew">
                   {% for i in range(33,41) %}
                   {% if i in seatVacant %}
                   <div class="seat"> <input type="checkbox" name="seatInput" value={{i}}> <span class="checkmark"></span></div>
@@ -165,7 +165,7 @@ https://templatemo.com/tm-569-edu-meeting
                   {%endif%}
                   {%endfor%}
                 </div>
-                <div class="rowow">
+                <div class="rowNew">
                   {% for i in range(41,49) %}
                   {% if i in seatVacant %}
                   <div class="seat"> <input type="checkbox" name="seatInput" value={{i}}> <span class="checkmark"></span></div>
@@ -177,8 +177,9 @@ https://templatemo.com/tm-569-edu-meeting
                 </div>
               </div>
 
-              <div class="main-button-red">
-                {{form.paymentSubmit(class="roundedGrid", type="submit")}}
+              <div class="">
+                {{form.paymentSubmit(class="roundedGrid", type="submit",  style="background-color:  #2c739fba; color: white;
+                font-family: 'Poppins', sans-serif;")}}
               </div><br><br>
             </form>
           </div>
