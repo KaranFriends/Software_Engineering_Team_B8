@@ -64,11 +64,10 @@ https://templatemo.com/tm-569-edu-meeting
     <section class="meetings-page" id="meetings">
 
         <div class="container">
-            <div class="row center-screen">
-                <div class="col-lg-12">
+            <div class="row center-screen" >
                     <div class="card container" style="overflow: auto;">
                       <div class="text-center centeredNew">
-                        <br><h2>Manage Users</h2><br>
+                        <br><h2>Manage Users</h2>
                     </div>
                       
                         <div id="table-scroll" th:if="${not #lists.isEmpty(users)}" class="userTable">
@@ -98,8 +97,9 @@ https://templatemo.com/tm-569-edu-meeting
                                             <td>{{userP.addressline2}}</td>
                                             <td>{{userP.city}}</td>
                                             <td>{{userP.state}}</td>
+                                            <td>{{userP.zip}}</td>
                                             <td>{{userP.country}}</td>
-                                            <td><button type="submit" value="{{userP.id}}" name="editUser"> Edit </button></td>
+                                            <!-- <td><button type="submit" value="{{userP.id}}" name="editUser"> Edit </button></td> -->
                                         </tr>
                                         {%endfor%}
                                 </table>
@@ -111,14 +111,11 @@ https://templatemo.com/tm-569-edu-meeting
                         </div> -->
 
                         <div class="col-lg-12 addUser centeredNew">
-                            <div class="main-button-blue"><br>
+                            <div class="main-button-blue">
                               <a th:href="@{add_user_by_admin.html}">Add a User</a>
                             </div>
                         </div>
-
                     </div>
-
-                </div>
             </div>
         </div>
 
