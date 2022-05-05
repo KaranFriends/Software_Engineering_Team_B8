@@ -82,117 +82,141 @@ https://templatemo.com/tm-569-edu-meeting
   <section class="meetings-page" id="meetings">
     <form action="{{ url_for('payment', movie=movie, show=show) }}" method="POST">
       <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <br>
-            <h2 style="color: white;">Payment</h2><br>
-            <div class="card bod"><br>
-              <div class="row">
-                <div class="col-md-8 cart">
-                  <div class="title">
-                    <div class="row">
-                      <div class="col ">
-                        <h3>&nbsp;&nbsp;Shopping Cart</h3>
-                        <hr>
-                      </div>
-                    </div>
-                  </div>
+        <div class="row marginBot marginTop">
+          <div class="grid-container4 roundedGrid">
+            <div class="grid-item4">
+              <div class="down-content">
+                <div class="info">
                   <div class="row">
-                    <div class="row main align-items-center">
-                      <!-- <div class="col-2"><img class="img-thumbnail" src="../static/images/adult.jpg"></div> -->
-                      <div class="col">
-                        <div class="row">Adult Ticket</div>
-                        <hr>
-                      </div>
-                      <div class="col">
-                        &dollar; 13.59 <span class="close">&#10005;</span>
-                        <a id="subtractCounterAdult">-</a>
-                        <input id="inputAdult" name="inputAdult" value="0" readonly="readonly" size="1"></input>
-                        <a id="addCounterAdult">+</a>
-                      </div>
+                    <div class="col-lg-6 mb-lg-4">
+                      <div class="col-md-8 card4 marginBot" style="position: absolute; left: 12%; top: 30%;">
+                        <div class="title">
+                          <div class="row">
+                            <div class="col ">
+                              <h3>&nbsp;&nbsp;Shopping Cart</h3>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="row main align-items-center">
+                            <!-- <div class="col-2"><img class="img-thumbnail" src="../static/images/adult.jpg"></div> -->
+                            <div class="col">
+                              <div class="row">Adult Ticket</div>
+                              <hr>
+                            </div>
+                            <div class="col">
+                              &dollar; 13.59 <span class="close">&#10005;</span>
+                              <a id="subtractCounterAdult">-</a>
+                              <input id="inputAdult" name="inputAdult" value="0" readonly="readonly" size="1"></input>
+                              <a id="addCounterAdult">+</a>
+                            </div>
 
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="row main align-items-center">
-                      <!-- <div class="col-2"><img class="img-thumbnail" src="../static/images/senior.jpg"></div> -->
-                      <div class="col">
-                        <div class="row">Senior Ticket</div>
-                        <hr>
-                      </div>
-                      <div class="col">
-                        &dollar; 10.59 <span class="close">&#10005;</span>
-                        <a id="subtractCounterSenior">-</a>
-                        <input id="inputSenior" name="inputSenior" value="0" readonly="readonly" size="1"></input>
-                        <a id="addCounterSenior">+</a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="row main align-items-center">
-                      <!-- <div class="col-2"><img class="img-thumbnail" src="../static/images/child.jpg"></div> -->
-                      <div class="col">
-                        <div class="row">Child Ticket</div>
-                        <hr>
-                      </div>
-                      <div class="col">
-                        &dollar; 9.59 <span class="close">&#10005;</span>
-                        <a id="subtractCounterChild">-</a>
-                        <input id="inputChild" name="inputChild" value="0" readonly="readonly" size="1"></input>
-                        <a id="addCounterChild">+</a>
+                          </div>
+                        </div><br>
+                        <div class="row">
+                          <div class="row main align-items-center">
+                            <!-- <div class="col-2"><img class="img-thumbnail" src="../static/images/senior.jpg"></div> -->
+                            <div class="col">
+                              <div class="row">Senior Ticket</div>
+                              <hr>
+                            </div>
+                            <div class="col">
+                              &dollar; 10.59 <span class="close">&#10005;</span>
+                              <a id="subtractCounterSenior">-</a>
+                              <input id="inputSenior" name="inputSenior" value="0" readonly="readonly" size="1"></input>
+                              <a id="addCounterSenior">+</a>
+                            </div>
+                          </div>
+                        </div><br>
+                        <div class="row">
+                          <div class="row main align-items-center">
+                            <!-- <div class="col-2"><img class="img-thumbnail" src="../static/images/child.jpg"></div> -->
+                            <div class="col">
+                              <div class="row">Child Ticket</div>
+                              <hr>
+                            </div>
+                            <div class="col">
+                              &dollar; 9.59 <span class="close">&#10005;</span>
+                              <a id="subtractCounterChild">-</a>
+                              <input id="inputChild" name="inputChild" value="0" readonly="readonly" size="1"></input>
+                              <a id="addCounterChild">+</a>
+                            </div>
+                          </div>
+                        </div><br>
+                        <div class="main-button-yellow centeredNew2">
+                          <a href="{{url_for('seatSelection', movie=movie, show=show)}}">Back to Seat Selection</a>
+                        </div><br>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4 summary" style="border-left: 1px solid rgba(0,0,0,.1); padding: 2em;">
-                  <div>
-                    <h5><b>Summary</b></h5>
-                  </div>
-                  <hr>
+              </div>
+            </div>
+            <div class="grid-item4">
+              <div class="down-content">
+                <div class="info">
                   <div class="row">
-                    <div class="col" style="padding-left:0;">Tickets Allowed {{seatNumber}}</div>
-                    <div class="col text-right">&dollar;
-                      <input value="0" readonly="readonly" size="1"></input>
-                    </div>
-                  </div><br>
-                  <div class="row">
-                    <div class="col" style="padding-left:0;">Tax</div>
-                    <div class="col text-right">&dollar;
-                      <input value="0" readonly="readonly" size="1"></input>
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col" style="padding-left:0;">TOTAL PRICE</div>
-                    <div class="col text-right">&dollar;
-                      <input value="0" readonly="readonly" size="1"></input>
-                    </div>
-                    <br.<br><br>
-                      {% with messages = get_flashed_messages() %}
-                      {% if messages %}
-                      <ul class=flashes>
-                        {% for message in messages %}
-                        <h3>{{ message }}</h3>
-                        {% endfor %}
-                      </ul>
-                      {% endif %}
-                      {% endwith %}
-                      {% for field, errors in form.errors.items() %}
-                      {{ ', '.join(errors) }}
-                      {% endfor %}
+                    <div class="col-8">
+                      <div class="align-self-center">
+                        <div class="row">
+                          <div class="col-lg-6 mb-lg-4">
+                            <div class="col-md-4 card4" style="position: absolute; right: 12%; top: 30%;" ;
+                              style="border-left: 1px solid rgba(0,0,0,.1); padding: 2em;">
+                              <div>
+                                <h3>Summary</h3><br>
+                              </div>
+                              <div class="row">
+                                <div class="col" style="padding-left:0;">Tickets Allowed: {{seatNumber}}</div>
+                                <div class="col text-right">&dollar;
+                                  <input value="0" readonly="readonly" size="1"></input>
+                                </div>
+                              </div><br>
+                              <div class="row">
+                                <div class="col" style="padding-left:0;">Tax</div>
+                                <div class="col text-right">&dollar;
+                                  <input value="0" readonly="readonly" size="1"></input>
+                                </div>
+                              </div>
+                              <hr>
+                              <div class="row">
+                                <div class="col" style="padding-left:0;">TOTAL PRICE</div>
+                                <div class="col text-right">&dollar;
+                                  <input value="0" readonly="readonly" size="1"></input>
+                                </div>
+                                <br.<br><br>
+                                  {% with messages = get_flashed_messages() %}
+                                  {% if messages %}
+                                  <ul class=flashes>
+                                    {% for message in messages %}
+                                    <h3>{{ message }}</h3>
+                                    {% endfor %}
+                                  </ul>
+                                  {% endif %}
+                                  {% endwith %}
+                                  {% for field, errors in form.errors.items() %}
+                                  {{ ', '.join(errors) }}
+                                  {% endfor %}
 
-                      <div class="main-button-red centeredNew">
-                        {{form.paymentSubmit(class="roundedGrid", type="submit")}}
-                      </div><br><br><br><br>
-
-                      <br>
+                                  <div class="main-button-red centeredNew">
+                                    {{form.paymentSubmit(class="roundedGrid", type="submit",
+                                    style="background-color: #a12c2f;
+                                    color: white;
+                                    font-family: 'Poppins', sans-serif;")}}
+                                  </div><br><br><br><br>
+                                  <br>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div><br>
+      </div>
     </form>
     <!-- Change the `data-field` of buttons and `name` of input field's for multiple plus minus buttons
     <div class="input-group plus-minus-input ">
