@@ -1,4 +1,5 @@
 #from curses.ascii import NUL
+from crypt import methods
 from distutils.log import error
 from wsgiref.validate import validator
 from flask import Flask, flash, g, make_response, redirect, render_template, url_for, request, session
@@ -14,6 +15,7 @@ import random
 #from model.model import User, Card #Ticket, Review, Movie, MovieCategory, Show, Showroom, Booking, TicketBooking, TicketPrice, Img
 from model.LoginForm import LoginForm
 from model.RegistrationForm import RegistrationForm
+from model.SeatSelection import SeatSelection
 from model.UserEditForm import UserEditForm
 from model.ChangePasswordEnterEmail import ChangePasswordEnterEmail
 from model.ChangePasswordVerifyOTP import ChangePasswordVerifyOTP
@@ -24,6 +26,8 @@ from model.AddMovie import AddMovie
 from model.PromotionAdd import PromotionAdd
 from model.ShowAdd import ShowAdd
 from model.Search import SearchAndFilter
+from model.SeatSelection import SeatSelection
+from model.Payment import Payment
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
@@ -277,13 +281,47 @@ def reset_Password():
     return render_template('resetPassword.html')
 
 
-@app.route('/seat_selection')
-def seat_Selection():
-    return render_template('seatSelection.html')
+@app.route('/seatSelection/<movie>,<show>', methods=['GET','POST'])
+def seatSelection(movie, show):
+    form = SeatSelection()
+    seatOccupied = Seat.query.filter_by(show_ID=show).all()
+    allSeats = list(range(1,49))
+    seatVacant = list(filter(lambda v: v not in seatOccupied, allSeats))
+    if request.method == 'POST':
+        test_list = [int(i) for i in request.form.getlist('seatInput')]
+        if len(test_list) == 0:
+            flash("Please select at least one seat")
+            return render_template('seatSelection.html', seatVacant=seatVacant, movie=movie, show=show, form=form)
+        resp = make_response(render_template('payment.html', movie=movie, show=show, seatNumber = len(test_list), form=Payment()))
+        
+        resp.set_cookie('seats', json.dumps(test_list))
+        return resp
+    else:
+        return render_template('seatSelection.html', seatVacant=seatVacant, movie=movie, show=show, form=form)
 
-@app.route('/payment')
-def payment():
-    return render_template('payment.html')
+@app.route('/payment/<movie>,<show>', methods=['POST'])
+def payment(movie, show):
+    seatList = request.cookies.get('seats')
+    print(seatList)
+    seatList = seatList.strip('][').split(', ')
+    print(seatList)
+    seatList = [int(i) for i in seatList]
+    print(seatList)
+    countAdult = int(request.form['inputAdult'])
+    countSenior = int(request.form['inputSenior'])
+    countChild = int(request.form['inputChild'])
+    print(countAdult)
+    print(countSenior)
+    print(countChild)
+    size = len(seatList)
+    total = countAdult + countSenior + countChild
+    print('size', size)
+    print('total', total)
+    if size != total:
+        error = "Please select " + str(len(seatList)) + " tickets"
+        flash(error) 
+        return render_template('payment.html', movie=movie, show=show, seatNumber = size, form=Payment())
+    return render_template('checkout.html', countAdult = countAdult, countSenior = countSenior, countChild = countChild, movie = movie, show=show)
 
 @app.route('/checkout')
 def checkout():

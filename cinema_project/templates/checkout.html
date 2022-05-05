@@ -50,7 +50,7 @@ https://templatemo.com/tm-569-edu-meeting
               <li class="scroll-to-section">
                 <a href="{{url_for('index')}}" class="active">Home</a>
               </li>
-               <li class="has-sub">
+              <li class="has-sub">
                 <a href="javascript:void(0)">Pages</a>
                 <ul class="sub-menu">
                   {% if session['email'] or request.cookies.get('email')%}
@@ -122,13 +122,10 @@ https://templatemo.com/tm-569-edu-meeting
                 <div class="row">
                   <div class="col" style="padding-left:0;">TOTAL PRICE</div>
                   <div class="col text-right">&dollar; 52.77</div>
-                  <br><div class="main-button-red centeredNew">
+                  <br>
+                  <div class="main-button-red centeredNew">
                     <a href="{{url_for('confirmation')}}">Confirm Purchase</a>
                   </div><br><br><br><br>
-                  <div class="main-button-yellow centeredNew">
-                    <a href="{{url_for('payment')}}">Back to Cart</a>
-                  </div><br>
-                 
                 </div>
               </div>
             </div>
