@@ -102,12 +102,12 @@ https://templatemo.com/tm-569-edu-meeting
                 <small>Available</small>
               </li>
               <li>
-                <div class="seat selected"></div>
-                <small>Selected</small>
+                <div class="seatFakeSelected"></div>
+                <small style="color: white;">Selected</small>
               </li>
               <li>
-                <div class="seat occupied"></div>
-                <small>Occupied</small>
+                <div class="seatFakeOccupied"></div>
+                <small style="color: white;">Occupied</small>
               </li>
             </ul>
 
@@ -118,60 +118,60 @@ https://templatemo.com/tm-569-edu-meeting
                 <div class="rowow">
                   {% for i in range(1,9) %}
                   {% if i in seatVacant %}
-                  <div class="seat"> <input type="checkbox" name="seatInput" value={{i}}> </div>
+                  <div class="seat"> <input type="checkbox" name="seatInput" value={{i}}><span class="checkmark"></span></div>
                   {%else%}
                   <div class="seat occupied"> <input type="checkbox" name="seatInput" checked="checked"
-                      disabled="disabled" value={{i}}> </div>
+                      disabled="disabled" value={{i}}> <span class="checkmark"></span></div>
                   {%endif%}
                   {%endfor%}
                 </div>
                 <div class="rowow">
                   {% for i in range(9,17) %}
                   {% if i in seatVacant %}
-                  <div class="seat"> <input type="checkbox" name="seatInput" value={{i}}> </div>
+                  <div class="seat"> <input type="checkbox" name="seatInput" value={{i}}> <span class="checkmark"></span></div>
                   {%else%}
                   <div class="seat occupied"> <input type="checkbox" name="seatInput" checked="checked"
-                      disabled="disabled" value={{i}}> </div>
+                      disabled="disabled" value={{i}}> <span class="checkmark"></span></div>
                   {%endif%}
                   {%endfor%}
                 </div>
                 <div class="rowow">
                   {% for i in range(17,25) %}
                   {% if i in seatVacant %}
-                  <div class="seat"> <input type="checkbox" name="seatInput" value={{i}}> </div>
+                  <div class="seat"> <input type="checkbox" name="seatInput" value={{i}}> <span class="checkmark"></span></div>
                   {%else%}
                   <div class="seat occupied"> <input type="checkbox" name="seatInput" checked="checked"
-                      disabled="disabled" value={{i}}> </div>
+                      disabled="disabled" value={{i}}> <span class="checkmark"></span></div>
                   {%endif%}
                   {%endfor%}
                 </div>
                 <div class="rowow">
                   {% for i in range(25,33) %}
                   {% if i in seatVacant %}
-                  <div class="seat"> <input type="checkbox" name="seatInput" value={{i}}> </div>
+                  <div class="seat"> <input type="checkbox" name="seatInput" value={{i}}> <span class="checkmark"></span></div>
                   {%else%}
                   <div class="seat occupied"> <input type="checkbox" name="seatInput" checked="checked"
-                      disabled="disabled" value={{i}}> </div>
+                      disabled="disabled" value={{i}}> <span class="checkmark"></span></div>
                   {%endif%}
                   {%endfor%}
                 </div>
                 <div class="rowow">
                   {% for i in range(33,41) %}
                   {% if i in seatVacant %}
-                  <div class="seat"> <input type="checkbox" name="seatInput" value={{i}}> </div>
+                  <div class="seat"> <input type="checkbox" name="seatInput" value={{i}}> <span class="checkmark"></span></div>
                   {%else%}
                   <div class="seat occupied"> <input type="checkbox" name="seatInput" checked="checked"
-                      disabled="disabled" value={{i}}> </div>
+                      disabled="disabled" value={{i}}> <span class="checkmark"></span></div>
                   {%endif%}
                   {%endfor%}
                 </div>
                 <div class="rowow">
                   {% for i in range(41,49) %}
                   {% if i in seatVacant %}
-                  <div class="seat"> <input type="checkbox" name="seatInput" value={{i}}> </div>
+                  <div class="seat"> <input type="checkbox" name="seatInput" value={{i}}> <span class="checkmark"></span></div>
                   {%else%}
                   <div class="seat occupied"> <input type="checkbox" name="seatInput" checked="checked"
-                      disabled="disabled" value={{i}}> </div>
+                      disabled="disabled" value={{i}}> <span class="checkmark"></span></div>
                   {%endif%}
                   {%endfor%}
                 </div>
@@ -214,6 +214,23 @@ https://templatemo.com/tm-569-edu-meeting
     $('.nav li:first').addClass('active');
 
     var showSection = function showSection(section, isAnimate) {
+      var
+        direction = section.replace(/#/, ''),
+        reqSection = $('.section').filter('[data-section="' + direction + '"]'),
+        reqSectionPos = reqSection.offset().top - 0;
+
+      if (isAnimate) {
+        $('body, html').animate({
+          scrollTop: reqSectionPos
+        },
+          800);
+      } else {
+        $('body, html').scrollTop(reqSectionPos);
+      }
+
+    };
+
+   function selectSeat() {
       var
         direction = section.replace(/#/, ''),
         reqSection = $('.section').filter('[data-section="' + direction + '"]'),
