@@ -343,6 +343,13 @@ margin-bottom: 30px;
   background-color: #2e56a5c6;
 }
 
+.seat.occupied input  {
+  position: absolute;
+  height: 0;
+  width: 0;
+}
+
+
 
 .seat {
 background-color: #c0ae79bd;
