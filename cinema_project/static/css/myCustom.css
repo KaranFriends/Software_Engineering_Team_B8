@@ -702,6 +702,7 @@ background: linear-gradient(90deg, rgba(87,63,251,1) 0%, rgba(70,215,252,1) 100%
 
 
 
+
 .marginTop {
   margin-top: 100px;
 }
@@ -716,6 +717,7 @@ background: linear-gradient(90deg, rgba(87,63,251,1) 0%, rgba(70,215,252,1) 100%
   margin-top: 600px;
   margin-bottom: 20px;
 }
+
 
 .paddOnly {
   padding-top: 50px;
