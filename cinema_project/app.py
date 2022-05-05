@@ -12,6 +12,7 @@ from datetime import datetime, timedelta
 from sqlalchemy import null
 import emailService
 import random
+from model.Checkout import Checkout
 #from model.model import User, Card #Ticket, Review, Movie, MovieCategory, Show, Showroom, Booking, TicketBooking, TicketPrice, Img
 from model.LoginForm import LoginForm
 from model.RegistrationForm import RegistrationForm
@@ -32,6 +33,10 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 import json
+from datetime import datetime
+from datetime import date
+
+
 
 
 app = Flask(__name__)
@@ -82,7 +87,6 @@ class Ticket(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     ticket_category_id=db.Column(db.Integer, nullable=False)
     ticket_category_quantity=db.Column(db.Integer, default=0, nullable=False)
-    seat_no=db.Column(db.Integer, nullable=False)
     ticketBookings = db.relationship('TicketBooking', backref='ticket', lazy=True)
 
 class Review(db.Model, UserMixin):
@@ -134,8 +138,10 @@ class Booking(db.Model, UserMixin):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     show_id = db.Column(db.Integer, db.ForeignKey("show.id"), nullable=False)
     card_id = db.Column(db.Integer, db.ForeignKey("card.id"), nullable=False)
-    booking_date = db.Column(db.Date, nullable=False)
-    booking_time = db.Column(db.Time, nullable=False)
+    booking_date = db.Column(db.String(30), nullable=False)
+    booking_time = db.Column(db.String(30), nullable=False)
+    seat_no = db.Column(db.String(255), nullable=False)
+    price = db.Column(db.Integer, nullable=False)
     ticketBookings = db.relationship('TicketBooking', backref='booking', lazy=True)
 
 class TicketBooking(db.Model, UserMixin):
@@ -270,7 +276,10 @@ def edit_Payment():
 
 @app.route('/view_payment_details')
 def view_Payment():
-    return render_template('viewPaymentDetails.html')
+    user = User.query.filter_by(email = session['email']).first()
+    cards = Card.query.filter_by(user_id = user.id).all()
+    bookings = Booking.query.filter_by(user_id = user.id).all()
+    return render_template('viewPaymentDetails.html', cards=cards, bookings = bookings)
 
 @app.route('/forgot_password')
 def forgot_Password():
@@ -310,22 +319,83 @@ def payment(movie, show):
     countAdult = int(request.form['inputAdult'])
     countSenior = int(request.form['inputSenior'])
     countChild = int(request.form['inputChild'])
-    print(countAdult)
-    print(countSenior)
-    print(countChild)
     size = len(seatList)
     total = countAdult + countSenior + countChild
-    print('size', size)
-    print('total', total)
+    ticketPrice = float(request.form['ticketPrice'])
+    taxPrice = float(request.form['taxPrice'])
+    totalPrice = float(request.form['totalPrice'])
     if size != total:
         error = "Please select " + str(len(seatList)) + " tickets"
-        flash(error) 
+        flash(error)
         return render_template('payment.html', movie=movie, show=show, seatNumber = size, form=Payment())
-    return render_template('checkout.html', countAdult = countAdult, countSenior = countSenior, countChild = countChild, movie = movie, show=show)
+    user = User.query.filter_by(email = session['email']).first()
+    cards = Card.query.filter_by(user_id = user.id).all()
+    return render_template('checkout.html', countAdult = countAdult, countSenior = countSenior, countChild = countChild, movie = movie, show=show, cards=cards, form=Checkout(), ticketPrice = ticketPrice, taxPrice=taxPrice, totalPrice=totalPrice)
 
-@app.route('/checkout')
-def checkout():
-    return render_template('checkout.html')
+@app.route('/checkout/<countAdult>,<countSenior>,<countChild>,<movie>,<show>, <ticketPrice>, <taxPrice>, <totalPrice>',methods=['POST'])
+def checkout(countAdult, countSenior, countChild, movie, show, ticketPrice, taxPrice, totalPrice):
+    user = User.query.filter_by(email = session['email']).first()
+    cards = Card.query.filter_by(user_id = user.id).all()
+    ticketList = []
+    seatList = request.cookies.get('seats')
+    seatList = seatList.strip('][').split(', ')
+    seatList = [int(i) for i in seatList]
+    
+    ticket=Ticket(ticket_category_id = 1,\
+                ticket_category_quantity = countAdult,\
+                )
+    db.session.add(ticket)
+    db.session.flush()
+    db.session.refresh(ticket)
+    ticketList.append(ticket.id)
+    
+    ticket=Ticket(ticket_category_id = 2,\
+                ticket_category_quantity = countSenior,\
+                )
+    db.session.add(ticket)
+    db.session.flush()
+    db.session.refresh(ticket)
+    ticketList.append(ticket.id)
+    
+    ticket=Ticket(ticket_category_id = 3,\
+                ticket_category_quantity = countChild,\
+                )
+    db.session.add(ticket)
+    db.session.flush()
+    db.session.refresh(ticket)
+    ticketList.append(ticket.id)
+
+    for i in seatList:
+        seat = Seat(show_ID = show,\
+            seatNumber = i)
+        db.session.add(seat)
+        db.session.flush()
+    
+    bookingid=0
+    for i in cards:
+        if int(request.form.get('make_payment')) == i.id:
+            booking = Booking(user_id=user.id,\
+            show_id=show,\
+            card_id=i.id,\
+                booking_date=str(date.today()),\
+                    booking_time= str(datetime.now().strftime("%H:%M:%S")),\
+                        seat_no=str(seatList),\
+                            price=totalPrice)
+            
+            db.session.add(booking)
+            db.session.flush()
+            db.session.refresh(booking)
+            bookingid = booking.id
+
+    for i in ticketList:
+        ticket_booking = TicketBooking(booking_id = bookingid,\
+            ticket_id = i,\
+                booking_price = totalPrice
+            )
+        db.session.add(ticket_booking)
+        db.session.flush()
+    db.session.commit()
+    return redirect(url_for('index'))
 
 @app.route('/confirmation')
 def confirmation():
@@ -642,10 +712,10 @@ def register():
                     db.session.commit()
                     user = User.query.filter_by(email = form.email.data).first()
                     id = user.id
-                    card=Card(cardNumber=bcrypt.generate_password_hash(form.cardnumber.data),\
-                        cardName=bcrypt.generate_password_hash(form.cardName.data),\
-                        cvv=bcrypt.generate_password_hash(form.cvv.data),\
-                        expirationDate=bcrypt.generate_password_hash(str(form.expirationDate.data).split(" ")[0]),\
+                    card=Card(cardNumber=form.cardnumber.data,\
+                        cardName=form.cardName.data,\
+                        cvv=form.cvv.data,\
+                        expirationDate=str(form.expirationDate.data).split(" ")[0],\
                         user_id=user.id)
                     db.session.add(card)
                     db.session.commit()

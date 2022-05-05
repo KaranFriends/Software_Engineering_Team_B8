@@ -152,20 +152,20 @@ https://templatemo.com/tm-569-edu-meeting
                   <div class="row">
                     <div class="col" style="padding-left:0;">Tickets Allowed {{seatNumber}}</div>
                     <div class="col text-right">&dollar;
-                      <input value="0" readonly="readonly" size="1"></input>
+                      <input value="0" name="ticketPrice" readonly="readonly" size="1"></input>
                     </div>
                   </div><br>
                   <div class="row">
                     <div class="col" style="padding-left:0;">Tax</div>
                     <div class="col text-right">&dollar;
-                      <input value="0" readonly="readonly" size="1"></input>
+                      <input value="0" name="taxPrice" readonly="readonly" size="1"></input>
                     </div>
                   </div>
                   <hr>
                   <div class="row">
                     <div class="col" style="padding-left:0;">TOTAL PRICE</div>
                     <div class="col text-right">&dollar;
-                      <input value="0" readonly="readonly" size="1"></input>
+                      <input value="0" name="totalPrice" readonly="readonly" size="1"></input>
                     </div>
                     <br.<br><br>
                       {% with messages = get_flashed_messages() %}
