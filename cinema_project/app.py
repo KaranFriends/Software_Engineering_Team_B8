@@ -567,10 +567,13 @@ def edit_user(user):
     if request.method == 'GET':
         print(user)
         user = User.query.filter_by(id = user).first()
+        users = User.query.filter_by(email = session['email']).first()
         print(user)
         if session['email']:
             form = UserEdit()
-            if user.user_type == 1:
+            print(user.email)
+            print(user.user_type)
+            if users.user_type == 1:
                 form.email.data =       user.email
                 form.first_name.data =  user.first_name
                 form.last_name.data =   user.last_name
