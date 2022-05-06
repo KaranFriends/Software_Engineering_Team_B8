@@ -9,7 +9,7 @@
   <meta name="author" content="Template Mo">
   <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
 
-  <title>Register Page</title>
+  <title>Add Show Page</title>
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -77,20 +77,18 @@ https://templatemo.com/tm-569-edu-meeting
                             <form id="contact" action="" method="post">
                               <div class="row">
                                 <div class="col-lg-12">
-                                  <h1>Add Show</h1><br>
+                                  <h3>Add Show</h3><br>
                                 </div>
                                 <div class="col-lg-12"></div>
-                                <hr>
                                 {% with messages = get_flashed_messages() %}
                                   {% if messages %}
                                     <ul class=flashes>
                                       {% for message in messages %}
-                                        <h3>{{ message }}</h3>
+                                        <h4>{{ message }}</h4>
                                       {% endfor %}
                                     </ul>
                                   {% endif %}
                                 {% endwith %}
-                                <h2>Movie Information </h2>
                                 {% for field, errors in form.errors.items() %}
                                 {{ ', '.join(errors) }}
                                 {% endfor %}
@@ -106,35 +104,24 @@ https://templatemo.com/tm-569-edu-meeting
                                     </div>
                                     Choose a Movie<SELECT name="movie">
                                       {% for c in movieList %}
-                                        <OPTION value={{c}}>{{c}}</option>
+                                      <br><br><OPTION value={{c}}>{{c}}</option>
                                       {% endfor %}
-                                    <div class="col-lg-12 form-group">
-                                      {{ form.show_submit(class="form-control") }}
-                                    </div>
+                                    <div class="col-lg-12 form-group"><br><br><br>
+                                      {{ form.show_submit(class="form-control",style="background-color: #a12c2f; color: white;
+                                      font-family: 'Poppins', sans-serif;") }}
+                                    </div><br>
                                   </form>
+                              </div><br><br>
+                            </form>
                           </div>
                         </div>
                       </div>
                     </div>
                 </div>
-              </div><br>
-              <div class="col-lg-12">
-                <div class="main-button-red">
-                  <a href="{{url_for('index')}}">Back To Home Screen</a>
-                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-
-
-
-
-      <div class="footer">
-        <p>Copyright © 2022 Virtual Cinemas., Ltd. All Rights Reserved.
-          <br>
-        </p>
       </div>
   </section>
 

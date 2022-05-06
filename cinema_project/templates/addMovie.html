@@ -78,20 +78,18 @@ https://templatemo.com/tm-569-edu-meeting
                             <form id="contact" action="" method="post" class="centeredNew">
                               <div class="row ">
                                 <div class="col-lg-12">
-                                  <h1>Add Movie</h1><br>
+                                  <h3>Add Movie</h3><br>
                                 </div>
                                 <div class="col-lg-12"></div>
-                                <hr>
                                 {% with messages = get_flashed_messages() %}
                                 {% if messages %}
                                 <ul class=flashes>
                                   {% for message in messages %}
-                                  <h3>{{ message }}</h3>
+                                  <h4>{{ message }}</h4>
                                   {% endfor %}
                                 </ul>
                                 {% endif %}
                                 {% endwith %}
-                                <h3>Movie Information </h3>
                                 {% for field, errors in form.errors.items() %}
                                 {{ ', '.join(errors) }}
                                 {% endfor %}
