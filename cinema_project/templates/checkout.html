@@ -94,14 +94,15 @@ https://templatemo.com/tm-569-edu-meeting
                     <div class="col-8">
                       <div class="align-self-center">
                         <div class="row">
-                          {% for card in cards %}
                           <div class="col-lg-6 mb-lg-4">
-                            <div class="col-md-8 card4 marginBot" style="position: absolute; left: 12%; top: 30%;  overflow: auto;">
+                            <br><div class="col-md-8 card4 marginBot" style="position: absolute; left: 12%; top: 10%;  transform: scale(0.8);">
+                              <h2>Wallet</h2><hr>
+                              {% for card in cards %}
+                              <h4>Card Number:</h4>
                               <div class="col-md-8  ">
                                 <div class="title">
                                   <div class="row">
                                     <div class="col ">
-                                      <h3>Checkout</h3><br>
                                       <br>
                                       <div class="number"> <label class="fw-bold" for="">{{card.cardNumber}}</label>
                                       </div>
@@ -110,15 +111,15 @@ https://templatemo.com/tm-569-edu-meeting
                                        </h5><span>{{card.expirationDate}}</span><br>
                                       <h5 class="fw-bold">Name:
                                       </h5><span>{{card.cardName}}</span><br><br>
-                                      </div><br><br>
+                                      </div><br>
                                       <div class="row">
                                         <button type="submit" class="roundedGrid main-button-red" name="make_payment" style="background-color:#a12c2f; color:white; transform: scale(1.2);"
-                                          value={{card.id}}>Submit Purchase</button>
+                                          value={{card.id}}>Purchase With This Card</button>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
+                              </div><hr>
 
                               {%endfor%}
                               <br>
@@ -140,7 +141,7 @@ https://templatemo.com/tm-569-edu-meeting
                                   <div class="col-md-4 card4" style="position: absolute; right: 12%; top: 30%;" ;
                                     style="border-left: 1px solid rgba(0,0,0,.1); padding: 2em;">
                                     <div>
-                                      <h3>Summary</h3>
+                                      <h3>Summary</h3><hr>
                                     </div>
                                     <div class="row">
                                       <div class="col" style="padding-left:0;">Tickets</div>
@@ -152,7 +153,8 @@ https://templatemo.com/tm-569-edu-meeting
                                     </div>
                                     <hr>
                                     <div class="row">
-                                      <div class="col" style="padding-left:0;">TOTAL PRICE</div>
+                                      <div class="col" style="padding-left:0; background-color: #a12c2f; color: white;
+                                      font-family: 'Poppins', sans-serif;">TOTAL PRICE</div>
                                       <div class="col text-right">&dollar; {{totalPrice}}</div>
                                       <br><br>
                                     </div>
@@ -166,9 +168,8 @@ https://templatemo.com/tm-569-edu-meeting
                     </div>
                   </div>
                 </div>
-              </div><br><br><br><br><br><br>
-            </div>
-
+              </div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+            </div><br><br><br><br><br><br>
               <div class="footer">
                 <p>Copyright © 2022 Virtual Cinemas., Ltd. All Rights Reserved.
                   <br>
