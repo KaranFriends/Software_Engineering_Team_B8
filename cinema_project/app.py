@@ -80,6 +80,7 @@ class User(db.Model, UserMixin):
     reviews = db.relationship('Review', backref='user', lazy=True)
     bookings = db.relationship('Booking', backref='user', lazy=True)
     confirmed = db.Column(db.Integer)
+    active = db.Column(db.Integer)
 class Card(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     cardNumber = db.Column(db.String(12), nullable=False)
@@ -183,6 +184,13 @@ class Promotion(db.Model, UserMixin):
 @app.route('/home', methods=['POST','GET'])
 @app.route('/index', methods=['POST','GET'])
 def index():
+    show = Show.query.order_by(Show.id).all()
+    nowShowing=set()
+    for i in show:
+        nowShowing.add(Movie.query.filter_by(id = i.movie_id).first())
+    for i in nowShowing:
+        print(i.movie_title)
+
     movie = Movie.query.order_by(Movie.id).all()
     print(movie)
     form = SearchAndFilter()
@@ -190,7 +198,8 @@ def index():
         if session['email']:
             if User.query.filter_by(email = session['email']).first().user_type == 1:
                 return redirect(url_for('admin_portal'))
-        return render_template('index.html', allmovies=movie, movie=movie, form=form)
+        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+        return render_template('index.html', allmovies=nowShowing, movie=movie, form=form)
     elif request.method == 'POST':
         filteredMovie = []
         if form.search.data:
@@ -198,11 +207,20 @@ def index():
                 movie = Movie.query.order_by(Movie.id).all()
                 form = SearchAndFilter()
                 moviesearched = []
+                print("text to be searched ", form.text.data)
                 for i in range(len(movie)):
+                    print("Compare ", movie[i].movie_title)
                     if form.text.data in movie[i].movie_title:
+                        print("Got " , movie[i].movie_title)
                         moviesearched.append(movie[i])
-                return redirect(url_for('index', movie=moviesearched, form=form))
-                # return redirect(url_for('search',text=form.text.data))
+                print("searched movies")
+                for i in moviesearched:
+                    print(i.movie_title)
+                print("all movies")
+                for i in movie:
+                    print(i.movie_title)
+                print("-------------------------------------------")
+                return render_template('index.html',allmovie=nowShowing, movie=moviesearched, form=form)
             
         elif form.filter1.data :
             for i in range(len(movie)):
@@ -216,7 +234,8 @@ def index():
             for i in range(len(movie)):
                 if movie[i].category_ID == 3:
                     filteredMovie.append(movie[i])
-        return render_template('index.html', allmovies=movie, movie=filteredMovie, form=form)
+        print("+++++++++++++++++++++++++++++++++++++++++++++++++++")
+        return render_template('index.html', allmovies=nowShowing, movie=filteredMovie, form=form)
 
 #if user is not confirmed, make sure to not let them login and display "email not confirmed" after they try entering email
 @app.route('/login', methods=['POST','GET'])
@@ -228,7 +247,7 @@ def login():
         if form.validate_on_submit():
             print(request.form.get('remember'))            
             if user:
-                if user.confirmed == 1:
+                if user.confirmed == 1 or user.active == 1:
                     if bcrypt.check_password_hash(user.password, form.password.data):
                         session['email'] = user.email
                         if request.form.get('remember') == "1":
@@ -244,7 +263,7 @@ def login():
                         flash('Invalid Login credentials',"error")
                         return render_template('login.html', form = form)
                 else:
-                    flash('Email not confirmed')
+                    flash('Email not confirmed/deactivated')
                     return render_template('login.html', form = form)
             else:
                 if bcrypt.check_password_hash(user.password, form.password.data):
@@ -366,9 +385,15 @@ def reset_Password():
 @app.route('/seatSelection/<movie>,<show>', methods=['GET','POST'])
 def seatSelection(movie, show):
     form = SeatSelection()
-    seatOccupied = Seat.query.filter_by(show_ID=show).all()
+    seattaken = Seat.query.filter_by(show_ID=show).all()
+    seatOccupied = []
+    for i in seattaken:
+        seatOccupied.append(i.seatNumber)
     allSeats = list(range(1,49))
     seatVacant = list(filter(lambda v: v not in seatOccupied, allSeats))
+    print(allSeats)
+    print(seatOccupied)
+    print(seatVacant)
     if request.method == 'POST':
         test_list = [int(i) for i in request.form.getlist('seatInput')]
         if len(test_list) == 0:
@@ -583,13 +608,13 @@ def manage_users():
 @app.route('/edit_user/<user>', methods=['GET','POST'])
 # @login_required
 def edit_user(user):
+    form = UserEdit()
     if request.method == 'GET':
         print(user)
         user = User.query.filter_by(id = user).first()
         users = User.query.filter_by(email = session['email']).first()
         print(user)
         if session['email']:
-            form = UserEdit()
             print(user.email)
             print(user.user_type)
             if users.user_type == 1:
@@ -614,7 +639,23 @@ def edit_user(user):
         # user.status = 0
         # db.session.add(user)
         # db.session.commit()
-        flash('user deactivated')
+        user = User.query.filter_by(id = user).first()
+        if form.user_submit.data:
+            if user.active == 0:
+                user.active = 1
+            else:
+                user.active = 0
+        if form.user_admin.data:
+            if user.user_type == 0:
+                user.user_type = 1
+            else:
+                user.user_type = 0
+        
+        flash('User Status Changed')
+
+        db.session.add(user)
+        db.session.commit()
+
         return redirect( url_for('manage_users'))
 
 
@@ -672,10 +713,11 @@ def edit_profile():
                 user.state = form.state.data
                 user.zip = form.zip.data
                 user.country = form.country.data
-                if request.form.get('promotion'):
+                print("print output ", request.form.get('promotion'))
+                if request.form.get('promotion') != None:
                     user.promotions = "1"
                 else:
-                    user.promotion = "0"
+                    user.promotions = "0"
                 db.session.add(user)
                 db.session.commit()
                 flash('Profile has been updated')
@@ -691,7 +733,9 @@ def edit_profile():
             form.addressline2.data = user.addressline2
             form.city.data = user.city
             form.state.data = user.state
-            form.zip.data = user.zip            
+            form.zip.data = user.zip
+            form.country.data = user.country    
+            print("print input", user.promotions)        
             return render_template('editProfile.html',form=form, promo=user.promotions)
         else:
             flash('Admin cannot access that page')
@@ -803,7 +847,8 @@ def register():
                         country = form.country.data,\
                         promotions = promo,\
                         user_type = 0,\
-                        confirmed = 0
+                        confirmed = 0,
+                        active=1
                         )
 
                     token = generate_confirmation_token(user.email) 
