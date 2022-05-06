@@ -43,12 +43,15 @@ https://templatemo.com/tm-569-edu-meeting
         <div class="col-12">
           <nav class="main-nav">
             <!-- ***** Logo Start ***** -->
-            <a href="{{url_for('index')}}" class="logo">
+            <a href="{{url_for('admin_portal')}}" class="logo">
               Virtual Cinemas
             </a>
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->
-           
+            <ul class="nav">
+              <li><a href="{{url_for('admin_portal')}}">Home</a></li>
+              <li><a href="{{url_for('logout')}}">Logout</a></li>
+            </ul>
             <a class='menu-trigger'>
               <span>Menu</span>
             </a>
@@ -82,60 +85,62 @@ https://templatemo.com/tm-569-edu-meeting
                                 <div class="col-lg-12"></div>
                                 <hr>
                                 {% with messages = get_flashed_messages() %}
-                                  {% if messages %}
-                                    <ul class=flashes>
-                                      {% for message in messages %}
-                                        <h3>{{ message }}</h3>
-                                      {% endfor %}
-                                    </ul>
-                                  {% endif %}
+                                {% if messages %}
+                                <ul class=flashes>
+                                  {% for message in messages %}
+                                  <h3>{{ message }}</h3>
+                                  {% endfor %}
+                                </ul>
+                                {% endif %}
                                 {% endwith %}
                                 <h2>Movie Information </h2>
                                 {% for field, errors in form.errors.items() %}
                                 {{ ', '.join(errors) }}
                                 {% endfor %}
                                 <form class="form-horizontal" action="{{url_for('add_show')}}" method="POST">
-                                    {{ form.csrf_token() }}
-                                    <div class="col-lg-12 form-group">
-                                      {{ form.show_date.label }}
-                                      {{ form.show_date(class="form-control") }}
-                                    </div>
-                                    <div class="col-lg-12 form-group">
-                                      {{ form.show_time.label }}
-                                      {{ form.show_time(class="form-control") }}
-                                    </div>
-                                    Choose a Movie<SELECT name="movie">
-                                      {% for c in movieList %}
-                                        <OPTION value={{c}}>{{c}}</option>
-                                      {% endfor %}
-                                    <div class="col-lg-12 form-group">
-                                      {{ form.show_submit(class="form-control") }}
-                                    </div>
-                                  </form>
+                                  {{ form.csrf_token() }}
+                                  <div class="col-lg-12 form-group">
+                                    {{ form.show_date.label }}
+                                    {{ form.show_date(class="form-control") }}
+                                  </div>
+                                  <div class="col-lg-12 form-group">
+                                    {{ form.show_time.label }}
+                                    {{ form.show_time(class="form-control") }}
+                                  </div>
+                                  Choose a Movie
+                                  <SELECT name="movie" class="selectpicker form-control">
+                                    {% for c in movieList %}
+                                    <OPTION value={{c}}>{{c}}</option>
+                                    {% endfor %}
+                                  </SELECT>
+                                  <div class="col-lg-12 form-group">
+                                    {{ form.show_submit(class="form-control") }}
+                                  </div>
+                                </form>
+                              </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                </div>
-              </div><br>
-              <div class="col-lg-12">
-                <div class="main-button-red">
-                  <a href="{{url_for('index')}}">Back To Home Screen</a>
+                </div><br>
+                <div class="col-lg-12">
+                  <div class="main-button-red">
+                    <a href="{{url_for('index')}}">Back To Home Screen</a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
 
 
 
-      <div class="footer">
-        <p>Copyright © 2022 Virtual Cinemas., Ltd. All Rights Reserved.
-          <br>
-        </p>
-      </div>
+        <div class="footer">
+          <p>Copyright © 2022 Virtual Cinemas., Ltd. All Rights Reserved.
+            <br>
+          </p>
+        </div>
   </section>
 
 

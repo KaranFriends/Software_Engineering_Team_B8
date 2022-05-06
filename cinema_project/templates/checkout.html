@@ -56,8 +56,9 @@ https://templatemo.com/tm-569-edu-meeting
                   {% if session['email'] or request.cookies.get('email')%}
                   <li><a href="{{url_for('edit_profile')}}">Edit Profile</a></li>
                   <li><a href="{{url_for('promotions')}}">Promotions</a></li>
+                  <li><a href="{{url_for('view_payment_details')}}">Edit Payment Details</a></li>
                   {% endif %}
-                  <li><a href="{{url_for('view_Payment')}}">Edit Payment Details</a></li>
+
                 </ul>
               </li>
               {% if not session['email']%}
@@ -112,11 +113,6 @@ https://templatemo.com/tm-569-edu-meeting
                           </div>
                           {%endfor%}
                           <br>
-                          <!-- <div class="col-lg-12">
-                            <div class="main-button-blue" style="transform: scale(1.2);">
-                              <a href="{{url_for('edit_Payment')}}">Add a Card</a>
-                            </div>
-                          </div> -->
                         </div>
                       </div>
                     </div>

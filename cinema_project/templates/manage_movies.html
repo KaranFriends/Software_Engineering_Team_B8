@@ -41,14 +41,14 @@ https://templatemo.com/tm-569-edu-meeting
                 <div class="col-12">
                     <nav class="main-nav">
                         <!-- ***** Logo Start ***** -->
-                        <a href="index.html" class="logo">
+                        <a href="{{url_for('admin_portal')}}" class="logo">
                             Virtual Cinemas
                         </a>
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <li><a href="admin_portal.html">Home</a></li>
-
+                            <li><a href="{{url_for('admin_portal')}}">Home</a></li>
+                            <li><a href="{{url_for('logout')}}">Logout</a></li>
                         </ul>
                         <a class='menu-trigger'>
                             <span>Menu</span>
@@ -65,7 +65,7 @@ https://templatemo.com/tm-569-edu-meeting
 
         <div class="container marginBot">
             <div class="row center-screen" style="transform: scale(0.9);">
-                <div class="col-lg-12 " >
+                <div class="col-lg-12 ">
                     <div class="card2 container centeredNew paddOnly marginTB" style="width: 80%">
                         <br>
                         <h2>Manage Movies</h2><br>
@@ -74,7 +74,8 @@ https://templatemo.com/tm-569-edu-meeting
                         <div id="table-scroll" th:if="${not #lists.isEmpty(users)}" class="userTable">
                             <div class="scrollit">
                                 <form action="{{ url_for('manage_movies') }}" method="POST">
-                                    <table class="table table-bordered table-hover mngTbl spacedTable" style="width:100%;">
+                                    <table class="table table-bordered table-hover mngTbl spacedTable"
+                                        style="width:100%;">
                                         <tr>
                                             <th>Title</th>
                                             <th>Director</th>
@@ -104,7 +105,7 @@ https://templatemo.com/tm-569-edu-meeting
                         <div class="main-button-blue"><br>
                             <a class="btn btn-sm btn-primary my-2 text-uppercase " href="{{url_for('addMovie')}}">Add a
                                 Movie</a>
-                          </div><br><br>
+                        </div><br><br>
 
                     </div>
                 </div>

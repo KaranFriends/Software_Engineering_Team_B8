@@ -41,14 +41,14 @@ https://templatemo.com/tm-569-edu-meeting
                 <div class="col-12">
                     <nav class="main-nav">
                         <!-- ***** Logo Start ***** -->
-                        <a href="index.html" class="logo">
+                        <a href="{{url_for('admin_portal')}}" class="logo">
                             Virtual Cinemas
                         </a>
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <li><a href="admin_portal.html">Home</a></li>
-                           
+                            <li><a href="{{url_for('admin_portal')}}">Home</a></li>
+                            <li><a href="{{url_for('logout')}}">Logout</a></li>
                         </ul>
                         <a class='menu-trigger'>
                             <span>Menu</span>
@@ -64,58 +64,60 @@ https://templatemo.com/tm-569-edu-meeting
     <section class="meetings-page" id="meetings">
 
         <div class="container">
-            <div class="row center-screen" >
-                    <div class="card container" style="overflow: auto;">
-                      <div class="text-center centeredNew">
-                        <br><h2>Manage Users</h2>
+            <div class="row center-screen">
+                <div class="card container" style="overflow: auto;">
+                    <div class="text-center centeredNew">
+                        <br>
+                        <h2>Manage Users</h2>
                     </div>
-                      
-                        <div id="table-scroll" th:if="${not #lists.isEmpty(users)}" class="userTable">
-                            <div class="scrollit">
-                                <form action="{{ url_for('manage_users') }}" method="POST">
-                                <table class="table table-bordered table-hover mngTbl spacedTable">
-                                        <tr>
-                                            <th>Email</th>&nbsp; 
-                                            <th>First Name</th>&nbsp; 
-                                            <th>Last Name</th>&nbsp; 
-                                            <th>DOB</th>&nbsp; 
-                                            <th>Address Line 1</th>&nbsp; 
-                                            <th>Address Line 2</th>&nbsp; 
-                                            <th>City</th>&nbsp; 
-                                            <th>State</th>&nbsp; 
-                                            <th>ZIP</th>&nbsp; 
-                                            <th>Country</th>&nbsp; 
 
-                                        </tr>
-                                        {%for userP in user%}
-                                        <tr>
-                                            <td>{{userP.email}}</td>
-                                            <td>{{userP.first_name}}</td>
-                                            <td>{{userP.last_name}}</td>
-                                            <td>{{userP.dob}}</td>
-                                            <td>{{userP.addressline1}}</td>
-                                            <td>{{userP.addressline2}}</td>
-                                            <td>{{userP.city}}</td>
-                                            <td>{{userP.state}}</td>
-                                            <td>{{userP.zip}}</td>
-                                            <td>{{userP.country}}</td>
-                                            <td><button type="submit" value="{{userP.id}}" name="editUser"> Edit </button></td>
-                                        </tr>
-                                        {%endfor%}
+                    <div id="table-scroll" th:if="${not #lists.isEmpty(users)}" class="userTable">
+                        <div class="scrollit">
+                            <form action="{{ url_for('manage_users') }}" method="POST">
+                                <table class="table table-bordered table-hover mngTbl spacedTable">
+                                    <tr>
+                                        <th>Email</th>&nbsp;
+                                        <th>First Name</th>&nbsp;
+                                        <th>Last Name</th>&nbsp;
+                                        <th>DOB</th>&nbsp;
+                                        <th>Address Line 1</th>&nbsp;
+                                        <th>Address Line 2</th>&nbsp;
+                                        <th>City</th>&nbsp;
+                                        <th>State</th>&nbsp;
+                                        <th>ZIP</th>&nbsp;
+                                        <th>Country</th>&nbsp;
+
+                                    </tr>
+                                    {%for userP in user%}
+                                    <tr>
+                                        <td>{{userP.email}}</td>
+                                        <td>{{userP.first_name}}</td>
+                                        <td>{{userP.last_name}}</td>
+                                        <td>{{userP.dob}}</td>
+                                        <td>{{userP.addressline1}}</td>
+                                        <td>{{userP.addressline2}}</td>
+                                        <td>{{userP.city}}</td>
+                                        <td>{{userP.state}}</td>
+                                        <td>{{userP.zip}}</td>
+                                        <td>{{userP.country}}</td>
+                                        <td><button type="submit" value="{{userP.id}}" name="editUser"> Edit </button>
+                                        </td>
+                                    </tr>
+                                    {%endfor%}
                                 </table>
                             </form>
-                            </div>
                         </div>
-                        <!-- <div class="text-center text-danger" th:if="${ #lists.isEmpty(users)}">
+                    </div>
+                    <!-- <div class="text-center text-danger" th:if="${ #lists.isEmpty(users)}">
                             <span>No users found for the search criteria</span>
                         </div> -->
 
-                        <div class="col-lg-12 addUser centeredNew">
-                            <div class="main-button-blue">
-                              <a th:href="@{add_user_by_admin.html}">Add a User</a>
-                            </div>
+                    <div class="col-lg-12 addUser centeredNew">
+                        <div class="main-button-blue">
+                            <a th:href="@{add_user_by_admin.html}">Add a User</a>
                         </div>
                     </div>
+                </div>
             </div>
         </div>
 

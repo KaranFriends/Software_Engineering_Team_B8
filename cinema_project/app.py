@@ -12,7 +12,9 @@ from datetime import datetime, timedelta
 from sqlalchemy import null
 import emailService
 import random
+from model.AddCard import AddCard
 from model.Checkout import Checkout
+from model.EditCard import EditCard
 #from model.model import User, Card #Ticket, Review, Movie, MovieCategory, Show, Showroom, Booking, TicketBooking, TicketPrice, Img
 from model.LoginForm import LoginForm
 from model.RegistrationForm import RegistrationForm
@@ -36,7 +38,7 @@ import json
 from datetime import datetime
 from datetime import date
 
-
+from tokenGen import generate_confirmation_token, confirm_token #added!!!!!!!!!!!!!!!!!!
 
 
 app = Flask(__name__)
@@ -73,7 +75,7 @@ class User(db.Model, UserMixin):
     user_type = db.Column(db.Integer, nullable=False)
     reviews = db.relationship('Review', backref='user', lazy=True)
     bookings = db.relationship('Booking', backref='user', lazy=True)
-
+    confirmed = db.Column(db.Integer)
 class Card(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     cardNumber = db.Column(db.String(12), nullable=False)
@@ -222,29 +224,33 @@ def login():
         if form.validate_on_submit():
             print(request.form.get('remember'))
             if user:
-                if bcrypt.check_password_hash(user.password, form.password.data):
-                    session['email'] = user.email
-                    if request.form.get('remember') == "1":
-                        print(request.form.get('remember'))
-                        resp = make_response(render_template('index.html'))
-                        resp.set_cookie('email', user.email)
-                        return resp
-                    if user.user_type == 1:
-                        return redirect(url_for('admin_portal'))
+                if user.confirmed == 1:
+                    if bcrypt.check_password_hash(user.password, form.password.data):
+                        session['email'] = user.email
+                        if request.form.get('remember') == "1":
+                            print(request.form.get('remember'))
+                            resp = make_response(render_template('index.html'))
+                            resp.set_cookie('email', user.email)
+                            return resp
+                        if user.user_type == 1:
+                            return redirect(url_for('admin_portal'))
+                        else:
+                            return redirect(url_for('index'))
                     else:
-                        return redirect(url_for('index'))
+                        flash('Invalid Login credentials',"error")
+                        return render_template('login.html', form = form)
                 else:
-                    flash('Invalid Login credentials',"error")
+                    flash('Email not confirmed')
                     return render_template('login.html', form = form)
             flash('Invalid Login credentials')
             return render_template('login.html', form = form)
     else:
-        if session['email']:
-            user = User.query.filter_by(email = session['email']).first()
-            if user.user_type == 1:
-                return redirect(url_for('admin_portal'))
-            else:
-                return redirect(url_for('index'))
+        # if session['email']:
+        #     user = User.query.filter_by(email = session['email']).first()
+        #     if user.user_type == 1:
+        #         return redirect(url_for('admin_portal'))
+        #     else:
+        #         return redirect(url_for('index'))
         return render_template('login.html', form=form)
 
 @app.route('/logout')
@@ -270,12 +276,60 @@ def promotions():
 def admin_portal():
     return render_template('adminPortal.html')
 
-@app.route('/edit_payment_details')
-def edit_Payment():
-    return render_template('editPaymentDetails.html')
+@app.route('/edit_payment_details/<card>',methods=['GET', 'POST'])
+def edit_payment_details(card):
+    form = EditCard()
+    user = User.query.filter_by(email = session['email']).first()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            id=card
+            cards = Card.query.filter_by(id = int(id)).first()
+            cards.cardNumber=form.cardnumber.data
+            cards.cardName=form.cardName.data
+            cards.cvv=form.cvv.data
+            cards.expirationDate=str(form.expirationDate.data).split(" ")[0]
+            cards.user_id=user.id
+            db.session.add(cards)
+            db.session.commit()
+            flash('Card Updated Successfully')
+            redirect(url_for('view_payment_details'))
+        else:
+            print(card,">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+            return render_template('editPaymentDetails.html', form=form, card=card)
+    cards = Card.query.filter_by(id = int(card)).first()
+    form.cardName.data =    cards.cardName
+    form.cardnumber.data =  cards.cardNumber
+    form.cvv.data =         cards.cvv
+    form.expirationDate.data = datetime.strptime(str(cards.expirationDate), '%Y-%m-%d')
+    return render_template('editPaymentDetails.html', form=form, card=cards.id)
 
-@app.route('/view_payment_details')
-def view_Payment():
+@app.route('/add_payment_details',methods=['GET', 'POST'])
+def add_payment_details():
+    form = AddCard()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            user = User.query.filter_by(email = session['email']).first()
+            card = Card.query.filter_by(cardNumber = form.cardnumber.data).first()
+            id = user.id
+            if card:
+                flash('Card with same number already exists')
+                return render_template('addPaymentDetails.html', form=form)
+            else:
+                card=Card(cardNumber=form.cardnumber.data,\
+                    cardName=form.cardName.data,\
+                    cvv=form.cvv.data,\
+                    expirationDate=str(form.expirationDate.data).split(" ")[0],\
+                    user_id=user.id)
+                db.session.add(card)
+                db.session.commit()
+                flash('Card Added Successfully')
+                redirect(url_for('view_payment_details'))
+        else:
+            return render_template('addPaymentDetails.html', form=form)
+    return render_template('addPaymentDetails.html', form=form)
+
+@app.route('/view_payment_details',methods=['GET'])
+def view_payment_details():
     user = User.query.filter_by(email = session['email']).first()
     cards = Card.query.filter_by(user_id = user.id).all()
     bookings = Booking.query.filter_by(user_id = user.id).all()
@@ -439,13 +493,14 @@ def add_show():
                     return render_template('addShow.html', form=form, movieList = movieNameList)
             id = 0
             for i in range(len(movieName)):
-                if movieName[i].movie_title == request.form.get("movie"):
+                if movieName[i].movie_title.split(" ")[0] == request.form.get("movie"):
                     id=i
                     break
+            print(str(request.form.get("movie")),'!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
             show = Show(show_date = str(form.show_date.data).split(" ")[0],\
                     show_time = str(form.show_time.data).split(" ")[0],\
-                    movie_id = i,\
-                    movie_title = request.form.get("movie"),\
+                    movie_id = i+1,\
+                    movie_title = movieName[i].movie_title,\
                     showroom_id = 1
                 )
             db.session.add(show)
@@ -679,6 +734,25 @@ def changePassword():
             return resp
     return render_template('changePassword.html', form=form)
 
+@app.route('/confirm/<token>')
+#@login_required
+def confirm_email(token):
+    try:
+        email = confirm_token(token)
+    except:
+        flash('The confirmation link is invalid or has expired.', 'danger')
+    user = User.query.filter_by(email=email).first_or_404()
+    if user.confirmed:
+        flash('Account already confirmed. Please login.', 'success')
+    else:
+        user.confirmed = 1
+        #user.confirmed_on = datetime.datetime.now()
+        db.session.add(user)
+        db.session.commit()
+        flash('You have confirmed your account. Thanks!', 'success')
+    return redirect(url_for('login'))
+
+
 @app.route('/register', methods=['POST','GET'])
 def register():
     form = RegistrationForm()
@@ -689,7 +763,7 @@ def register():
                 flash("Email already registered")
                 return render_template('register.html', form=form)
             else:
-                if emailService.emailS(form.email.data, "Thank you for registration", "Welcome"):
+                if emailService.emailS(form.email.data, "Thank you for registration. A confirmation email has been sent.", "Welcome"):
                     if request.form.get('promotion'):
                         promo = "1"
                     else:
@@ -706,8 +780,14 @@ def register():
                         zip = form.zip.data,\
                         country = form.country.data,\
                         promotions = promo,\
-                        user_type = 0
+                        user_type = 0,\
+                        confirmed = 0
                         )
+
+                    token = generate_confirmation_token(user.email) 
+                    confirm_url = url_for('confirm_email', token=token, _external=True)
+                    emailService.emailS(form.email.data, confirm_url, "Please confirm email")
+                    
                     db.session.add(user)
                     db.session.commit()
                     user = User.query.filter_by(email = form.email.data).first()
