@@ -85,30 +85,43 @@ https://templatemo.com/tm-569-edu-meeting
       action="{{ url_for('checkout', countAdult = countAdult, countSenior = countSenior, countChild = countChild, movie = movie, show=show, ticketPrice = ticketPrice, taxPrice=taxPrice, totalPrice=totalPrice) }}"
       method="POST">
       <div class="container">
-        <div class="row marginBot marginTop">
+        <div class="row marginTB2 marginTop">
           <div class="grid-container4 roundedGrid">
             <div class="grid-item4">
               <div class="down-content">
                 <div class="info">
                   <div class="row">
                     <div class="col-8">
-                      <h3 style=" color: white;">Saved Cards</h3><br>
                       <div class="align-self-center">
                         <div class="row">
                           {% for card in cards %}
                           <div class="col-lg-6 mb-lg-4">
-                            <div class="card creditCard">
+                            <div class="col-md-8 card4 marginBot" style="position: absolute; left: 12%; top: 30%;  overflow: auto;">
+                              <div class="col-md-8  ">
+                                <div class="title">
+                                  <div class="row">
+                                    <div class="col ">
+                                      <h3>Checkout</h3><br>
+                                      <br>
+                                      <div class="number"> <label class="fw-bold" for="">{{card.cardNumber}}</label>
+                                      </div>
+                                      <div class="d-flex align-items-center justify-content-between">
+                                       <h5 class="fw-bold">Expiry date:
+                                       </h5><span>{{card.expirationDate}}</span><br>
+                                      <h5 class="fw-bold">Name:
+                                      </h5><span>{{card.cardName}}</span><br><br>
+                                      </div><br><br>
+                                      <div class="row">
+                                        <button type="submit" class="roundedGrid main-button-red" name="make_payment" style="background-color:#a12c2f; color:white; transform: scale(1.2);"
+                                          value={{card.id}}>Submit Purchase</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              {%endfor%}
                               <br>
-                              <div class="number"> <label class="fw-bold" for="">{{card.cardNumber}}</label> </div>
-                              <div class="d-flex align-items-center justify-content-between">
-                                <small><span class="fw-bold">Expiry date:
-                                  </span><span>{{card.expirationDate}}</span></small> <br>
-                                <small><span class="fw-bold">Name: </span><span>{{card.cardName}}</span></small><br><br>
-                              </div>
-                              <div class="main-button-yellow">
-                                <button type="submit" class="roundedGrid" name="make_payment" value={{card.id}}>Make
-                                  Payment</button>
-                              </div>
                             </div>
                           </div>
                           {%endfor%}
@@ -117,59 +130,55 @@ https://templatemo.com/tm-569-edu-meeting
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-            <div class="grid-item4">
-              <div class="down-content">
-                <div class="info">
-                  <div class="row">
-                    <div class="col-8">
-                      <div class="align-self-center">
+                  <div class="grid-item4">
+                    <div class="down-content">
+                      <div class="info">
                         <div class="row">
-                          <div class="col-lg-6 mb-lg-4">
-                            <div class="col-md-4 card4" style="position: absolute; right: 12%; top: 30%;" ;
-                              style="border-left: 1px solid rgba(0,0,0,.1); padding: 2em;">
-                              <div>
-                                <h3>Summary</h3>
-                              </div>
+                          <div class="col-8">
+                            <div class="align-self-center">
                               <div class="row">
-                                <div class="col" style="padding-left:0;">Tickets</div>
-                                <div class="col text-right">&dollar; {{ticketPrice}}</div>
-                              </div><br>
-                              <div class="row">
-                                <div class="col" style="padding-left:0;">Tax</div>
-                                <div class="col text-right">&dollar; {{taxPrice}}</div>
+                                <div class="col-lg-6 mb-lg-4">
+                                  <div class="col-md-4 card4" style="position: absolute; right: 12%; top: 30%;" ;
+                                    style="border-left: 1px solid rgba(0,0,0,.1); padding: 2em;">
+                                    <div>
+                                      <h3>Summary</h3>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col" style="padding-left:0;">Tickets</div>
+                                      <div class="col text-right">&dollar; {{ticketPrice}}</div>
+                                    </div><br>
+                                    <div class="row">
+                                      <div class="col" style="padding-left:0;">Tax</div>
+                                      <div class="col text-right">&dollar; {{taxPrice}}</div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                      <div class="col" style="padding-left:0;">TOTAL PRICE</div>
+                                      <div class="col text-right">&dollar; {{totalPrice}}</div>
+                                      <br><br>
+                                    </div>
+                                  </div><br><br>
+                                </div>
                               </div>
-                              <hr>
-                              <div class="row">
-                                <div class="col" style="padding-left:0;">TOTAL PRICE</div>
-                                <div class="col text-right">&dollar; {{totalPrice}}</div>
-                                <br><br>
-                                <!-- <div class="main-button-red centeredNew">
-                                <a href="{{url_for('confirmation')}}">Submit Purchase</a>
-                              </div><br><br> -->
-                              </div>
-                            </div><br><br>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </div><br><br><br><br><br><br>
             </div>
+
+              <div class="footer">
+                <p>Copyright © 2022 Virtual Cinemas., Ltd. All Rights Reserved.
+                  <br>
+                </p>
+              </div>
           </div>
         </div>
-
-
-        <div class="footer">
-          <p>Copyright © 2022 Virtual Cinemas., Ltd. All Rights Reserved.
-            <br>
-          </p>
-        </div>
       </div>
-      </div>
+    </form>
   </section>
 
 
