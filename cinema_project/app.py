@@ -3,6 +3,7 @@
 from distutils.log import error
 from wsgiref.validate import validator
 from flask import Flask, flash, g, make_response, redirect, render_template, url_for, request, session
+from flask_mail import Mail, Message #added!!!!!
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import login_required, login_user, logout_user, current_user
 from graphviz import render
@@ -40,8 +41,11 @@ from datetime import date
 
 from tokenGen import generate_confirmation_token, confirm_token #added!!!!!!!!!!!!!!!!!!
 
+from tokenGen import generate_confirmation_token, confirm_token #added!!!!!!!!!!!!!!!!!!
+
 
 app = Flask(__name__)
+mail= Mail(app)
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -214,7 +218,7 @@ def index():
                     filteredMovie.append(movie[i])
         return render_template('index.html', allmovies=movie, movie=filteredMovie, form=form)
 
-
+#if user is not confirmed, make sure to not let them login and display "email not confirmed" after they try entering email
 @app.route('/login', methods=['POST','GET'])
 def login():
     form = LoginForm()
@@ -222,7 +226,7 @@ def login():
     if request.method == 'POST':
         user = User.query.filter_by(email = form.email.data).first()
         if form.validate_on_submit():
-            print(request.form.get('remember'))
+            print(request.form.get('remember'))            
             if user:
                 if user.confirmed == 1:
                     if bcrypt.check_password_hash(user.password, form.password.data):
@@ -242,6 +246,21 @@ def login():
                 else:
                     flash('Email not confirmed')
                     return render_template('login.html', form = form)
+                else:
+                    if bcrypt.check_password_hash(user.password, form.password.data):
+                        session['email'] = user.email
+                        if request.form.get('remember') == "1":
+                            print(request.form.get('remember'))
+                            resp = make_response(render_template('index.html'))
+                            resp.set_cookie('email', user.email)
+                            return resp
+                        if user.confirmed == 1:
+                            return redirect(url_for('admin_portal3'))
+                        else:
+                            return redirect(url_for('index'))
+                    else:
+                        flash('Invalid Login credentials',"error")
+                        return render_template('login.html', form = form)
             flash('Invalid Login credentials')
             return render_template('login.html', form = form)
     else:
@@ -802,9 +821,26 @@ def register():
                         user_id=user.id)
                     db.session.add(card)
                     db.session.commit()
+
+
+
+
+
+#testing
+
+
+                    #login_user(user)
+
+
+
+
+
+
+
+                    
                     # session.pop('email', None)
                     # request.cookies.pop('email', None)
-                    flash('Registration successful')
+                    flash('Registration successful. A confirmation email has been sent. Please confirm you email.')
                     return render_template('login.html', form=LoginForm())
                 else:
                     flash('Please provide a valid Email Address')
