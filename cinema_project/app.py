@@ -246,21 +246,21 @@ def login():
                 else:
                     flash('Email not confirmed')
                     return render_template('login.html', form = form)
-                else:
-                    if bcrypt.check_password_hash(user.password, form.password.data):
-                        session['email'] = user.email
-                        if request.form.get('remember') == "1":
-                            print(request.form.get('remember'))
-                            resp = make_response(render_template('index.html'))
-                            resp.set_cookie('email', user.email)
-                            return resp
-                        if user.confirmed == 1:
-                            return redirect(url_for('admin_portal3'))
-                        else:
-                            return redirect(url_for('index'))
+            else:
+                if bcrypt.check_password_hash(user.password, form.password.data):
+                    session['email'] = user.email
+                    if request.form.get('remember') == "1":
+                        print(request.form.get('remember'))
+                        resp = make_response(render_template('index.html'))
+                        resp.set_cookie('email', user.email)
+                        return resp
+                    if user.confirmed == 1:
+                        return redirect(url_for('admin_portal3'))
                     else:
-                        flash('Invalid Login credentials',"error")
-                        return render_template('login.html', form = form)
+                        return redirect(url_for('index'))
+                else:
+                    flash('Invalid Login credentials',"error")
+                    return render_template('login.html', form = form)
             flash('Invalid Login credentials')
             return render_template('login.html', form = form)
     else:
