@@ -1,6 +1,7 @@
 from distutils.log import error
 from wsgiref.validate import validator
 from flask import Flask, flash, g, make_response, redirect, render_template, url_for, request, session
+from flask_mail import Mail, Message #added!!!!!
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import login_required, login_user, logout_user, current_user
 from graphviz import render
@@ -19,8 +20,11 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 
+from tokenGen import generate_confirmation_token, confirm_token #added!!!!!!!!!!!!!!!!!!
+
 
 app = Flask(__name__)
+mail= Mail(app)
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -57,6 +61,7 @@ class User(db.Model, UserMixin):
      user_type = db.Column(db.Integer, nullable=False)
      reviews = db.relationship('Review', backref='user', lazy=True)
      bookings = db.relationship('Booking', backref='user', lazy=True)
+     confirmed= db.Column(db.Integer, nullable=False)
 
 class Card(db.Model, UserMixin):
      id = db.Column(db.Integer, primary_key=True, nullable=False)
@@ -172,7 +177,7 @@ def index():
             return render_template('login.html', form=LoginForm())
     return render_template('index.html')
 
-
+#if user is not confirmed, make sure to not let them login and display "email not confirmed" after they try entering email
 @app.route('/login', methods=['POST','GET'])
 def login():
     form = LoginForm()
@@ -180,22 +185,26 @@ def login():
     if request.method == 'POST':
         user = User.query.filter_by(email = form.email.data).first()
         if form.validate_on_submit():
-            print(request.form.get('remember'))
+            print(request.form.get('remember'))            
             if user:
-                if bcrypt.check_password_hash(user.password, form.password.data):
-                    session['email'] = user.email
-                    if request.form.get('remember') == "1":
-                        print(request.form.get('remember'))
-                        resp = make_response(render_template('index.html'))
-                        resp.set_cookie('email', user.email)
-                        return resp
-                    if user.user_type == 1:
-                        return redirect(url_for('admin_portal3'))
-                    else:
-                        return redirect(url_for('index'))
-                else:
-                    flash('Invalid Login credentials',"error")
+                if user.confirmed==0:
+                    flash("Email not confirmed.", "")
                     return render_template('login.html', form = form)
+                else:
+                    if bcrypt.check_password_hash(user.password, form.password.data):
+                        session['email'] = user.email
+                        if request.form.get('remember') == "1":
+                            print(request.form.get('remember'))
+                            resp = make_response(render_template('index.html'))
+                            resp.set_cookie('email', user.email)
+                            return resp
+                        if user.confirmed == 1:
+                            return redirect(url_for('admin_portal3'))
+                        else:
+                            return redirect(url_for('index'))
+                    else:
+                        flash('Invalid Login credentials',"error")
+                        return render_template('login.html', form = form)
             flash('Invalid Login credentials')
             return render_template('login.html', form = form)
     else:
@@ -394,7 +403,7 @@ def register():
                 flash("Email already registered")
                 return render_template('register.html', form=form)
             else:
-                if emailService.emailS(form.email.data, "Thank you for registration", "Welcome"):
+                if emailService.emailS(form.email.data, "Thank you for registration. A confirmation email has been sent.", "Welcome"): #include link for confirmation
                     if request.form.get('promotion'):
                         promo = "1"
                     else:
@@ -411,8 +420,20 @@ def register():
                         zip = form.zip.data,\
                         country = form.country.data,\
                         promotions = promo,\
-                        user_type = 0
+                        user_type = 0,
+                        confirmed = 0 #added!!!!!!!!!!!!
                         )
+                    
+                    
+                    #testing!!!!!!!!!!!!!!!!
+                    token = generate_confirmation_token(user.email) #added!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    confirm_url = url_for('confirm_email', token=token, _external=True)
+                    #html = render_template('activate.html', confirm_url=confirm_url)
+                    #subject = "Please confirm your email"
+                    emailService.emailS(form.email.data, confirm_url, "Please confirm email")
+                    
+                    
+                    
                     db.session.add(user)
                     db.session.commit()
                     user = User.query.filter_by(email = form.email.data).first()
@@ -424,9 +445,26 @@ def register():
                         user_id=user.id)
                     db.session.add(card)
                     db.session.commit()
+
+
+
+
+
+#testing
+
+
+                    #login_user(user)
+
+
+
+
+
+
+
+                    
                     # session.pop('email', None)
                     # request.cookies.pop('email', None)
-                    flash('Registration successful')
+                    flash('Registration successful. A confirmation email has been sent. Please confirm you email.')
                     return render_template('login.html', form=LoginForm())
                 else:
                     flash('Please provide a valid Email Address')
@@ -437,6 +475,44 @@ def register():
     else:
         flash('Welcome to registration page')
         return render_template('register.html', form=form)
+
+
+@app.route('/confirm/<token>')
+#@login_required
+def confirm_email(token):
+    try:
+        email = confirm_token(token)
+    except:
+        flash('The confirmation link is invalid or has expired.', 'danger')
+    user = User.query.filter_by(email=email).first_or_404()
+    if user.confirmed:
+        flash('Account already confirmed. Please login.', 'success')
+    else:
+        user.confirmed = 1
+        #user.confirmed_on = datetime.datetime.now()
+        db.session.add(user)
+        db.session.commit()
+        flash('You have confirmed your account. Thanks!', 'success')
+    return redirect(url_for('login'))
+
+
+#added!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+def send_email(to, subject, template):
+    msg = Message(
+        subject,
+        recipients=[to],
+        html=template,
+        sender='karanrajsinghranawat@gmail.com'     #app.config['MAIL_DEFAULT_SENDER']
+    )
+    mail.send(msg)
+
+
+
+
+
+
+
+
 
 # @app.before_request
 # def before_request():
