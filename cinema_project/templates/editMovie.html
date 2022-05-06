@@ -9,7 +9,7 @@
     <meta name="author" content="Template Mo">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
 
-    <title>Movie Details Page</title>
+    <title>Edit Movie</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="../static/css/templatemo-edu-meeting.css">
     <link rel="stylesheet" href="../static/css/owl.css">
     <link rel="stylesheet" href="../static/css/lightbox.css">
-
+    <link rel="stylesheet" href="../static/css/myCustom.css">
     <!--
 
     
@@ -94,7 +94,6 @@ https://templatemo.com/tm-569-edu-meeting
                                                                     <p>Fill out and submit any information you'd like to
                                                                         update.</p><br>
                                                                 </div>
-                                                                <h2>Personal Information </h2>
                                                                 {% for field, errors in form.errors.items() %}
                                                                 {{ ', '.join(errors) }}
                                                                 {% endfor %}
