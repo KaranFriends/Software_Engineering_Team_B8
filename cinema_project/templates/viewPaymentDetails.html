@@ -49,17 +49,26 @@ https://templatemo.com/tm-569-edu-meeting
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->
             <ul class="nav">
-              <li><a href="{{url_for('index')}}">Home</a></li>
-              <li><a href="{{url_for('promotions')}}">Promotions</a></li>
+              <li class="scroll-to-section">
+                <a href="{{url_for('index')}}" class="active">Home</a>
+              </li>
               <li class="has-sub">
                 <a href="javascript:void(0)">Pages</a>
                 <ul class="sub-menu">
+                  {% if session['email'] or request.cookies.get('email')%}
                   <li><a href="{{url_for('edit_profile')}}">Edit Profile</a></li>
-                  <!-- <li><a href="{{url_for('view_Payment')}}">Edit Payment Details</a></li> -->
+                  <li><a href="{{url_for('promotions')}}">Promotions</a></li>
+                  <li><a href="{{url_for('view_payment_details')}}">Edit Payment Details</a></li>
+                  {% endif %}
+
                 </ul>
               </li>
-              <!-- <li><a href="register.html" class="active">Register</a></li> -->
+              {% if not session['email']%}
+              <li><a href="{{url_for('register')}}">Register</a></li>
+              <li><a href="{{url_for('login')}}">Login</a></li>
+              {% else %}
               <li><a href="{{url_for('logout')}}">Logout</a></li>
+              {% endif %}
             </ul>
             <a class='menu-trigger'>
               <span>Menu</span>
@@ -72,74 +81,110 @@ https://templatemo.com/tm-569-edu-meeting
   </header>
   <!-- ***** Header Area End ***** -->
 
-
   <section class="meetings-page" id="meetings">
     <div class="container">
       <div class="row center-screen">
-        <div class="col-lg-12">
-          <div class="row center-screen">
-            <div class="card2" style="background-color:rgba(220, 217, 211, 0.338);">
-              <div class="meeting-single-item">
-                <div class="thumb">
-                  <section class="contact-us" id="contact">
-                    <h2>Wallet</h2><br><br>
-                    <div class="container">
-                      <div class="row">
-                        <div class="align-self-center">
-                          <div class="row">
-                            <div class="col-lg-6 mb-lg-4">
-                              <div class="card creditCard">
-                                <br>
-                                <div class="number"> <label class="fw-bold" for="">**** **** **** 1234</label> </div>
-                                <div class="d-flex align-items-center justify-content-between"> <small><span
-                                      class="fw-bold">Expiry date: </span><span>MM/YY</span></small> <small><span
-                                      class="fw-bold">Name: </span><span>Kumar</span></small><br><br><br> </div>
-                                <div class="main-button-yellow">
-                                  <a href="editPaymentDetails.html">Edit Card</a>
+        <div class="">
+          <div class="grid-container3 roundedGrid">
+            <div class="grid-item3">
+              <div class="down-content">
+                <div class="info">
+                  {% for booking in bookings %}
+                  <div class="row">
+                    <div class="col-8">
+                      <br>
+                      <h3 class="" style=" color: white;">Order History</h3><br>
+                      <div class="align-self-center">
+                        <div class="col-lg-6 mb-lg-4" style="transform: scale(0.8);">
+                          <div class="cart marginLR roundedDiv">
+                            <h5 class="fw-bold">Order #: {{booking.id}}</h5>
+                            <h6 class="fw-bold">Total: &dollar; {{booking.price}}</h6><br>
+                            <div class="row">
+                              <div class="row main align-items-center">
+                                <div class="col">
+                                  <div class="row">Time {{booking.booking_time}}</div>
+                                  <hr>
                                 </div>
                               </div>
                             </div>
-                            <div class="col-lg-6 mb-lg-4">
-                              <div class="card creditCard">
-                                <br>
-                                <div class="number"> <label class="fw-bold" for="">**** **** **** 5678</label> </div>
-                                <div class="d-flex align-items-center justify-content-between"> <small><span
-                                      class="fw-bold">Expiry date: </span><span>MM/YY</span></small> <small><span
-                                      class="fw-bold">Name: </span><span>Kumar</span></small><br><br><br> </div>
-                                <div class="main-button-yellow">
-                                  <a href="editPaymentDetails.html">Edit Card</a>
+                            <div class="row">
+                              <div class="row main align-items-center">
+                                <div class="col">
+                                  <div class="row">Date {{booking.booking_date}}</div>
+                                  <hr>
                                 </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="row main align-items-center">
+                                <div class="col">
+                                  <div class="row">1 Child Ticket(s)</div>
+                                  <hr>
+                                </div>
+                                <div class="col">&dollar; {{booking.price}}</div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                </div>
-              </div><br>
-              <div class="col-lg-12">
-                <div class="main-button-red">
-                  <a href="editPaymentDetails.html">Add a Card</a>
+                  </div>
+                  {%endfor%}
                 </div>
               </div>
-              <div class="col-lg-12">
-                <div class="main-button-red">
-                  <a href="index.html">Back To Home Screen</a>
+            </div>
+            <div class="grid-item3">
+              <div class="down-content">
+                <div class="info">
+                  <div class="row">
+                    <div class="col-8">
+                      <br>
+                      <h3 style=" color: white;">Saved Cards</h3><br>
+                      <div class="align-self-center">
+                        <div class="row">
+                          {% for card in cards %}
+                          <div class="col-lg-6 mb-lg-4">
+                            <div class="card creditCard">
+                              <br>
+                              <div class="number"> <label class="fw-bold" for="">{{card.cardNumber}}</label> </div>
+                              <div class="d-flex align-items-center justify-content-between">
+                                <small><span class="fw-bold">Expiry date:
+                                  </span><span>{{card.expirationDate}}</span></small> <br>
+                                <small><span class="fw-bold">Name: </span><span>{{card.cardName}}</span></small><br><br>
+                              </div>
+                              <div class="main-button-yellow">
+                                <a href="{{url_for('edit_payment_details',card=card.id)}}">Edit Card</a>
+                              </div>
+                            </div>
+                          </div>
+                          {%endfor%}
+                        </div><br>
+                        <div class="col-lg-12">
+                          <div class="main-button-blue" style="transform: scale(1.2);">
+                            <a href="{{url_for('add_payment_details')}}">Add a Card</a>
+                          </div>
+                        </div>
+                      </div>
+
+
+                    </div>
+                  </div>
                 </div>
-              </div><br><br>
+              </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+    </div>
 
-
-
-
-      <div class="footer">
-        <p>Copyright © 2022 Virtual Cinemas., Ltd. All Rights Reserved.
-          <br>
-        </p>
-      </div>
+    <div class="footer">
+      <p>Copyright © 2022 Virtual Cinemas., Ltd. All Rights Reserved.
+        <br>
+      </p>
+    </div>
+    </div>
+    </div>
   </section>
 
 

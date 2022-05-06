@@ -20,7 +20,6 @@
   <link rel="stylesheet" href="../static/css/templatemo-edu-meeting.css">
   <link rel="stylesheet" href="../static/css/owl.css">
   <link rel="stylesheet" href="../static/css/lightbox.css">
-
   <link rel="stylesheet" href="../static/css/myCustom.css">
   <!--
 
@@ -40,224 +39,146 @@ https://templatemo.com/tm-569-edu-meeting
     <div class="container">
       <div class="row">
         <div class="col-12">
-          <ul class="nav">
-            <li class="scroll-to-section">
-              <a href="{{url_for('index')}}" class="active">Home</a>
-            </li>
-            <li><a href="{{url_for('promotions')}}">Promotions</a></li>
-            <li class="has-sub">
-              <a href="javascript:void(0)">Pages</a>
-              <ul class="sub-menu">
-                {% if session['email'] or request.cookies.get('email')%}
-                <li><a href="{{url_for('edit_profile')}}">Edit Profile</a></li>
-                {% endif %}
-                <li><a href="{{url_for('view_Payment')}}">Edit Payment Details</a></li>
-              </ul>
-            </li>
-            {% if not session['email']%}
-            <li><a href="{{url_for('register')}}">Register</a></li>
-            <li><a href="{{url_for('login')}}">Login</a></li>
-            {% else %}
-            <li><a href="{{url_for('logout')}}">Logout</a></li>
-            {% endif %}
-          </ul>
-          <a class='menu-trigger'>
-            <span>Menu</span>
-          </a>
-          <!-- ***** Menu End ***** -->
-        </nav>
+          <nav class="main-nav">
+            <!-- ***** Logo Start ***** -->
+            <a href="{{url_for('index')}}" class="logo">
+              Virtual Cinemas
+            </a>
+            <!-- ***** Logo End ***** -->
+            <!-- ***** Menu Start ***** -->
+            <ul class="nav">
+              <li class="scroll-to-section">
+                <a href="{{url_for('index')}}" class="active">Home</a>
+              </li>
+              <li class="has-sub">
+                <a href="javascript:void(0)">Pages</a>
+                <ul class="sub-menu">
+                  {% if session['email'] or request.cookies.get('email')%}
+                  <li><a href="{{url_for('edit_profile')}}">Edit Profile</a></li>
+                  <li><a href="{{url_for('promotions')}}">Promotions</a></li>
+                  <li><a href="{{url_for('view_payment_details')}}">Edit Payment Details</a></li>
+                  {% endif %}
+
+                </ul>
+              </li>
+              {% if not session['email']%}
+              <li><a href="{{url_for('register')}}">Register</a></li>
+              <li><a href="{{url_for('login')}}">Login</a></li>
+              {% else %}
+              <li><a href="{{url_for('logout')}}">Logout</a></li>
+              {% endif %}
+            </ul>
+            <a class='menu-trigger'>
+              <span>Menu</span>
+            </a>
+            <!-- ***** Menu End ***** -->
+          </nav>
         </div>
       </div>
     </div>
   </header>
   <!-- ***** Header Area End ***** -->
 
+
   <section class="meetings-page" id="meetings">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <h2>Checkout</h2>
-          <div><br>
-            <div class="row">
-              <div class="col-md-8 cart ">
-                <div class="title">
+    <form
+      action="{{ url_for('checkout', countAdult = countAdult, countSenior = countSenior, countChild = countChild, movie = movie, show=show, ticketPrice = ticketPrice, taxPrice=taxPrice, totalPrice=totalPrice) }}"
+      method="POST">
+      <div class="container">
+        <div class="row marginTB2 marginTop">
+          <div class="grid-container4 roundedGrid">
+            <div class="grid-item4">
+              <div class="down-content">
+                <div class="info">
                   <div class="row">
-                    <div class="col ">
-                      <h3>&nbsp;&nbsp;Checkout</h3>
-                      <hr>
-                    </div>
-                  </div>
-                </div>
-
-                <form>
-                  <input type="radio" id="pay1" name="pay" value="onFile">
-                  <label for="pay1">Use card on file</label><br>
-                  <input type="radio" id="pay2" name="pay" value="newFile">
-                  <label for="pay2">Add new payment method</label><br>
-                </form>
-
-
-                <!-- <form id="contact" action="" method="post">
-                  <div class="row">
-                    <div class=" card cart">
-                      <fieldset>
-
-
-                        <div class="control-group">
-                          <p style="text-align:left">Card Holder's Name</p>
-                          <div class="controls">
-                            <input type="text" id="username" name="username" placeholder="" class="input-xlarge">
-                          </div>
-                        </div>
-
-                        <div class="control-group">
-                          <p style="text-align:left">Card Number</p>
-                          <div class="controls">
-                            <input type="text" id="email" name="email" placeholder="" class="input-xlarge">
-                          </div>
-                        </div>
-
-
-                        <div class="control-group">
-                          <p style="text-align:left">CVV</p>
-                          <div class="controls">
-                            <input type="password" id="password_confirm" name="password_confirm" placeholder=""
-                              class="span2">
-                          </div>
-                        </div>
-
-                        <div class="control-group">
-                          <p>Expiration Date</p>
-                          <div class="controls">
-                            <select class="span3" name="expiry_month" id="expiry_month">
-                              <option></option>
-                              <option value="01">Jan (01)</option>
-                              <option value="02">Feb (02)</option>
-                              <option value="03">Mar (03)</option>
-                              <option value="04">Apr (04)</option>
-                              <option value="05">May (05)</option>
-                              <option value="06">June (06)</option>
-                              <option value="07">July (07)</option>
-                              <option value="08">Aug (08)</option>
-                              <option value="09">Sep (09)</option>
-                              <option value="10">Oct (10)</option>1
-                              <option value="11">Nov (11)</option>
-                              <option value="12">Dec (12)</option>
-                            </select>
-                            <select class="span2" name="expiry_year">
-                              <option value="13">2013</option>
-                              <option value="14">2014</option>
-                              <option value="15">2015</option>
-                              <option value="16">2016</option>
-                              <option value="17">2017</option>
-                              <option value="18">2018</option>
-                              <option value="19">2019</option>
-                              <option value="20">2020</option>
-                              <option value="21">2021</option>
-                              <option value="22">2022</option>
-                              <option value="23">2023</option>
-                            </select>
-                          </div>
-                        </div>
-                      </fieldset>
-                    </div>
-                  </div>
-                  <div class="col-lg-12">
-                    <fieldset>
-                      <br><button type="submit" id="form-submit" class="button">Submit</button>
-                    </fieldset>
-                  </div>
-                </form> -->
-
-
-                <div class="container-fluid  ">
-                  <div class="row d-flex justify-content-center">
-                    <div class="col-sm-12">
-                      <div class="card mx-auto">
-                        <form class="card-details myImage ">
-
-                          <div class="form-group mb-0">
-                            <p class="mb-0" style="color:rgba(26, 26, 32, 0.678);">Card Number</p> <input type="text" name="card-num"
-                              placeholder="1234 5678 9012 3457" size="17" id="cno" minlength="19" maxlength="19">
-                          </div>
-                          <div class="form-group">
-                            <p class="mb-0" style="color:rgba(26, 26, 32, 0.678);">Cardholder's Name</p> <input type="text" name="name"
-                              placeholder="Name" size="17">
-                          </div>
-                          <div class="form-group pt-2">
-                            <div class="row d-flex">
-                              <div class="col-sm-4">
-                                <p class=" mb-0" style="color:rgba(26, 26, 32, 0.678);">Expiration</p> <input type="text" name="exp"
-                                  placeholder="MM/YYYY" size="7" id="exp" minlength="7" maxlength="7">
-                              </div>
-                              <div class="col-sm-3">
-                                <p class=" mb-0" style="color:rgba(26, 26, 32, 0.678);">Cvv</p> <input type="password" name="cvv"
-                                  placeholder="&#9679;&#9679;&#9679;" size="1" minlength="3" maxlength="3">
+                    <div class="col-8">
+                      <div class="align-self-center">
+                        <div class="row">
+                          {% for card in cards %}
+                          <div class="col-lg-6 mb-lg-4">
+                            <div class="col-md-8 card4 marginBot" style="position: absolute; left: 12%; top: 30%;  overflow: auto;">
+                              <div class="col-md-8  ">
+                                <div class="title">
+                                  <div class="row">
+                                    <div class="col ">
+                                      <h3>Checkout</h3><br>
+                                      <br>
+                                      <div class="number"> <label class="fw-bold" for="">{{card.cardNumber}}</label>
+                                      </div>
+                                      <div class="d-flex align-items-center justify-content-between">
+                                       <h5 class="fw-bold">Expiry date:
+                                       </h5><span>{{card.expirationDate}}</span><br>
+                                      <h5 class="fw-bold">Name:
+                                      </h5><span>{{card.cardName}}</span><br><br>
+                                      </div><br><br>
+                                      <div class="row">
+                                        <button type="submit" class="roundedGrid main-button-red" name="make_payment" style="background-color:#a12c2f; color:white; transform: scale(1.2);"
+                                          value={{card.id}}>Submit Purchase</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
                               </div>
 
-                            </div><br><br>
-                            <div class="main-button-yellow">
-                              <a href="">Add Payment</a>
+                              {%endfor%}
+                              <br>
                             </div>
-
                           </div>
-                        </form>
+                          {%endfor%}
+                          <br>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="grid-item4">
+                    <div class="down-content">
+                      <div class="info">
+                        <div class="row">
+                          <div class="col-8">
+                            <div class="align-self-center">
+                              <div class="row">
+                                <div class="col-lg-6 mb-lg-4">
+                                  <div class="col-md-4 card4" style="position: absolute; right: 12%; top: 30%;" ;
+                                    style="border-left: 1px solid rgba(0,0,0,.1); padding: 2em;">
+                                    <div>
+                                      <h3>Summary</h3>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col" style="padding-left:0;">Tickets</div>
+                                      <div class="col text-right">&dollar; {{ticketPrice}}</div>
+                                    </div><br>
+                                    <div class="row">
+                                      <div class="col" style="padding-left:0;">Tax</div>
+                                      <div class="col text-right">&dollar; {{taxPrice}}</div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                      <div class="col" style="padding-left:0;">TOTAL PRICE</div>
+                                      <div class="col text-right">&dollar; {{totalPrice}}</div>
+                                      <br><br>
+                                    </div>
+                                  </div><br><br>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-
-
-              </div>
-              <div class="col-md-4 summary " style="border-left: 1px solid rgba(0,0,0,.1); padding: 2em;">
-                <div>
-                  <h5><b>Summary</b></h5>
-                </div>
-                <hr>
-                <div class="row">
-                  <div class="col" style="padding-left:0;">ITEMS 3</div>
-                  <div class="col text-right">&dollar; 40.77</div>
-                </div><br>
-                <div class="row">
-                  <div class="col" style="padding-left:0;">Tax</div>
-                  <div class="col text-right">&dollar; 12.00</div>
-                </div>
-                <hr>
-                <div class="row">
-                  <div class="col" style="padding-left:0;">TOTAL PRICE</div>
-                  <div class="col text-right">&dollar; 52.77</div>
-                  <div class="main-button-red">
-                    <a href="payment.html">Back to Cart</a>
-                  </div><br>
-                  <div class="main-button-red">
-                    <a href="confirmation.html">Confirm Purchase</a>
-                  </div><br>
-                </div>
-              </div>
+              </div><br><br><br><br><br><br>
             </div>
+
+              <div class="footer">
+                <p>Copyright © 2022 Virtual Cinemas., Ltd. All Rights Reserved.
+                  <br>
+                </p>
+              </div>
           </div>
         </div>
       </div>
-    </div><br>
-    <!-- Change the `data-field` of buttons and `name` of input field's for multiple plus minus buttons
-    <div class="input-group plus-minus-input ">
-      <div class="input-group-button">
-        <button type="button" class="button hollow circle" data-quantity="minus" data-field="quantity">
-          <i class="fa fa-minus" aria-hidden="true"></i>
-        </button>
-      </div>
-      <input class="input-group-field" type="number" name="quantity" value="0">
-      <div class="input-group-button">
-        <button type="button" class="button hollow circle" data-quantity="plus" data-field="quantity">
-          <i class="fa fa-plus" aria-hidden="true"></i>
-        </button>
-      </div>
-    </div> -->
-    <div class="footer">
-      <p>Copyright © 2022 Virtual Cinemas., Ltd. All Rights Reserved.
-        <br>
-      </p>
-    </div>
+    </form>
   </section>
 
 

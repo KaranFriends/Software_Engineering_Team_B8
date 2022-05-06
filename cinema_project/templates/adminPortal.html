@@ -16,11 +16,11 @@
 
 
     <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="static/css/fontawesome.css">
-    <link rel="stylesheet" href="static/css/templatemo-edu-meeting.css">
-    <link rel="stylesheet" href="static/css/owl.css">
-    <link rel="stylesheet" href="static/css/lightbox.css">
-    <link rel="stylesheet" href="static/css/myCustom.css">
+    <link rel="stylesheet" href="../static/css/fontawesome.css">
+    <link rel="stylesheet" href="../static/css/templatemo-edu-meeting.css">
+    <link rel="stylesheet" href="../static/css/owl.css">
+    <link rel="stylesheet" href="../static/css/lightbox.css">
+    <link rel="stylesheet" href="../static/css/myCustom.css">
     <!--
 
 TemplateMo 569 Edu Meeting
@@ -41,13 +41,13 @@ https://templatemo.com/tm-569-edu-meeting
                 <div class="col-12">
                     <nav class="main-nav">
                         <!-- ***** Logo Start ***** -->
-                        <a href="index.html" class="logo">
+                        <a href="{{url_for('admin_portal')}}" class="logo">
                             Virtual Cinemas
                         </a>
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <li><a href="admin_portal3.html">Home</a></li>
+                            <li><a href="{{url_for('admin_portal')}}">Home</a></li>
                             <li><a href="{{url_for('logout')}}">Logout</a></li>
                         </ul>
                         <a class='menu-trigger'>
@@ -63,35 +63,41 @@ https://templatemo.com/tm-569-edu-meeting
 
     <section class="meetings-page" id="meetings">
         <div class="container">
-            <div class="row">
+            <div class="row center-screen">
                 <div class="col-lg-12">
                     <div class="container">
                         <div class="row text-center">
                             <div class="card-deck mt-2">
                                 <div class=" p-4 m-4">
-                                    <div class="card ">
+                                    <div class="card centeredNew">
                                         <div class="text-center">
-                                            <br><h2>Admin Portal</h2><br>
+                                            <br>
+                                            <h2>Admin Portal</h2><br>
                                         </div>
                                         <br><br>
-                                        <table>
-                                            <tr>
-                                                <th>Manage Movies</th>
-                                                <th>Manage Users</th>
-                                                <th>Manage Promotions</th>
-                                            </tr>
-                                            <tr>
-                                                <td><a href="manage_movies.html"><img
-                                                            src="../static/images/managemovie.png"
-                                                            alt="Movies"><b>Edit</b></a></td>
-                                                <td><a href="manage_users.html"><img src="../static/images/manageUser.png"
-                                                            alt="Users"><b>Edit</b></a></td>
-                                                <td><a href="manage_promotions.html"><img
-                                                            src="../static/images/managePromo.png"
-                                                            alt="Promotions"><b>Edit</b></a></td>
-                                            </tr>
-                                        </table>
-                                        <br><br>
+                                        <div class="grid-container2">
+
+                                            <div class="grid-item2">
+                                                <a href="{{url_for('manage_movies')}}"><img
+                                                        src="../static/images/managemovie.png" alt="Movies"><b>Edit
+                                                        Movies</b></a>
+                                            </div>
+                                            <div class="grid-item2">
+                                                <a href="{{url_for('manage_users')}}"><img
+                                                        src="../static/images/manageUser.png" alt="Users"><b>Edit
+                                                        Users</b></a>
+                                            </div>
+                                            <div class="grid-item2">
+                                                <a href="{{url_for('manage_promotions')}}"><img
+                                                        src="../static/images/managePromo.png" alt="Promotions"><b>Edit
+                                                        Promotions</b></a>
+                                            </div>
+                                            <div class="grid-item2">
+                                                <a href="{{url_for('manage_show')}}"><img
+                                                        src="../static/images/managePromo.png" alt="Show"><b>Edit
+                                                        Show</b></a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -101,12 +107,6 @@ https://templatemo.com/tm-569-edu-meeting
 
                 </div>
             </div>
-        </div>
-
-        <div class="footer">
-            <p>Copyright © 2022 Virtual Cinemas., Ltd. All Rights Reserved.
-                <br>
-            </p>
         </div>
     </section>
 
