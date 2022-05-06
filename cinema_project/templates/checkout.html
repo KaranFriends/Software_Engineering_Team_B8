@@ -82,7 +82,7 @@ https://templatemo.com/tm-569-edu-meeting
 
   <section class="meetings-page" id="meetings">
     <form
-      action="{{ url_for('checkout', countAdult = countAdult, countSenior = countSenior, countChild = countChild, movie = movie, show=show, ticketPrice = ticketPrice, taxPrice=taxPrice, totalPrice=totalPrice) }}"
+      action="{{ url_for('checkout', countAdult = countAdult, countSenior = countSenior, countChild = countChild, movie = movie, show=show, cards=cards , ticketPrice = ticketPrice, taxPrice=taxPrice, totalPrice=totalPrice, discountedPrice=discountedPrice) }}"
       method="POST">
       <div class="container">
         <div class="row marginTB2 marginTop">
@@ -95,8 +95,11 @@ https://templatemo.com/tm-569-edu-meeting
                       <div class="align-self-center">
                         <div class="row">
                           <div class="col-lg-6 mb-lg-4">
-                            <br><div class="col-md-8 card4 marginBot" style="position: absolute; left: 12%; top: 10%;  transform: scale(0.8);">
-                              <h2>Wallet</h2><hr>
+                            <br>
+                            <div class="col-md-8 card4 marginBot"
+                              style="position: absolute; left: 12%; top: 10%;  transform: scale(0.8);">
+                              <h2>Wallet</h2>
+                              <hr>
                               {% for card in cards %}
                               <h4>Card Number:</h4>
                               <div class="col-md-8  ">
@@ -107,20 +110,21 @@ https://templatemo.com/tm-569-edu-meeting
                                       <div class="number"> <label class="fw-bold" for="">{{card.cardNumber}}</label>
                                       </div>
                                       <div class="d-flex align-items-center justify-content-between">
-                                       <h5 class="fw-bold">Expiry date:
-                                       </h5><span>{{card.expirationDate}}</span><br>
-                                      <h5 class="fw-bold">Name:
-                                      </h5><span>{{card.cardName}}</span><br><br>
+                                        <h5 class="fw-bold">Expiry date:
+                                        </h5><span>{{card.expirationDate}}</span><br>
+                                        <h5 class="fw-bold">Name:
+                                        </h5><span>{{card.cardName}}</span><br><br>
                                       </div><br>
                                       <div class="row">
-                                        <button type="submit" class="roundedGrid main-button-red" name="make_payment" style="background-color:#a12c2f; color:white; transform: scale(1.2);"
+                                        <button type="submit" class="roundedGrid main-button-red" name="make_payment"
+                                          style="background-color:#a12c2f; color:white; transform: scale(1.2);"
                                           value={{card.id}}>Purchase With This Card</button>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
-                              </div><hr>
-
+                              </div>
+                              <hr>
                               {%endfor%}
                               <br>
                             </div>
@@ -141,7 +145,8 @@ https://templatemo.com/tm-569-edu-meeting
                                   <div class="col-md-4 card4" style="position: absolute; right: 12%; top: 30%;" ;
                                     style="border-left: 1px solid rgba(0,0,0,.1); padding: 2em;">
                                     <div>
-                                      <h3>Summary</h3><hr>
+                                      <h3>Summary</h3>
+                                      <hr>
                                     </div>
                                     <div class="row">
                                       <div class="col" style="padding-left:0;">Tickets</div>
@@ -155,9 +160,33 @@ https://templatemo.com/tm-569-edu-meeting
                                     <div class="row">
                                       <div class="col" style="padding-left:0; background-color: #a12c2f; color: white;
                                       font-family: 'Poppins', sans-serif;">TOTAL PRICE</div>
-                                      <div class="col text-right">&dollar; {{totalPrice}}</div>
+                                      <div class="col text-right">&dollar; {{discountedPrice}}</div>
                                       <br><br>
                                     </div>
+                                    <div class="row">
+                                      <div class="col" style="padding-left:0;">Promo Code: </div>
+                                      <div class="col text-right">
+                                        <input name="promoCode" size="20"></input>
+                                      </div>
+                                    </div><br>
+                                    {% with messages = get_flashed_messages() %}
+                                    {% if messages %}
+                                    <ul class=flashes>
+                                      {% for message in messages %}
+                                      <h3>{{ message }}</h3>
+                                      {% endfor %}
+                                    </ul>
+                                    {% endif %}
+                                    {% endwith %}
+                                    {% for field, errors in form.errors.items() %}
+                                    {{ ', '.join(errors) }}
+                                    {% endfor %}<br><br>
+                                    <div class="main-button-red centeredNew">
+                                      <button type="submit" class="roundedGrid main-button-red" name="apply_promoCode"
+                                        value="apply_promoCode"
+                                        style="background-color:#a12c2f; color:white; transform: scale(1.2);">Apply
+                                        Promo Code</button>
+                                    </div><br>
                                   </div><br><br>
                                 </div>
                               </div>
@@ -170,11 +199,11 @@ https://templatemo.com/tm-569-edu-meeting
                 </div>
               </div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
             </div><br><br><br><br><br><br>
-              <div class="footer">
-                <p>Copyright © 2022 Virtual Cinemas., Ltd. All Rights Reserved.
-                  <br>
-                </p>
-              </div>
+            <div class="footer">
+              <p>Copyright © 2022 Virtual Cinemas., Ltd. All Rights Reserved.
+                <br>
+              </p>
+            </div>
           </div>
         </div>
       </div>

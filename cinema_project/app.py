@@ -172,6 +172,7 @@ class Img(db.Model, UserMixin):
 class Promotion(db.Model, UserMixin):
     id=db.Column(db.Integer, primary_key=True, nullable=False)
     code=db.Column(db.String(20), unique=True, nullable=False)
+    discount = db.Column(db.Integer, nullable=False)
     # startDate = db.Column(db.String(8), nullable=False)
     # endDate = db.Column(db.String(8), nullable=False)
 
@@ -308,7 +309,8 @@ def movie_details(movie):
 
 @app.route('/promotions')
 def promotions():
-    return render_template('promotions.html')
+    promotion = Promotion.query.order_by(Promotion.id).all()
+    return render_template('promotions.html', promotion = promotion)
 
 @app.route('/admin_portal')
 def admin_portal():
@@ -428,10 +430,24 @@ def payment(movie, show):
         return render_template('payment.html', movie=movie, show=show, seatNumber = size, form=Payment())
     user = User.query.filter_by(email = session['email']).first()
     cards = Card.query.filter_by(user_id = user.id).all()
-    return render_template('checkout.html', countAdult = countAdult, countSenior = countSenior, countChild = countChild, movie = movie, show=show, cards=cards, form=Checkout(), ticketPrice = ticketPrice, taxPrice=taxPrice, totalPrice=totalPrice)
+    return render_template('checkout.html', countAdult = countAdult, countSenior = countSenior, countChild = countChild, movie = movie, show=show, cards=cards, form=Checkout(), ticketPrice = ticketPrice, taxPrice=taxPrice, totalPrice=totalPrice, discountedPrice=totalPrice)
 
-@app.route('/checkout/<countAdult>,<countSenior>,<countChild>,<movie>,<show>, <ticketPrice>, <taxPrice>, <totalPrice>',methods=['POST'])
-def checkout(countAdult, countSenior, countChild, movie, show, ticketPrice, taxPrice, totalPrice):
+@app.route('/checkout/<countAdult>,<countSenior>,<countChild>,<movie>,<show>,<cards>, <ticketPrice>, <taxPrice>, <totalPrice>, <discountedPrice>',methods=['POST'])
+def checkout(countAdult, countSenior, countChild, movie, show, cards, ticketPrice, taxPrice, totalPrice, discountedPrice):
+
+    if request.form.get('apply_promoCode'):
+        print(request.form.get('promoCode'))
+        user = User.query.filter_by(email = session['email']).first()
+        cards = Card.query.filter_by(user_id = user.id).all()
+        promo = Promotion.query.order_by(Promotion.id).all()
+        for i in promo:
+            if request.form.get('promoCode') == i.code:
+                flash("Promo Code Applied Successfully")
+                discountedPrice = float(totalPrice) - float(totalPrice)*i.discount/100
+                return render_template('checkout.html', countAdult = countAdult, countSenior = countSenior, countChild = countChild, movie = movie, show=show, cards=cards, form=Checkout(), ticketPrice = ticketPrice, taxPrice=taxPrice, totalPrice=totalPrice, discountedPrice=discountedPrice)
+        flash("Invalid Code Provided")
+        return render_template('checkout.html', countAdult = countAdult, countSenior = countSenior, countChild = countChild, movie = movie, show=show, cards=cards, form=Checkout(), ticketPrice = ticketPrice, taxPrice=taxPrice, totalPrice=totalPrice, discountedPrice=discountedPrice)        
+
     user = User.query.filter_by(email = session['email']).first()
     cards = Card.query.filter_by(user_id = user.id).all()
     ticketList = []
@@ -488,7 +504,7 @@ def checkout(countAdult, countSenior, countChild, movie, show, ticketPrice, taxP
     for i in ticketList:
         ticket_booking = TicketBooking(booking_id = bookingid,\
             ticket_id = i,\
-                booking_price = totalPrice
+                booking_price = discountedPrice
             )
         db.session.add(ticket_booking)
         db.session.flush()
@@ -505,7 +521,8 @@ def add_promotions():
     form = PromotionAdd()
     if request.method == 'POST':
         if form.validate_on_submit():
-            promotion=Promotion(code = form.code.data
+            promotion=Promotion(code = form.code.data,\
+                discount = form.discount.data
                 )
             db.session.add(promotion)
             db.session.commit()
