@@ -75,17 +75,18 @@ https://templatemo.com/tm-569-edu-meeting
                         <div id="table-scroll" th:if="${not #lists.isEmpty(users)}" class="userTable">
                             <div class="scrollit">
                                 <form action="{{ url_for('manage_promotions') }}" method="POST">
-                                    <table class="table table-bordered table-hover mngTbl spacedTable">
+                                    <table class="table table-bordered table-hover mngTbl spacedTable"
+                                        style="width:100%;">
                                         <tr>
-                                            <th class="centeredNew">Code</th>
+                                            <th>Code</th>
+                                            <th>Discount</th>
                                             <!-- <th>Start Date</th>
                                             <th>End Date</th> -->
                                         </tr>
                                         {%for promotionP in promotion%}
                                         <tr>
                                             <td>{{promotionP.code}}</td>
-                                            <!-- <td>{{promotionP.startDate}}</td>
-                                            <td>{{promotionP.endDate}}</td> -->
+                                            <td>{{promotionP.discount}}</td>
                                             <td><button type="submit" value="{{promotionP.id}}" name="sendPromotion">
                                                     Send
                                                 </button></td>

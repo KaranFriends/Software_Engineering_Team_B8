@@ -120,7 +120,7 @@ https://templatemo.com/tm-569-edu-meeting
                               <hr>
                             </div>
                             <div class="col">
-                              &dollar; 10.59 
+                              &dollar; 10.59
                               <a id="subtractCounterSenior">-</a>
                               <input id="inputSenior" name="inputSenior" value="0" readonly="readonly" size="1"></input>
                               <a id="addCounterSenior">+</a>
@@ -134,7 +134,7 @@ https://templatemo.com/tm-569-edu-meeting
                               <hr>
                             </div>
                             <div class="col">
-                              &dollar; 9.59 
+                              &dollar; 9.59
                               <a id="subtractCounterChild">-</a>
                               <input id="inputChild" name="inputChild" value="0" readonly="readonly" size="1"></input>
                               <a id="addCounterChild">+</a>
@@ -172,31 +172,25 @@ https://templatemo.com/tm-569-edu-meeting
                       <input value="0" name="totalPrice" readonly="readonly" size="1"></input>
                     </div>
                     <br><br>
-                    <div class="row">
-                      <div class="col" style="padding-left:0;">Promo Code: </div>
-                      <div class="col text-right">
-                        <input name="promoCode" size="20"></input>
-                      </div>
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    <ul class=flashes>
+                      {% for message in messages %}
+                      <h3>{{ message }}</h3>
+                      {% endfor %}
+                    </ul>
+                    {% endif %}
+                    {% endwith %}
+                    {% for field, errors in form.errors.items() %}
+                    {{ ', '.join(errors) }}
+                    {% endfor %}<br><br>
+                    <div class="main-button-red centeredNew">
+                      {{form.paymentSubmit(class="roundedGrid", type="submit",
+                      style="background-color: #a12c2f;
+                      color: white;
+                      font-family: 'Poppins', sans-serif;")}}
                     </div><br>
-                      {% with messages = get_flashed_messages() %}
-                      {% if messages %}
-                      <ul class=flashes>
-                        {% for message in messages %}
-                        <h3>{{ message }}</h3>
-                        {% endfor %}
-                      </ul>
-                      {% endif %}
-                      {% endwith %}
-                      {% for field, errors in form.errors.items() %}
-                      {{ ', '.join(errors) }}
-                      {% endfor %}<br>
-                      <div class="main-button-red centeredNew">
-                        {{form.paymentSubmit(class="roundedGrid", type="submit",
-                        style="background-color: #a12c2f;
-                        color: white;
-                        font-family: 'Poppins', sans-serif;")}}
-                      </div><br>
-                      <br>
+                    <br>
                   </div>
                 </div>
               </div>
