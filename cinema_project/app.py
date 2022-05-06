@@ -677,35 +677,54 @@ def edit_user(user):
 
 
 
-@app.route('/update_movie', methods=['POST'])
-def update_movie():
+@app.route('/update_movie/<movie>', methods=['POST'])
+def update_movie(movie):
     if request.method == 'POST':
-        return redirect('manage_movies')
+        movie = Movie.query.filter_by(id = int(movie)).first()
+        form = MovieEdit()
+        if form.validate_on_submit():    
+            movie.movie_title    =      form.movie_title.data
+            movie.movie_director     =  form.movie_director.data
+            movie.movie_cast        =   form.movie_cast.data
+            movie.movie_producer  =     form.movie_producer.data
+            movie.movie_synopsis  =     form.movie_synopsis.data
+            movie.movie_status        = form.movie_status.data
+            movie.movie_video         = form.movie_video.data
 
-@app.route('/edit_movie/<movie>', methods=['GET'])
+            db.session.add(movie)
+            db.session.commit()
+            flash('Movie has been updated')
+            return redirect('manage_movies')
+        return render_template('editMovie.html', form=form, movie=movie.id)
+
+
+@app.route('/edit_movie/<movie>', methods=['GET','POST'])
 # @login_required
 def edit_movie(movie):
     print(movie)
     movie = Movie.query.filter_by(id = movie).first()
     print(movie)
     print("---------------")
-    if session['email']:
-        user = User.query.filter_by(email = session['email']).first()
-        form = MovieEdit()
-        if user.user_type == 1:
-            form.movie_title.data = movie.movie_title
-            form.movie_director.data = movie.movie_director_name
-            form.movie_cast.data = movie.movie_cast_name
-            form.movie_producer.data = movie.movie_producer_name
-            form.movie_synopsis.data = movie.movie_synopsis
-            form.movie_status.data = movie.movie_status
-            form.movie_video.data = movie.movie_video
-            return render_template('editMovie.html', form=form)
-        else:
-            flash('User cannot access that page')
-            return render_template('login.html', form = LoginForm())
-    flash('Please Login first to access page')
-    return render_template('login.html', form = LoginForm())
+    if request.method == 'GET':
+        if session['email']:
+            user = User.query.filter_by(email = session['email']).first()
+            form = MovieEdit()
+            if user.user_type == 1:
+                form.movie_title.data = movie.movie_title
+                form.movie_director.data = movie.movie_director_name
+                form.movie_cast.data = movie.movie_cast_name
+                form.movie_producer.data = movie.movie_producer_name
+                form.movie_synopsis.data = movie.movie_synopsis
+                form.movie_status.data = movie.movie_status
+                form.movie_video.data = movie.movie_video
+                return render_template('editMovie.html', form=form, movie=movie.id)
+            else:
+                flash('User cannot access that page')
+                return render_template('login.html', form = LoginForm())
+        flash('Please Login first to access page')
+        return render_template('login.html', form = LoginForm())
+    movie = Movie.query.order_by(Movie.id).all()
+    return render_template('manage_movies.html', movie=movie)
 
 # @app.route('/manage_usres')
 # def manage_users():
@@ -927,7 +946,7 @@ def addMovie():
                 movie_synopsis      = form.movie_synopsis.data,\
                 movie_status        = form.movie_status.data,\
                 movie_video         = form.movie_video.data,\
-                movie_picture       = 'FantasticBeasts.jpg',\
+                movie_picture       = 'newMovie.jpg',\
                 category_ID         = 1
                 )
             db.session.add(movie)
