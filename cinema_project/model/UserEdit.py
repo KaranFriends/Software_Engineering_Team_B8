@@ -15,4 +15,5 @@ class UserEdit(FlaskForm):
     state = StringField("State", validators=[InputRequired(), Length(min=4, max=20, message='Name length must be between %(min)d and %(max)dcharacters')], render_kw={"placeholder": "State"})
     zip = StringField("ZIP Code", validators=[InputRequired(), Length(min=4, max=20, message='Name length must be between %(min)d and %(max)dcharacters')], render_kw={"placeholder": "ZIP"})
     country = StringField("Country", validators=[InputRequired(), Length(min=4, max=20, message='Name length must be between %(min)d and %(max)dcharacters')], render_kw={"placeholder": "Country"})
-    user_submit = SubmitField(label = "Deactivate")
+    user_submit = SubmitField(label = "Change Status")
+    user_admin = SubmitField(label = "Change User Type")

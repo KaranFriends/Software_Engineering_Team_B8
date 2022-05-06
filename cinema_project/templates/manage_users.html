@@ -76,6 +76,7 @@ https://templatemo.com/tm-569-edu-meeting
                             <form action="{{ url_for('manage_users') }}" method="POST">
                                 <table class="table table-bordered table-hover mngTbl spacedTable">
                                     <tr>
+                                        <th>Status</th>&nbsp;
                                         <th>Email</th>&nbsp;
                                         <th>First Name</th>&nbsp;
                                         <th>Last Name</th>&nbsp;
@@ -86,10 +87,16 @@ https://templatemo.com/tm-569-edu-meeting
                                         <th>State</th>&nbsp;
                                         <th>ZIP</th>&nbsp;
                                         <th>Country</th>&nbsp;
+                                        <th>Edit User</th>&nbsp;
 
                                     </tr>
                                     {%for userP in user%}
                                     <tr>
+                                        {% if userP.active == 1 %}
+                                        <td>Active</td>
+                                        {% else %}
+                                        <td>Inactive</td>
+                                        {%endif%}
                                         <td>{{userP.email}}</td>
                                         <td>{{userP.first_name}}</td>
                                         <td>{{userP.last_name}}</td>

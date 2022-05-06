@@ -292,17 +292,17 @@ https://templatemo.com/tm-569-edu-meeting
 
     <div class="col-lg-12">
       <div class="grid-container roundedGrid" style="height: fit-content;">
-        {%for movieP in movie%}
+        {%for moviePP in movie%}
         <div class="grid-item ">
           <div class="down-content">
             <div class="info">
               <div class="row">
                 <div class="col-8">
-                  <a href="{{url_for('movie_details', movie=movieP.id)}}"><img class="gridImage"
-                      src="../static/images/{{movieP.movie_picture}}" alt=""></a>
+                  <a href="{{url_for('movie_details', movie=moviePP.id)}}"><img class="gridImage"
+                      src="../static/images/{{moviePP.movie_picture}}" alt=""></a>
                 </div>
                 <div class="col-4">
-                  <h4>{{movieP.movie_title}}</h4>
+                  <h4>{{moviePP.movie_title}}</h4>
                 </div>
               </div>
             </div>
